@@ -1,0 +1,6 @@
+CREATE TABLE [FavoriteStoryDetail] ([Id] uniqueidentifier  NOT NULL  
+, [StoryDetailId] uniqueidentifier  NOT NULL  
+);
+ALTER TABLE [FavoriteStoryDetail] ADD CONSTRAINT [PK__FavoriteStoryDetail__0000000000000045] PRIMARY KEY ([Id]);
+ALTER TABLE [FavoriteStoryDetail] ADD CONSTRAINT [fk_supplier] FOREIGN KEY ([StoryDetailId]) REFERENCES [StoryDetail] ([Id]);
+
