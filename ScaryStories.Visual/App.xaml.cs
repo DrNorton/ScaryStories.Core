@@ -1,21 +1,26 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.IsolatedStorage;
+using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 
-using ScaryStories.Entities;
+using OpenNETCF.ORM;
 
+using ScaryStories.Entities;
+using ScaryStories.Entities.EntityModels;
 
 namespace ScaryStories.Visual
 {
 		public partial class App : Application
 		{
 				private static MainViewModel viewModel = null;
-				private const string DBConnectionString = "Data Source=isostore:/ScaryStories.sdf";
-
+                private const string DBConnectionString = "ScaryStories.db";
+		        private static SQLiteDataStore _store;
+            
 				/// <summary>
 				/// A static ViewModel used by the views to bind against.
 				/// </summary>
@@ -26,7 +31,7 @@ namespace ScaryStories.Visual
 						{
 								// Delay creation of the view model until necessary
 								if (viewModel == null)
-										viewModel = new MainViewModel(DBConnectionString);
+										viewModel = new MainViewModel(_store);
 
 								return viewModel;
 						}
@@ -71,29 +76,33 @@ namespace ScaryStories.Visual
 								// and consume battery power when the user is not using the phone.
 								PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
 						}
-					
-
-						// Create the database if it does not exist.
-						using (var db = new ScaryStoriesContext(DBConnectionString))
-						{
-                          
-								if (db.DatabaseExists() == false)
-								{
-                                  ImportDatabaseToIsolatedStorage();
-								}
-						}
-                       
-
+                      
+                        if(!CheckDatabaseExists(DBConnectionString))
+				        {
+                            ImportDatabaseToIsolatedStorage();
+                        }
+                        _store = new SQLiteDataStore(DBConnectionString);
+				        _store.AddType<CategoryDetail>();
+                        _store.AddType<StoryDetail>();
 				}
 
-		    private void ImportDatabaseToIsolatedStorage() {
+		        private void ImportDatabaseToIsolatedStorage() {
                 var assembly = Assembly.GetExecutingAssembly();
-                var dbStream = assembly.GetManifestResourceStream("ScaryStories.Visual.StoryDb.ScaryStories.sdf");
+		        using (var dbStream = assembly.GetManifestResourceStream("ScaryStories.Visual.StoryDb.ScaryStories.db")) {
+                        IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
+                        using (var isolatedStorageWriter = new IsolatedStorageFileStream("ScaryStories.db", FileMode.OpenOrCreate, fileStorage))
+                        {
+                            dbStream.CopyTo(isolatedStorageWriter);
+                            dbStream.Close();
+                            isolatedStorageWriter.Close();
+		                 }
+		        }
+		    }
+
+		    private bool CheckDatabaseExists(string name) {
                 IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
-                var isolatedStorageWriter =new IsolatedStorageFileStream("ScaryStories.sdf", FileMode.OpenOrCreate, fileStorage);
-                dbStream.CopyTo(isolatedStorageWriter);
-               
-               
+		        return fileStorage.FileExists(name);
+
 		    }
 
 		        

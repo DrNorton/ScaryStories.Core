@@ -37,9 +37,7 @@
         <appBarUtils:AppBarItemTrigger Id="Поделиться в контакте">
             <i:InvokeCommandAction  Command="{Binding ShareVkCommand}"/>
         </appBarUtils:AppBarItemTrigger>
-        <appBarUtils:AppBarItemTrigger Id="next">
-        <i:InvokeCommandAction  Command="{Binding NextStoryCommand}"/>
-        </appBarUtils:AppBarItemTrigger>
+
         <appBarUtils:AppBarItemTrigger Id="previosly">
             <i:InvokeCommandAction  Command="{Binding PrevioslyStoryCommand}"/>
         </appBarUtils:AppBarItemTrigger>

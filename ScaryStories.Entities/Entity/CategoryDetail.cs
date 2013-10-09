@@ -1,28 +1,28 @@
 ﻿using System;
-using System.Data.Linq;
-using System.Data.Linq.Mapping;
+using System.IO;
+
+using OpenNETCF.ORM;
 
 using ScaryStories.Entities.Entity;
 
 
 namespace ScaryStories.Entities.EntityModels
 {
-		[Table]
-		public class CategoryDetail:IDetail {
-				private Guid _id;
+    [Entity(KeyScheme = KeyScheme.Identity)]
+	public class CategoryDetail:IDetail {
+		    private int _id;
 			private string _name;
 			private byte[] _image;
-			private EntitySet<StoryDetail> _stories;
+			private StoryDetail[] _stories;
 
-			public CategoryDetail(Guid id, string name, byte[] image) {
+			public CategoryDetail(int id, string name, byte[] image) {
 				_id = id;
 				_name = name;
-				_stories =new EntitySet<StoryDetail>();
 				_image = image;
 			}
 
-			[Column(IsPrimaryKey = true, DbType = "uniqueidentifier", CanBeNull = false)]
-			public Guid Id
+            [Field(IsPrimaryKey = true)]
+			public int Id
 			{
 					get
 					{
@@ -34,7 +34,7 @@ namespace ScaryStories.Entities.EntityModels
 					}
 			}
 			
-				[Column]
+			[Field]
 			public string Name
 				{
 						get
@@ -46,7 +46,7 @@ namespace ScaryStories.Entities.EntityModels
 								_name = value;
 						}
 				}
-				[Column]
+            [Field]
 			public byte[] Image
 				{
 						get
@@ -59,11 +59,12 @@ namespace ScaryStories.Entities.EntityModels
 						}
 				}
 
-			[Association(Storage = "_stories", OtherKey = "_categoryId", ThisKey = "Id")]
-			public EntitySet<StoryDetail> Stories
+        
+            [Reference(typeof(StoryDetail), "_categoryId",Autofill = true)]
+            public StoryDetail[] Stories
 			{
-					get { return this._stories; }
-					set { this._stories.Assign(value); }
+				get { return this._stories; }
+				set { this._stories=value; }
 			}
 
 			public CategoryDetail() {

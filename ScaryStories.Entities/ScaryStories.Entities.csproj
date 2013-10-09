@@ -41,7 +41,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Community.CsharpSqlite.SQLiteClient.WP">
+      <HintPath>..\Используемые готовые библиотеки\Community.CsharpSqlite.SQLiteClient.WP.dll</HintPath>
+    </Reference>
+    <Reference Include="Community.CsharpSqlite.WinPhone">
+      <HintPath>..\Используемые готовые библиотеки\Community.CsharpSqlite.WinPhone.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
+    <Reference Include="OpenNETCF.ORM.SQLite">
+      <HintPath>..\Используемые готовые библиотеки\OpenNETCF.ORM.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenNETCF.ORM.WinPhone">
+      <HintPath>..\Используемые готовые библиотеки\OpenNETCF.ORM.WinPhone.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.Ersatz.WinPhone">
+      <HintPath>..\Используемые готовые библиотеки\System.Data.Ersatz.WinPhone.dll</HintPath>
+    </Reference>
     <Reference Include="system.data.linq" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -49,12 +64,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="mscorlib.extensions" />
-    <Reference Include="Vici.CoolStorage.WP7">
-      <HintPath>..\Используемые готовые библиотеки\Vici.CoolStorage.WP7.dll</HintPath>
-    </Reference>
-    <Reference Include="Vici.Core.WP7">
-      <HintPath>..\Используемые готовые библиотеки\Vici.Core.WP7.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dto\BaseDto.cs" />
@@ -64,11 +73,10 @@
     <Compile Include="Entity\IDetail.cs" />
     <Compile Include="Entity\StoryDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories.Obsolete\Base\BaseRepository.cs" />
-    <Compile Include="Repositories.Obsolete\CategoryRepository.cs" />
-    <Compile Include="Repositories.Obsolete\Base\IRepository.cs" />
-    <Compile Include="Repositories.Obsolete\StoryRepository.cs" />
-    <Compile Include="ScaryStoriesContext.cs" />
+    <Compile Include="Repositories\Base\BaseRepository.cs" />
+    <Compile Include="Repositories\CategoryRepository.cs" />
+    <Compile Include="Repositories\Base\IRepository.cs" />
+    <Compile Include="Repositories\StoryRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="SqlLiteRepositories\" />

@@ -1,6 +1,11 @@
-CREATE TABLE [FavoriteStoryDetail] ([Id] uniqueidentifier  NOT NULL  
-, [StoryDetailId] uniqueidentifier  NOT NULL  
+CREATE TABLE [StoryDetail] ([_categoryId] uniqueidentifier  NOT NULL  
+, [Id] uniqueidentifier  NOT NULL  
+, [Header] nvarchar(4000) NULL  
+, [Image] varbinary(8000) NULL  
+, [Likes] bigint  NOT NULL  
+, [IsFavorite] bit  NOT NULL  
+, [Text] nvarchar(4000) NULL  
 );
-ALTER TABLE [FavoriteStoryDetail] ADD CONSTRAINT [PK__FavoriteStoryDetail__0000000000000045] PRIMARY KEY ([Id]);
-ALTER TABLE [FavoriteStoryDetail] ADD CONSTRAINT [fk_supplier] FOREIGN KEY ([StoryDetailId]) REFERENCES [StoryDetail] ([Id]);
+ALTER TABLE [StoryDetail] ADD CONSTRAINT [PK_StoryDetail] PRIMARY KEY ([Id]);
+ALTER TABLE [StoryDetail] ADD CONSTRAINT [FK_StoryDetail_Category] FOREIGN KEY ([_categoryId]) REFERENCES [CategoryDetail] ([Id]);
 

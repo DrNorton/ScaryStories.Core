@@ -7,13 +7,39 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScaryStories.Entities", "Sc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScaryStories.Helpers", "ScaryStories.Helpers\ScaryStories.Helpers.csproj", "{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C64CCC7B-9F5F-4D99-8154-BDF0727FE98F}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Downloads\ORM_1.0.13029_SRC\Local.testsettings = ..\..\..\..\Downloads\ORM_1.0.13029_SRC\Local.testsettings
+		..\..\..\..\Downloads\ORM_1.0.13029_SRC\OpenNETCF.ORM.FFx.vsmdi = ..\..\..\..\Downloads\ORM_1.0.13029_SRC\OpenNETCF.ORM.FFx.vsmdi
+		..\..\..\..\Downloads\ORM_1.0.13029_SRC\OpenNETCF.ORM\SqlDateTimeDefault.cs = ..\..\..\..\Downloads\ORM_1.0.13029_SRC\OpenNETCF.ORM\SqlDateTimeDefault.cs
+		..\..\..\..\Downloads\ORM_1.0.13029_SRC\TraceAndTestImpact.testsettings = ..\..\..\..\Downloads\ORM_1.0.13029_SRC\TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQLite", "SQLite", "{46B57893-C73E-4F80-B05C-387AB94F65F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ORM Core", "ORM Core", "{94CC8703-9D3D-4F68-9EA0-D24E2D2349E4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dao", "Dao", "{84305253-84C8-42C1-9101-75ADE28B4319}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenNETCF.ORM.WinPhone", "..\ORM_1.0.13029_SRC\OpenNETCF.ORM\OpenNETCF.ORM.WinPhone.csproj", "{C52EC860-6119-4131-815B-4305DB3BFA95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenNETCF.ORM.SQLite.WinPhone", "..\ORM_1.0.13029_SRC\OpenNETCF.ORM.SQLite\OpenNETCF.ORM.SQLite.WinPhone.csproj", "{C6814B71-2825-491A-9066-A989BC3ABFF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.CsharpSqlite.SQLiteClient.WP", "..\csharp-sqlite_3_7_7_1_64\Community.CsharpSqlite.SQLiteClient.WP\Community.CsharpSqlite.SQLiteClient.WP.csproj", "{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Community.CsharpSqlite.WinPhone", "..\csharp-sqlite_3_7_7_1_64\Community.CsharpSqlite.WinPhone\Community.CsharpSqlite.WinPhone.csproj", "{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Data.Ersatz.WinPhone", "..\csharp-sqlite_3_7_7_1_64\System.Data.Ersatz\WinPhone\System.Data.Ersatz.WinPhone.csproj", "{60396C62-02C2-45FE-98BD-4A16E076722B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|ARM = Debug|ARM
+		Debug|Mixed Platforms = Debug|Mixed Platforms
 		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
 		Release|ARM = Release|ARM
+		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
@@ -21,31 +47,114 @@ Global
 		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Debug|Mixed Platforms.Deploy.0 = Debug|Any CPU
 		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Release|ARM.ActiveCfg = Release|Any CPU
+		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Release|Mixed Platforms.Deploy.0 = Release|Any CPU
 		{AE451BB1-E2B8-40C5-A693-58EAFE79F5D5}.Release|x86.ActiveCfg = Release|Any CPU
 		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{42F15866-4159-47A6-9B37-BB9076CE46E9}.Release|x86.ActiveCfg = Release|Any CPU
 		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
 		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}.Release|x86.ActiveCfg = Release|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C52EC860-6119-4131-815B-4305DB3BFA95}.Release|x86.ActiveCfg = Release|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{C6814B71-2825-491A-9066-A989BC3ABFF6}.Release|x86.ActiveCfg = Release|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B}.Release|x86.ActiveCfg = Release|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9}.Release|x86.ActiveCfg = Release|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{60396C62-02C2-45FE-98BD-4A16E076722B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C6814B71-2825-491A-9066-A989BC3ABFF6} = {46B57893-C73E-4F80-B05C-387AB94F65F4}
+		{C52EC860-6119-4131-815B-4305DB3BFA95} = {94CC8703-9D3D-4F68-9EA0-D24E2D2349E4}
+		{94CC8703-9D3D-4F68-9EA0-D24E2D2349E4} = {84305253-84C8-42C1-9101-75ADE28B4319}
+		{C64CCC7B-9F5F-4D99-8154-BDF0727FE98F} = {84305253-84C8-42C1-9101-75ADE28B4319}
+		{46B57893-C73E-4F80-B05C-387AB94F65F4} = {84305253-84C8-42C1-9101-75ADE28B4319}
+		{22E602F9-ADB6-4B94-B980-40EB1E83BE8B} = {84305253-84C8-42C1-9101-75ADE28B4319}
+		{A1CF8CB2-DB66-4036-AB1F-9D205D5C93E9} = {84305253-84C8-42C1-9101-75ADE28B4319}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = tests\SQLite.Tests.csproj

@@ -7,6 +7,6 @@ namespace ScaryStories.Entities.Entity
 {
 		public interface IDetail
 		{
-		    Guid Id { get; set; }
+		    int Id { get; set; }
 		}
 }

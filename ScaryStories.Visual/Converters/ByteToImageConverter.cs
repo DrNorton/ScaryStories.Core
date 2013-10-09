@@ -9,14 +9,18 @@ namespace ScaryStories.Visual.Converters
     public class ByteToImageConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            return ByteArraytoBitmap((Byte[])value);
+            return ByteArrayToImage((byte[])value);
         }
-        public BitmapImage ByteArraytoBitmap(Byte[] byteArray)
-        {
 
-            MemoryStream stream = new MemoryStream(byteArray);
-            BitmapImage bitmapImage = new BitmapImage();
-            bitmapImage.SetSource(stream);
+        public static BitmapSource ByteArrayToImage(byte[] bytes)
+        {
+            BitmapImage bitmapImage = null;
+            using (MemoryStream stream = new MemoryStream(bytes, 0, bytes.Length))
+            {
+                bitmapImage = new BitmapImage();
+                bitmapImage.SetSource(stream);
+            }
+
             return bitmapImage;
         }
 

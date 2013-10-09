@@ -43,5 +43,12 @@ namespace ScaryStories.Visual
                     NavigationService.Navigate(new Uri(String.Format("{0}?id={1}", "/Pages/StoryView.xaml", listbox.SelectedIndex), UriKind.Relative));
                 }
 
+                private void Selector_OnMenuSelectionChanged(object sender, SelectionChangedEventArgs e)
+                {
+                    var listbox = (ListBox)sender;
+                    NavigationService.Navigate(
+                        new Uri("/Pages/Category/StoriesWithSortingPage.xaml", UriKind.Relative));
+                }
+
 		}
 }

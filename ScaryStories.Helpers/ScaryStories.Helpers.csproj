@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="BasePropertyChanging.cs" />
     <Compile Include="Converters\ImageToByte.cs" />
-    <Compile Include="DelegateCommand.cs" />
+    <Compile Include="ActionCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vkontakte\VkPost.cs" />
   </ItemGroup>

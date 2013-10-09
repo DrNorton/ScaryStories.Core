@@ -9,8 +9,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="clr-namespace:ScaryStories.Visual.Converters"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800" 
-    
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+        xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+        FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
@@ -26,27 +26,51 @@
         	<controls:Panorama.Background>
         		<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
         			<GradientStop Color="Black" Offset="0"/>
-        			<GradientStop Color="#FF4B0C0C" Offset="1"/>
+                    <GradientStop Color="Black" Offset="1"/>
         		</LinearGradientBrush>
         	</controls:Panorama.Background>
-            <!--Panorama item one-->
-            <controls:PanoramaItem Header="Категории">
-                <!--Double line list with text wrapping-->
-				<ListBox Margin="0,0,-12,0" SelectedItem="{Binding SelectedCategory,Mode=TwoWay}"  ItemsSource="{Binding Categories,Mode=OneWay}" BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="Selector_OnSelectionChanged">
+
+            <controls:PanoramaItem Header="Меню" DataContext="{Binding MenuViewModel}">
+                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding Menu}" SelectedItem="{Binding SelectedMenuItem,Mode=TwoWay}"  SelectionChanged="Selector_OnMenuSelectionChanged">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Margin="0,0,0,17" Width="432" Height="78">
-                                <Image Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}"/>
-                                <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                               
+                            <StackPanel Orientation="Horizontal" Height="105" Width="432">
+                                <!--Replace rectangle with image-->
+                                <Image Width="99" Height="99" Source="{Binding ImagePath}" />
+                                <StackPanel Width="311" Margin="8,-7,0,0">
+
+                                    <TextBlock Text="{Binding Header}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
+                                    <TextBlock Text="{Binding Description}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+                                </StackPanel>
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+           
+
             </controls:PanoramaItem>
             <!--Panorama item one-->
+            <controls:PanoramaItem Header="Категории">
+                <!--Double line list with text wrapping-->
+				<ListBox Margin="0,0,-12,0" SelectedItem="{Binding SelectedCategory,Mode=TwoWay}"  ItemsSource="{Binding Categories,Mode=OneWay}" BorderBrush="{x:Null}" Background="{x:Null}" SelectionChanged="Selector_OnSelectionChanged">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="17,0,0,17">
+                                <toolkit:HubTile  Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}" Title="{Binding Name}" />
+                            </StackPanel>
+                            
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                </controls:PanoramaItem>
+            <!--Panorama item one-->
             <controls:PanoramaItem Header="Избранное">
-                <ListBox ItemsSource="{Binding FavoritesStory}" SelectedItem="{Binding SelectedFavoriteStory}" SelectionChanged="SelectorFavourites_OnSelectionChanged" >
+                <ListBox ItemsSource="{Binding FavoriteStories}" SelectedItem="{Binding SelectedFavoriteStory,Mode=TwoWay}" SelectionChanged="SelectorFavourites_OnSelectionChanged" >
                    <ListBox.ItemTemplate>
                        <DataTemplate>
                             <TextBlock Text="{Binding Header}" TextWrapping="Wrap" Style="{StaticResource PhoneTextLargeStyle}"/>

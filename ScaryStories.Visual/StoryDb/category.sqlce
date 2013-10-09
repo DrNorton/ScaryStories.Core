@@ -1,0 +1,6 @@
+CREATE TABLE [CategoryDetail] ([Id] uniqueidentifier  NOT NULL  
+, [Name] nvarchar(4000) NULL  
+, [Image] varbinary(8000) NULL  
+);
+ALTER TABLE [CategoryDetail] ADD CONSTRAINT [PK_CategoryDetail] PRIMARY KEY ([Id]);
+

@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Data.Linq;
-using System.Data.Linq.Mapping;
-
+using OpenNETCF.ORM;
 using ScaryStories.Entities.Entity;
 
 namespace ScaryStories.Entities.EntityModels
 {
-		[Table]
+         [Entity(KeyScheme = KeyScheme.Identity)]
 		public class StoryDetail:IDetail{
-				private Guid _id;
+				private int _id;
 
-				[Column(IsPrimaryKey = true, DbType = "uniqueidentifier", CanBeNull = false)]
-				public Guid Id
+                [Field(IsPrimaryKey = true)]
+				public int Id
 				{
 						get
 						{
@@ -27,11 +25,15 @@ namespace ScaryStories.Entities.EntityModels
 				private byte[] _image;
 				private string _text;
 				private long _likes;
-		        private bool _isFavorite;
-				private EntityRef<CategoryDetail> _category;
-				[Column]
-				internal Guid _categoryId;
-				[Column]
+                [Field]
+		        public  bool IsFavorite { get; set; }
+
+                [Field]
+                 public int _categoryId { get; set; }
+
+		
+
+                [Field]
 				public string Header
 				{
 						get
@@ -43,7 +45,7 @@ namespace ScaryStories.Entities.EntityModels
 								_header = value;
 						}
 				}
-                [Column(DbType = "varbinary(8000)")]
+                [Field]
 				public byte[] Image
 				{
 						get
@@ -55,7 +57,7 @@ namespace ScaryStories.Entities.EntityModels
 								_image = value;
 						}
 				}
-				[Column]
+                [Field]
 				public long Likes
 				{
 						get
@@ -67,7 +69,7 @@ namespace ScaryStories.Entities.EntityModels
 								_likes = value;
 						}
 				}
-                [Column]
+                [Field]
 				public string Text
 				{
 						get
@@ -79,48 +81,20 @@ namespace ScaryStories.Entities.EntityModels
 								_text = value;
 						}
 				}
-                [Column]
-                public bool IsFavorite
-                {
-                    get
-                    {
-                        return _isFavorite;
-                    }
-                    set
-                    {
-                        _isFavorite = value;
-                    }
-                }
+               
+                
+                
+             
 
-
-				[Association(Storage = "_category", ThisKey = "_categoryId", OtherKey = "Id", IsForeignKey = true)]
-				public CategoryDetail Category
-				{
-						get
-						{
-								return _category.Entity;
-						}
-						set
-						{
-								_category.Entity = value;
-								if (value != null)
-								{
-										_categoryId = value.Id;
-								}
-						}
-				}
-
-		    
-
-		    public StoryDetail(Guid id, string header, byte[] image, string text, long likes, Guid categoryId,bool isFavorite) {
+             public StoryDetail(int id, string header, byte[] image, string text, long likes, int categoryId,bool isFavorite) {
 				_id = id;
 				_header = header;
 				_image = image;
 				_text = text;
 				_likes = likes;
 				_categoryId = categoryId;
-		        _isFavorite = isFavorite;
-		    }
+                 IsFavorite = isFavorite;
+             }
 
 			public StoryDetail() {
 				

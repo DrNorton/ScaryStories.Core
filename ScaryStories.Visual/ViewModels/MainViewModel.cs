@@ -2,17 +2,20 @@
  using System.Collections.Generic;
  using System.Linq;
 
+ using OpenNETCF.ORM;
+
  using ScaryStories.Entities.Dto;
  using ScaryStories.Entities.Repositories;
  using ScaryStories.Helpers;
-
+ using ScaryStories.Visual.ViewModels;
 
 namespace ScaryStories.Visual
 {
 	public class MainViewModel:BasePropertyChanging {
 	    private List<CategoryDto> _categories;
         private List<StoryDto> _stories;
-	    private List<StoryDto> _favoritesStories; 
+	    private List<StoryDto> _favoriteStories; 
+        
 
 	    private CategoryRepository _categoryRepository;
 	    private StoryRepository _storyRepository;
@@ -25,24 +28,44 @@ namespace ScaryStories.Visual
 	    private StoryDto _selectedStory;
 	    private CategoryDto _selectedCategory;
 	    private StoryDto _selectedFavoriteStory;
-	    
 
-	    public MainViewModel(string connectionString) {
-			_categoryRepository=new CategoryRepository(connectionString);
-            _storyRepository=new StoryRepository(connectionString);
-	        _categories = _categoryRepository.GetAll().ToList();
+	    private MenuViewModel _menuViewModel;
+	    private MenuItem _selectedMenuItem;
+
+	    public MainViewModel(SQLiteDataStore store) {
+			_categoryRepository=new CategoryRepository(store);
+            _storyRepository=new StoryRepository(store);
+            _storyRepository.OnChange += _storyRepository_OnChange;
             _selectedCategory=new CategoryDto();
             _selectedStory=new StoryDto();
-	        _favoritesStories = _storyRepository.GetFavoritesStories().ToList();
-            SelectedFavoriteStory=new StoryDto();
-
+            _selectedFavoriteStory=new StoryDto();
+            _menuViewModel = new MenuViewModel();
+            SelectedMenuItem=new MenuItem();
+            GetCategories();
+            GetFavoritesStory();
 	    }
+
+	    private void GetFavoritesStory() {
+            FavoriteStories = _storyRepository.GetFavoritesStories().ToList();
+	    }
+
+	    private void GetCategories() {
+            Categories = _categoryRepository.GetAll().ToList();
+	    }
+	    
+        void _storyRepository_OnChange(StoryDto story) {
+            GetFavoritesStory();
+            SelectedStory = story;
+          
+        }
 
 	    private void LoadStoriesForCurrentCategory() {
 	        Stories = _storyRepository.GetStoriesByCategory(_selectedCategory.Id).ToList();
 	    }
 
-         
+	    private void ShowFavoritesDetails() {
+	        Stories = _favoriteStories;
+	    } 
 
         private void DeleteFromFavorites() {
           
@@ -65,6 +88,14 @@ namespace ScaryStories.Visual
 	        if (currentIndex != 0) {
 	            SelectedStory = _stories.ElementAt(currentIndex - 1);
 	        }
+	    }
+
+	    private bool IsCanPrevios() {
+            var currentIndex = _stories.IndexOf(SelectedStory);
+            if (currentIndex == 0) {
+                return false;
+            }
+	        return true;
 	    }
 
         public ActionCommand DeleteFromFavoritesCommand
@@ -113,6 +144,7 @@ namespace ScaryStories.Visual
             }
         }
 
+
 	    public List<CategoryDto> Categories {
 	        get {
 	            return _categories;
@@ -154,12 +186,13 @@ namespace ScaryStories.Visual
 	        }
 	    }
 
-	    public List<StoryDto> FavoritesStory {
+	    public List<StoryDto> FavoriteStories {
 	        get {
-	            return _favoritesStories;
+	            return _favoriteStories;
 	        }
 	        set {
-	            _favoritesStories = value;
+	            _favoriteStories = value;
+                base.NotifyPropertyChanged("FavoriteStories");
 	        }
 	    }
 
@@ -169,7 +202,25 @@ namespace ScaryStories.Visual
 	            return _selectedFavoriteStory;
 	        }
 	        set {
+                ShowFavoritesDetails();
 	            _selectedFavoriteStory = value;
+	        }
+	    }
+
+
+	    public MenuViewModel MenuViewModel {
+	        get {
+	            return _menuViewModel;
+	        }
+	    }
+
+	    public MenuItem SelectedMenuItem {
+	        get {
+	            return _selectedMenuItem;
+	        }
+	        set {
+	            _selectedMenuItem = value;
+                base.NotifyPropertyChanged("SelectedMenuItem");
 	        }
 	    }
 	}

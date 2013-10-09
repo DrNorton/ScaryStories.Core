@@ -1,4 +1,5 @@
-﻿<phone:PhoneApplicationPage xmlns:UserControls="clr-namespace:ScaryStories.Visual.UserControls"  
+﻿<phone:PhoneApplicationPage 
+  
     x:Class="ScaryStories.Visual.StoriesForCurrentCategoryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -15,13 +16,25 @@
     shell:SystemTray.IsVisible="True">
 
     <Grid  x:Name="LayoutRoot"   Background="Transparent">
-        <ListBox ItemsSource="{Binding Stories}" SelectedItem="{Binding SelectedStory,Mode=TwoWay}" SelectionChanged="Selector_OnSelectionChanged">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Header}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock Text="{Binding SelectedCategory.Name}" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+        </StackPanel>
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <ListBox ItemsSource="{Binding Stories}" SelectedItem="{Binding SelectedStory,Mode=TwoWay}" SelectionChanged="Selector_OnSelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Header}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        
     </Grid>
 
 
