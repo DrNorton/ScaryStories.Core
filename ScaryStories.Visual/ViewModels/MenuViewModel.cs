@@ -9,8 +9,6 @@ namespace ScaryStories.Visual.ViewModels
 {
     public class MenuViewModel:BasePropertyChanging {
         private List<MenuItem> _menu;
-        
-        
 
         public MenuViewModel() {
               CreateMenu();   

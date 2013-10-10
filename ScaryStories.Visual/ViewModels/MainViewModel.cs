@@ -32,6 +32,8 @@ namespace ScaryStories.Visual
 	    private MenuViewModel _menuViewModel;
 	    private MenuItem _selectedMenuItem;
 
+
+
 	    public MainViewModel(SQLiteDataStore store) {
 			_categoryRepository=new CategoryRepository(store);
             _storyRepository=new StoryRepository(store);
