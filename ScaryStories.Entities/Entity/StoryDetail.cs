@@ -7,6 +7,7 @@ namespace ScaryStories.Entities.EntityModels
          [Entity(KeyScheme = KeyScheme.Identity)]
 		public class StoryDetail:IDetail{
 				private int _id;
+                private DateTime _createdTime;
 
                 [Field(IsPrimaryKey = true)]
 				public int Id
@@ -30,9 +31,18 @@ namespace ScaryStories.Entities.EntityModels
 
                 [Field]
                  public int _categoryId { get; set; }
-
-		
-
+                [Field]
+                public DateTime CreatedTime
+                {
+                    get
+                    {
+                        return _createdTime;
+                    }
+                    set
+                    {
+                        _createdTime = value;
+                    }
+                }
                 [Field]
 				public string Header
 				{

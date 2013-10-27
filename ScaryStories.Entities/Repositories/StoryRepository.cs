@@ -10,7 +10,6 @@ using ScaryStories.Entities.EntityModels;
 namespace ScaryStories.Entities.Repositories
 {
 		public class StoryRepository:BaseRepository<StoryDetail,StoryDto> {
-		    
 
 				public StoryRepository(SQLiteDataStore store)
 					:base(store)
@@ -21,23 +20,29 @@ namespace ScaryStories.Entities.Repositories
 				public override StoryDetail UpdateEntry(StoryDto sourceDto, StoryDetail targetEntity) {
 					targetEntity.Id = sourceDto.Id;
 					targetEntity.Image = sourceDto.Image;
-					targetEntity.Header = sourceDto.Header;
+					targetEntity.Header = sourceDto.Name;
 					targetEntity.Likes = sourceDto.Likes;
 					targetEntity.Text = sourceDto.Text;
 				    targetEntity._categoryId = sourceDto.CategoryId;
 				    targetEntity.IsFavorite = sourceDto.IsFavorite;
+				    targetEntity.CreatedTime = sourceDto.CreatedTime;
 					return targetEntity;
 				}
+
+                 public DateTime GetLastTimeData() {
+                     return _store.GetLastDateTimeInsert("StoryDetail");
+                 }
 
 				public override StoryDetail CreateEntry(StoryDto dto) {
 					return new StoryDetail() {
 						Id = dto.Id,
                         _categoryId = dto.CategoryId,
-						Header = dto.Header,
+						Header = dto.Name,
 						Image = dto.Image,
 						Likes = dto.Likes,
 						Text = dto.Text,
-                        IsFavorite = dto.IsFavorite
+                        IsFavorite = dto.IsFavorite,
+                        CreatedTime = dto.CreatedTime
 					};
 				}
 
@@ -57,16 +62,26 @@ namespace ScaryStories.Entities.Repositories
                      this.Save(story);
                  }
 
-                public IEnumerable<StoryDto> GetFavoritesStories()
+                public IEnumerable<StoryDto> GetFavoriteStories()
                 {
                     return ConvertColl(_store.Select<StoryDetail>(x => x.IsFavorite.Equals(true)));
 		        }
 
                 protected override StoryDto Convert(StoryDetail entity)
                 {
-                    return new StoryDto(){CategoryId = entity._categoryId,Header = entity.Header,
+                    return new StoryDto(){CategoryId = entity._categoryId,Name = entity.Header,
                         Id=entity.Id,Image = entity.Image,IsFavorite = entity.IsFavorite,
                         Likes = entity.Likes,Text=entity.Text};
                 }
+
+                public override IEnumerable<StoryDto> Search(string pattern) {
+                    return ConvertColl(_store.Select<StoryDetail>(x => x.Header.ToLower().Contains(pattern.ToLower())));
+                }
+
+		    public byte[] GetRandomImage() 
+            {
+                return (byte[])_store.ExecuteScalar(@"SELECT Image FROM StoryDetail ORDER BY RANDOM() LIMIT 1");
+		    }
+
         }
 }

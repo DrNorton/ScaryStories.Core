@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
+using ScaryStories.ViewModel.DataContext.Base;
+
 
 namespace ScaryStories.Visual
 {
@@ -22,6 +17,10 @@ namespace ScaryStories.Visual
 
 						// Set the data context of the listbox control to the sample data
 						DataContext = App.ViewModel;
+				    CategorySection.DataContext =
+				        App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "CategoriesWithStoriesContainer");
+                    FavoriteSection.DataContext = App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "FavoriteStoryContainer");
+				    MenuSection.DataContext = App.ViewModel;
 						this.Loaded += new RoutedEventHandler(MainPage_Loaded);
 				}
 
@@ -31,23 +30,28 @@ namespace ScaryStories.Visual
 					
 				}
 
-				private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-					var listbox = (ListBox)sender;
-					NavigationService.Navigate(
-                        new Uri(String.Format("/Pages/Category/StoriesForCurrentCategoryPage.xaml?index={0}", listbox.SelectedIndex), UriKind.Relative));
-				}
-
-                private void SelectorFavourites_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+                private void Selector_OnCategorySelectionChanged(object sender, SelectionChangedEventArgs e)
                 {
-                    var listbox = (ListBox)sender;
-                    NavigationService.Navigate(new Uri(String.Format("{0}?id={1}", "/Pages/StoryView.xaml", listbox.SelectedIndex), UriKind.Relative));
+                    NavigationService.Navigate(
+                        new Uri(
+                            "/Pages/StoriesForSelectedCategoryList.xaml",
+                            UriKind.Relative));
                 }
 
-                private void Selector_OnMenuSelectionChanged(object sender, SelectionChangedEventArgs e)
+                private void Selector_OnFavoriteSelectionChanged(object sender, SelectionChangedEventArgs e)
                 {
                     var listbox = (ListBox)sender;
+                    NavigationService.Navigate(new Uri(String.Format("{0}?id={1}&code={2}", "/Pages/StoryView.xaml", listbox.SelectedIndex, "FavoriteStoryContainer"), UriKind.Relative));
+                }
+
+                private void Selector_OnMenuSelectionChanged(object sender, SelectionChangedEventArgs e) {
+                    var listbox = (ListBox)sender;
+                    var menuItemCode = ((IMenuItem)(listbox.SelectedValue)).DataContextCode;
                     NavigationService.Navigate(
-                        new Uri("/Pages/Category/StoriesWithSortingPage.xaml", UriKind.Relative));
+                        new Uri(String.Format("/Pages/{0}.xaml?code={1}", menuItemCode,menuItemCode), UriKind.Relative));
+                            
+
+                 
                 }
 
 		}

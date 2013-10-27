@@ -7,7 +7,7 @@ namespace ScaryStories.Entities.Dto
 {
 		public class CategoryDto:BaseDto
 		{
-				public string Name { get; set; }
+				
 				public byte[] Image { get;set; }
 		}
 }

@@ -58,6 +58,11 @@ namespace ScaryStories.Entities.Base.Repositories
 		        public void Delete(Dto dto) {
                     _store.Delete<entity>(dto.Id);
 		        }
+
+
+		     public abstract IEnumerable<Dto> Search(string pattern);
+		         
+		        
     
 			 public abstract entity UpdateEntry(Dto sourceDto, entity targetEntity);
 			 public abstract entity CreateEntry(Dto dto);

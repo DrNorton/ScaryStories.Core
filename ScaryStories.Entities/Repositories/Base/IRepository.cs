@@ -10,5 +10,7 @@ namespace ScaryStories.Entities.Repositories
 			T GetItem(Guid id);
 			void SaveRange(IEnumerable<T> items);
 			void Save(T item);
+            IEnumerable<T> Search(string pattern);
+            
 		}
 }

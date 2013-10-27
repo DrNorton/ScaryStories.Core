@@ -30,7 +30,7 @@
             <ListBox ItemsSource="{Binding Stories}" SelectedItem="{Binding SelectedStory,Mode=TwoWay}" >
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Header}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                        <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

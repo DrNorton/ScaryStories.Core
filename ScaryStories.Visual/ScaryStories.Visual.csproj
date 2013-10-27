@@ -64,6 +64,8 @@
       <HintPath>..\Используемые готовые библиотеки\System.Data.Ersatz.WinPhone.dll</HintPath>
     </Reference>
     <Reference Include="system.data.linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -76,25 +78,29 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\ByteArrayToImageSource.cs" />
     <Compile Include="Converters\ByteToImageConverter.cs" />
+    <Compile Include="Converters\StoryNumberInCollectionConverter.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\Category\StoriesForCurrentCategoryPage.xaml.cs">
-      <DependentUpon>StoriesForCurrentCategoryPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
+    <Compile Include="Pages\AllStoriesList.xaml.cs">
+      <DependentUpon>AllStoriesList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\StoriesWithSortingPage.xaml.cs">
-      <DependentUpon>StoriesWithSortingPage.xaml</DependentUpon>
+    <Compile Include="Pages\SearchPage.xaml.cs">
+      <DependentUpon>SearchPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\StoriesForSelectedCategoryList.xaml.cs">
+      <DependentUpon>StoriesForSelectedCategoryList.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Pages\StoryView.xaml.cs">
       <DependentUpon>StoryView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\UpdateView.xaml.cs">
+      <DependentUpon>UpdateView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DatabaseService.cs" />
-    <Compile Include="Services\Events\OnStorageChangeEventArgs.cs" />
-    <Compile Include="ViewModels\MenuViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -105,11 +111,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\Category\StoriesForCurrentCategoryPage.xaml">
+    <Page Include="Pages\AllStoriesList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\StoriesWithSortingPage.xaml">
+    <Page Include="Pages\SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StoriesForSelectedCategoryList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,12 +127,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\UpdateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
-    <None Include="Properties\WMAppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml">
+      <SubType>Designer</SubType>
+    </None>
     <EmbeddedResource Include="StoryDb\ScaryStories.db" />
+    <Content Include="Content\search.png" />
+    <Content Include="Content\Wallpapers\1.jpg" />
+    <Content Include="Content\Wallpapers\2.jpg" />
+    <Content Include="Content\Wallpapers\3.jpg" />
+    <Content Include="ServiceReferences.ClientConfig" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ApplicationIcon.png">
@@ -153,7 +174,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\allStories.png" />
-    <Content Include="README_FIRST.txt" />
+    <Content Include="Content\update.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Add.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
@@ -182,8 +203,22 @@
       <Project>{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}</Project>
       <Name>ScaryStories.Helpers</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ScaryStories.Services\ScaryStories.Services.csproj">
+      <Project>{79AAE72E-F843-49A2-B9A2-995DF90E4CCD}</Project>
+      <Name>ScaryStories.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScaryStories.ViewModel\ScaryStories.ViewModel.csproj">
+      <Project>{E504309E-97C7-4ED0-99E6-FCB53F238BED}</Project>
+      <Name>ScaryStories.ViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Вспомогательные проекты\Phone.Controls\Phone.Controls.csproj">
+      <Project>{71A41463-066F-444A-B774-5FB036C913A0}</Project>
+      <Name>Phone.Controls</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

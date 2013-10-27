@@ -12,6 +12,7 @@ using OpenNETCF.ORM;
 
 using ScaryStories.Entities;
 using ScaryStories.Entities.EntityModels;
+using ScaryStories.ViewModel;
 
 namespace ScaryStories.Visual
 {
@@ -92,7 +93,7 @@ namespace ScaryStories.Visual
                         IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
                         using (var isolatedStorageWriter = new IsolatedStorageFileStream("ScaryStories.db", FileMode.OpenOrCreate, fileStorage))
                         {
-                            dbStream.CopyTo(isolatedStorageWriter);
+                            dbStream.CopyTo(isolatedStorageWriter); 
                             dbStream.Close();
                             isolatedStorageWriter.Close();
 		                 }

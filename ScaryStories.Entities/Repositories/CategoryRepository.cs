@@ -29,5 +29,9 @@ namespace ScaryStories.Entities.Repositories
                 {
                     return new CategoryDto(){Id=entity.Id,Image = entity.Image,Name=entity.Name};
                 }
+
+                public override System.Collections.Generic.IEnumerable<CategoryDto> Search(string pattern) {
+                    return ConvertColl(_store.Select<CategoryDetail>(x => x.Name.Contains(pattern)));
+                }
         }
 }

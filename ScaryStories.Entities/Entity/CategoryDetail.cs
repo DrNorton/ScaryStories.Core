@@ -14,6 +14,7 @@ namespace ScaryStories.Entities.EntityModels
 			private string _name;
 			private byte[] _image;
 			private StoryDetail[] _stories;
+             private DateTime _createdTime;
 
 			public CategoryDetail(int id, string name, byte[] image) {
 				_id = id;
@@ -58,7 +59,18 @@ namespace ScaryStories.Entities.EntityModels
 								_image = value;
 						}
 				}
-
+            [Field]
+            public DateTime CreatedTime
+            {
+                get
+                {
+                    return _createdTime;
+                }
+                set
+                {
+                    _createdTime = value;
+                }
+            }
         
             [Reference(typeof(StoryDetail), "_categoryId",Autofill = true)]
             public StoryDetail[] Stories
@@ -67,7 +79,9 @@ namespace ScaryStories.Entities.EntityModels
 				set { this._stories=value; }
 			}
 
-			public CategoryDetail() {
+           
+
+        public CategoryDetail() {
 				
 			}
 		

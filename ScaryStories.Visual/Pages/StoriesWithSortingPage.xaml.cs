@@ -32,7 +32,7 @@ namespace ScaryStories.Visual.Pages
             if (NavigationContext.QueryString.TryGetValue("id", out msg))
             {
                 int id = int.Parse(msg);
-                LayoutRoot.DataContext = App.ViewModel.Stories[id];
+            //    LayoutRoot.DataContext = App.ViewModel.Stories[id];
               
             }
         }
