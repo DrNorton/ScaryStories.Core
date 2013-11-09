@@ -33,6 +33,14 @@ namespace Phone.Controls
                typeof(ScrollableTextBlock),
                new PropertyMetadata(null, OnSourcePropertyChanged));
 
+        public static readonly DependencyProperty FontProperty =
+        DependencyProperty.Register(
+            "Font",
+            typeof(FontFamily),
+            typeof(ScrollableTextBlock),
+            new PropertyMetadata(null, OnFontPropertyChanged));
+
+     
         public ImageSource Source
         {
             get
@@ -45,12 +53,30 @@ namespace Phone.Controls
             }
         }
 
+        public FontFamily Font
+        {
+            get
+            {
+                return (FontFamily)GetValue(FontProperty);
+            }
+            set
+            {
+                SetValue(FontProperty, value);
+            }
+        }
+
         private static void OnSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScrollableTextBlock source = (ScrollableTextBlock)d;
             var value = (ImageSource)e.NewValue;
             source.Source = value;
         }
+
+        private static void OnFontPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+            var control = (ScrollableTextBlock)d;
+            control.Font = (FontFamily)e.NewValue;
+        }
+
 
 
 
@@ -61,6 +87,8 @@ namespace Phone.Controls
                 typeof(string),
                 typeof(ScrollableTextBlock),
                 new PropertyMetadata("ScrollableTextBlock", OnTextPropertyChanged));
+
+
 
         public string Text
         {
@@ -116,12 +144,14 @@ namespace Phone.Controls
             }
             // Clear previous TextBlocks
             this.stackPanel.Children.Clear();
+
             // Calculate max char count
             int maxTexCount = this.GetMaxTextSize();
 
             if (value.Length < maxTexCount)
             {
                 TextBlock textBlock = this.GetTextBlock();
+                textBlock.FontFamily = this.Font;
                 textBlock.Text = value;
                 this.stackPanel.Children.Add(textBlock);
             }
@@ -151,18 +181,25 @@ namespace Phone.Controls
 
         private void ParseText(string value)
         {
+           
             StringReader reader = new StringReader(value);
 
             if (this.stackPanel == null)
             {
                 return;
             }
-            
+            this.stackPanel.Children.Clear();
+            var image = new Image();
+            image.Width = 500;
+            image.Height = 500;
+            image.Source = this.Source;
+            this.stackPanel.Children.Add(image);
             // Calculate max char count
             int maxTexCount = this.GetMaxTextSize();
 
             if (value.Length < maxTexCount)
             {
+             
                 TextBlock textBlock = this.GetTextBlock();
                 textBlock.Text = value;
                 this.stackPanel.Children.Add(textBlock);

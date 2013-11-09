@@ -1,30 +1,47 @@
-﻿using ScaryStories.Entities.Repositories;
+﻿using ScaryStories.Entities.Base.Repositories;
+using ScaryStories.Entities.Dto;
+using ScaryStories.Entities.Entity;
+using ScaryStories.Entities.EntityModels;
+using ScaryStories.Entities.Repositories;
+using ScaryStories.Entities.Repositories.Contracts;
 using ScaryStories.Helpers;
 
 namespace ScaryStories.ViewModel.DataContext.Base
 {
-    public abstract class DatabaseDataContext:BasePropertyChanging,IContext {
-        private StoryRepository _storyRepository;
-        private CategoryRepository _categoryRepository;
+    public abstract class DatabaseDataContext:BaseTemplate,IContext {
+        private IStoryRepository _storyRepository;
+        private ICategoryRepository _categoryRepository;
+        private IHistoryViewRepository _historyViewRepository;
 
-        public DatabaseDataContext(StoryRepository storyRepository,CategoryRepository categoryRepository) {
-            _storyRepository = storyRepository;
-            _categoryRepository = categoryRepository;
+        public ICategoryRepository CategoryRepository {
+            get {
+                return _categoryRepository;
+            }
         }
 
-        public abstract string DataContextCode { get; }
-
-        public StoryRepository StoryRepository {
+        public IStoryRepository StoryRepository {
             get {
                 return _storyRepository;
             }
         }
 
-        public CategoryRepository CategoryRepository {
+        public IHistoryViewRepository HistoryViewRepository {
             get {
-                return _categoryRepository;
+                return _historyViewRepository;
             }
-       
         }
+
+        
+
+        public DatabaseDataContext(RepositoriesStore repositories)
+        {
+            _storyRepository = repositories.StoryRepository;
+            _categoryRepository = repositories.CategoryRepository;
+            _historyViewRepository = repositories.HistoryViewRepository;
+        }
+
+        public abstract string DataContextCode { get; }
+        public abstract  void Run();
+
     }
 }

@@ -22,24 +22,41 @@ namespace ScaryStories.ViewModel.DataContext.MenuDataContexts
         private DateTime _lastStoryDatetime;
         private string _statusText;
         private Visibility _progressBarVisibility=Visibility.Collapsed;
+        private Visibility _insertedStoriesCountVisibility=Visibility.Collapsed;
+        private bool _updateButtonEnabled=false;
         private long _newStoriesCount;
         private bool _isIndeterminate = true;
         private int _currentImportStoryNumber=0;
+        private object lockObject = new object();
 
-        public UpdateMenuDataContext(StoryRepository storyRepository, CategoryRepository categoryRepository)
-          :base(storyRepository,categoryRepository){
+        public UpdateMenuDataContext(RepositoriesStore store,UpdateService service)
+          :base(store){
             _lastStoryDatetime = base.StoryRepository.GetLastTimeData();
-            _service = new UpdateService(storyRepository,categoryRepository);
+            _service = service;
             _service.OnCheckUpdate += _service_OnCheckUpdate;
             _service.OnStoryInserted += _service_OnStoryInserted;
             _service.OnStoriesDownload += _service_OnStoriesDownload;
-            _lastStoryDatetime = storyRepository.GetLastTimeData();
-            _service.CheckUpdate(_lastStoryDatetime);
+            _service.OnUpdateCompleted += _service_OnUpdateCompleted;
+        }
+
+        void _service_OnUpdateCompleted() {
+            ProgressBarVisibility = Visibility.Collapsed;
+            InsertedStoriesCountVisibility = Visibility.Collapsed;
+            UpdateButtonEnabled = false;
         }
 
         void _service_OnCheckUpdate(RemoteCheckingUpdateDto dto) {
+            ProgressBarVisibility = Visibility.Collapsed;
+            IsIndeterminate = false;
             NewStoriesCount = dto.NewStoriesCount;
-            LogToStatusText(String.Format("Новых историй:{0}",dto.NewStoriesCount));
+           
+            if (dto.NewStoriesCount != 0) {
+                LogToStatusText(String.Format("Новых историй:{0}", dto.NewStoriesCount));
+                UpdateButtonEnabled = true;
+            }
+            else {
+                LogToStatusText(String.Format("Нет обновлений", dto.NewStoriesCount));
+            }
         }
 
         private void LogToStatusText(string text) {
@@ -47,11 +64,15 @@ namespace ScaryStories.ViewModel.DataContext.MenuDataContexts
         }
 
         private void _service_OnStoryInserted() {
-            CurrentImportStoryNumber = CurrentImportStoryNumber + 1;
+            lock (lockObject) {
+                CurrentImportStoryNumber = CurrentImportStoryNumber + 1;   
+            }
         }
 
         private void _service_OnStoriesDownload() {
             IsIndeterminate = false;
+            UpdateButtonEnabled = true;
+
         }
 
         public string Header
@@ -82,13 +103,27 @@ namespace ScaryStories.ViewModel.DataContext.MenuDataContexts
             }
         }
 
-    
-
         public void Update() {
             LogToStatusText("Начинаем загрузку..");
             _service.StartAsyncUpdate(_lastStoryDatetime);
            ProgressBarVisibility=Visibility.Visible;
-           
+           InsertedStoriesCountVisibility = Visibility.Visible;
+            UpdateButtonEnabled = false;
+
+        }
+
+        public void CheckUpdate() {
+            ProgressBarVisibility = Visibility.Visible;
+            IsIndeterminate = true;
+            LogToStatusText("Подождите. Идет проверка доступных обновлений");
+            _lastStoryDatetime = StoryRepository.GetLastTimeData();
+            try {
+                _service.CheckUpdate(_lastStoryDatetime);
+            }
+            catch (Exception e) {
+                MessageBox.Show("Нет подключения к интернету, либо сервис обновления не доступен");
+
+            }
         }
 
       
@@ -147,5 +182,31 @@ namespace ScaryStories.ViewModel.DataContext.MenuDataContexts
                 base.NotifyPropertyChanged("CurrentImportStoryNumber");
             }
         }
+
+        public Visibility InsertedStoriesCountVisibility {
+            get {
+                return _insertedStoriesCountVisibility;
+            }
+            set {
+                _insertedStoriesCountVisibility = value;
+                base.NotifyPropertyChanged("InsertedStoriesCountVisibility");
+            }
+        }
+
+        public bool UpdateButtonEnabled {
+            get {
+                return _updateButtonEnabled;
+            }
+            set {
+                _updateButtonEnabled = value;
+                base.NotifyPropertyChanged("UpdateButtonEnabled");
+            }
+        }
+
+        public override void Run()
+        {
+            CheckUpdate();
+        }
+
     }
 }

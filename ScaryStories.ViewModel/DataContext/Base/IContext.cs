@@ -3,5 +3,6 @@
     public interface IContext
     {
         string DataContextCode { get; }
+        void Run();
     }
 }

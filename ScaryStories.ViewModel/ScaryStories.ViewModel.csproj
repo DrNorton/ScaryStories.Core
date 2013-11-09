@@ -41,6 +41,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Phone" />
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\sl4-windowsphone71\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.15\lib\sl4-windowsphone71\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.15\lib\sl4-windowsphone71\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.15\lib\sl4-windowsphone71\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\sl4-windowsphone71\System.Threading.Tasks.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -50,16 +69,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext\Base\DatabaseDataContext.cs" />
+    <Compile Include="DataContext\Base\BaseTemplate.cs" />
     <Compile Include="DataContext\Base\IContext.cs" />
     <Compile Include="DataContext\Base\IFind.cs" />
     <Compile Include="DataContext\Base\IMenuItem.cs" />
+    <Compile Include="DataContext\Base\IServiceStore.cs" />
     <Compile Include="DataContext\Base\IStoryManipulator.cs" />
     <Compile Include="DataContext\ItemsViewModels\CategoriesWithStoriesContainerContext.cs" />
     <Compile Include="DataContext\ItemsViewModels\FavoriteStoryContainerContext.cs" />
+    <Compile Include="DataContext\ItemsViewModels\HistoryViewContainerContext.cs" />
     <Compile Include="DataContext\ItemsViewModels\StoryContainerContext.cs" />
     <Compile Include="DataContext\MenuDataContexts\AllStoriesMenuDataContext.cs" />
+    <Compile Include="DataContext\MenuDataContexts\RandomStoriesDataContext.cs" />
     <Compile Include="DataContext\MenuDataContexts\SearchMenuDataContext.cs" />
+    <Compile Include="DataContext\MenuDataContexts\SettingsMenuDataContext.cs" />
     <Compile Include="DataContext\MenuDataContexts\UpdateMenuDataContext.cs" />
+    <Compile Include="DataContext\MenuDataContexts\VkAuthDataContext.cs" />
+    <Compile Include="Extensions\AccentColor.cs" />
+    <Compile Include="Extensions\AlphaKeyGroup.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\ScaryStoriesSettings.cs" />
+    <Compile Include="Extensions\SettingsManager.cs" />
+    <Compile Include="Extensions\SolidColorBrushExtension.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -76,6 +107,22 @@
       <Project>{C52EC860-6119-4131-815B-4305DB3BFA95}</Project>
       <Name>OpenNETCF.ORM.WinPhone</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteCommonModel\VkontakteInfrastructure.csproj">
+      <Project>{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}</Project>
+      <Name>VkontakteInfrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteCore\VkontakteCore\VkontakteCore.csproj">
+      <Project>{CCD1ECF2-3190-4174-A421-0031B316D01B}</Project>
+      <Name>VkontakteCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteDataLayer\VkontakteDataLayer.csproj">
+      <Project>{3F6BFF94-49B6-4D55-999B-8F9E9A7EB8D4}</Project>
+      <Name>VkontakteDataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteServiceLayer\VkontakteServiceLayer.csproj">
+      <Project>{70AC4FF5-4318-410C-9DD3-BD9B0754364E}</Project>
+      <Name>VkontakteServiceLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScaryStories.Entities\ScaryStories.Entities.csproj">
       <Project>{42F15866-4159-47A6-9B37-BB9076CE46E9}</Project>
       <Name>ScaryStories.Entities</Name>
@@ -89,9 +136,17 @@
       <Name>ScaryStories.Services</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

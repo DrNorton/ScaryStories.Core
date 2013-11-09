@@ -78,6 +78,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\FontPicker.xaml.cs">
+      <DependentUpon>FontPicker.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\ByteArrayToImageSource.cs" />
     <Compile Include="Converters\ByteToImageConverter.cs" />
     <Compile Include="Converters\StoryNumberInCollectionConverter.cs" />
@@ -90,6 +93,9 @@
     <Compile Include="Pages\SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\StoriesForSelectedCategoryList.xaml.cs">
       <DependentUpon>StoriesForSelectedCategoryList.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -100,6 +106,9 @@
     <Compile Include="Pages\UpdateView.xaml.cs">
       <DependentUpon>UpdateView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\VkAuthPage.xaml.cs">
+      <DependentUpon>VkAuthPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +116,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="Controls\FontPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -116,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -131,6 +148,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\VkAuthPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -139,7 +160,10 @@
       <SubType>Designer</SubType>
     </None>
     <EmbeddedResource Include="StoryDb\ScaryStories.db" />
+    <Content Include="Content\random.png" />
     <Content Include="Content\search.png" />
+    <Content Include="Content\settings.png" />
+    <Content Include="Content\SmallSearch.png" />
     <Content Include="Content\Wallpapers\1.jpg" />
     <Content Include="Content\Wallpapers\2.jpg" />
     <Content Include="Content\Wallpapers\3.jpg" />
@@ -180,9 +204,6 @@
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Delete.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Select.png" />
-    <EmbeddedResource Include="StoryDb\ScaryStories.sdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <Resource Include="PanoramaBackground.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
@@ -194,6 +215,14 @@
     <ProjectReference Include="..\..\ORM_1.0.13029_SRC\OpenNETCF.ORM\OpenNETCF.ORM.WinPhone.csproj">
       <Project>{C52EC860-6119-4131-815B-4305DB3BFA95}</Project>
       <Name>OpenNETCF.ORM.WinPhone</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteCommonModel\VkontakteInfrastructure.csproj">
+      <Project>{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}</Project>
+      <Name>VkontakteInfrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteServiceLayer\VkontakteServiceLayer.csproj">
+      <Project>{70AC4FF5-4318-410C-9DD3-BD9B0754364E}</Project>
+      <Name>VkontakteServiceLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\ScaryStories.Entities\ScaryStories.Entities.csproj">
       <Project>{42F15866-4159-47A6-9B37-BB9076CE46E9}</Project>
@@ -218,6 +247,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Translator</id>
+    <version>0.1.2</version>
+    <title>Microsoft.Translator</title>
+    <authors>miaodadao</authors>
+    <owners>miaodadao</owners>
+    <projectUrl>https://code.google.com/p/microsoft-translator/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>https://datamarket.azure.com/dataset/bing/microsofttranslator</description>
+    <summary>Easy to use Microsoft Translator</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <tags>c# i18n translator</tags>
+  </metadata>
+</package>

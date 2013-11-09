@@ -7,6 +7,7 @@ using System.Windows;
 using ScaryStories.Entities.Dto;
 using ScaryStories.Entities.Repositories;
 using ScaryStories.Helpers;
+using ScaryStories.Services;
 using ScaryStories.ViewModel.DataContext.Base;
 using ScaryStories.ViewModel.DataContext.ItemsViewModels;
 
@@ -19,8 +20,8 @@ namespace ScaryStories.ViewModel.DataContext.MenuDataContexts
         private string _searchPattern="";
         private BackgroundWorker _searchWorker;
 
-        public SearchMenuDataContext(StoryRepository storyRepository,CategoryRepository categoryRepository)
-           :base(storyRepository,categoryRepository){
+        public SearchMenuDataContext(RepositoriesStore store,VkService vkService)
+           :base(store,vkService){
                  _searchWorker=new BackgroundWorker();
          _searchWorker.DoWork+=new DoWorkEventHandler(_searchWorker_DoWork);
             _searchWorker.RunWorkerCompleted+=new RunWorkerCompletedEventHandler(_searchWorker_Completed);
@@ -84,5 +85,12 @@ namespace ScaryStories.ViewModel.DataContext.MenuDataContexts
                 base.NotifyPropertyChanged("SearchPattern");
             }
         }
+
+        public override void Run()
+        {
+            base.Run();
+        }
+
+     
     }
 }

@@ -1,18 +1,18 @@
 ﻿using System;
+
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Shell;
+using OpenNETCF.ORM;
+using ScaryStories.Entities.Entity;
+using ScaryStories.Entities.EntityModels;
+using ScaryStories.Services;
+using ScaryStories.ViewModel;
+using ScaryStories.ViewModel.Extensions;
 using System.IO;
 using System.IO.IsolatedStorage;
-using System.Linq;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-
-using OpenNETCF.ORM;
-
-using ScaryStories.Entities;
-using ScaryStories.Entities.EntityModels;
-using ScaryStories.ViewModel;
 
 namespace ScaryStories.Visual
 {
@@ -21,6 +21,8 @@ namespace ScaryStories.Visual
 				private static MainViewModel viewModel = null;
                 private const string DBConnectionString = "ScaryStories.db";
 		        private static SQLiteDataStore _store;
+		        private static SettingsManager _settingsManager;
+		        private static VkService _vkService;
             
 				/// <summary>
 				/// A static ViewModel used by the views to bind against.
@@ -32,7 +34,7 @@ namespace ScaryStories.Visual
 						{
 								// Delay creation of the view model until necessary
 								if (viewModel == null)
-										viewModel = new MainViewModel(_store);
+										viewModel = new MainViewModel(_store,_settingsManager,_vkService);
 
 								return viewModel;
 						}
@@ -83,35 +85,45 @@ namespace ScaryStories.Visual
                             ImportDatabaseToIsolatedStorage();
                         }
                         _store = new SQLiteDataStore(DBConnectionString);
+                         _vkService=new VkService();
+				         _vkService.OnLoginDemand += NavigateToAuthorization;
+                        
+                         _settingsManager=new SettingsManager(IsolatedStorageSettings.ApplicationSettings);
+                         _settingsManager.Load();
 				        _store.AddType<CategoryDetail>();
                         _store.AddType<StoryDetail>();
+                        _store.AddType<HistoryViewDetail>();
 				}
 
-		        private void ImportDatabaseToIsolatedStorage() {
-                var assembly = Assembly.GetExecutingAssembly();
-		        using (var dbStream = assembly.GetManifestResourceStream("ScaryStories.Visual.StoryDb.ScaryStories.db")) {
-                        IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
-                        using (var isolatedStorageWriter = new IsolatedStorageFileStream("ScaryStories.db", FileMode.OpenOrCreate, fileStorage))
-                        {
-                            dbStream.CopyTo(isolatedStorageWriter); 
-                            dbStream.Close();
-                            isolatedStorageWriter.Close();
-		                 }
+               
+
+		        private  void NavigateToAuthorization(Action<string> obj) {
+                    RootFrame.Navigate(new Uri(String.Format("/Pages/{0}.xaml?code={1}", "VkAuthPage", "VkAuth"), UriKind.Relative));
 		        }
-		    }
 
-		    private bool CheckDatabaseExists(string name) {
-                IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
-		        return fileStorage.FileExists(name);
+		        private void ImportDatabaseToIsolatedStorage() {
+                    var assembly = Assembly.GetExecutingAssembly();
+		            using (var dbStream = assembly.GetManifestResourceStream("ScaryStories.Visual.StoryDb.ScaryStories.db")) {
+                            IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
+                            using (var isolatedStorageWriter = new IsolatedStorageFileStream("ScaryStories.db", FileMode.OpenOrCreate, fileStorage))
+                            {
+                                dbStream.CopyTo(isolatedStorageWriter); 
+                                dbStream.Close();
+                                isolatedStorageWriter.Close();
+		                     }
+		            }
+		        }
 
-		    }
-
-		        
+		        private bool CheckDatabaseExists(string name) {
+                    IsolatedStorageFile fileStorage = IsolatedStorageFile.GetUserStoreForApplication();
+		            return fileStorage.FileExists(name);
+                    
+		        }
 
 				// Code to execute when the application is launching (eg, from Start)
 				// This code will not execute when the application is reactivated
-				private void Application_Launching(object sender, LaunchingEventArgs e)
-				{
+				private void Application_Launching(object sender, LaunchingEventArgs e) {
+				
 				}
 
 				// Code to execute when the application is activated (brought to foreground)

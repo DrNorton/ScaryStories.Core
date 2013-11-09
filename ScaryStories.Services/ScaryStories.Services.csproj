@@ -41,19 +41,36 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Translator">
+      <HintPath>..\packages\Microsoft.Translator.0.1.2\lib\Microsoft.Translator.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\sl4-windowsphone71\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\sl4-windowsphone71\System.Threading.Tasks.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="TranslatorService.Speech">
+      <HintPath>..\packages\TranslatorService.Speech.1.4.0\lib\sl4-wp71\TranslatorService.Speech.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\IRandomImageService.cs" />
     <Compile Include="Base\IRemoteService.cs" />
     <Compile Include="Base\IService.cs" />
+    <Compile Include="Base\ISpeechSynthesizer.cs" />
     <Compile Include="Dto\CategoryRemoteServiceDto.cs" />
     <Compile Include="Dto\RemoteCheckingUpdate.cs" />
     <Compile Include="Dto\StoryRemoteServiceDto.cs" />
@@ -64,12 +81,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SpeechSynthesizerService.cs" />
     <Compile Include="UpdateService.cs" />
+    <Compile Include="VkService.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Service References\StoriesUpdateRemoteService\ScaryStories.Services.StoriesUpdateRemoteService.CategoryServiceDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -113,6 +133,22 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteCommonModel\VkontakteInfrastructure.csproj">
+      <Project>{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}</Project>
+      <Name>VkontakteInfrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteCore\VkontakteCore\VkontakteCore.csproj">
+      <Project>{CCD1ECF2-3190-4174-A421-0031B316D01B}</Project>
+      <Name>VkontakteCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteDataLayer\VkontakteDataLayer.csproj">
+      <Project>{3F6BFF94-49B6-4D55-999B-8F9E9A7EB8D4}</Project>
+      <Name>VkontakteDataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteServiceLayer\VkontakteServiceLayer.csproj">
+      <Project>{70AC4FF5-4318-410C-9DD3-BD9B0754364E}</Project>
+      <Name>VkontakteServiceLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ScaryStories.Entities\ScaryStories.Entities.csproj">
       <Project>{42F15866-4159-47A6-9B37-BB9076CE46E9}</Project>
       <Name>ScaryStories.Entities</Name>
@@ -121,6 +157,11 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

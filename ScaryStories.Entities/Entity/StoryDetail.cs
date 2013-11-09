@@ -92,10 +92,6 @@ namespace ScaryStories.Entities.EntityModels
 						}
 				}
                
-                
-                
-             
-
              public StoryDetail(int id, string header, byte[] image, string text, long likes, int categoryId,bool isFavorite) {
 				_id = id;
 				_header = header;

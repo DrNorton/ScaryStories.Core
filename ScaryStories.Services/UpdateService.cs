@@ -4,9 +4,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Windows;
 
 using ScaryStories.Entities.Dto;
 using ScaryStories.Entities.Repositories;
+using ScaryStories.Entities.Repositories.Contracts;
 using ScaryStories.Services.Base;
 using ScaryStories.Services.Dto;
 using ScaryStories.Services.StoriesUpdateRemoteService;
@@ -16,20 +18,23 @@ namespace ScaryStories.Services
     public class UpdateService:IRemoteService {
         private StoriesUpdateServiceClient _serviceClient;
         private DateTime _tempDateTime;
-        private CategoryRepository _categoryRepository;
-        private StoryRepository _storyRepository;
+        private ICategoryRepository _categoryRepository;
+        private IStoryRepository _storyRepository;
         private BackgroundWorker _updateWorker;
         private IEnumerable<CategoryDto> _localCategories;
-        private int? _currentStoryIndex=0;
+        private List<ThreadSyncByCategory> _syncMaster; 
         private IEnumerable<int> _newStoriesIds;
+        private object _lockObject=new object();
 
-        public UpdateService(StoryRepository storyRepository,CategoryRepository categoryRepository) {
-            _categoryRepository = categoryRepository;
-            _storyRepository = storyRepository;
+        public UpdateService(RepositoriesStore store)
+        {
+            _categoryRepository = store.CategoryRepository;
+            _storyRepository = store.StoryRepository;
             _serviceClient=new StoriesUpdateServiceClient();
             _serviceClient.CheckUpdateCompleted+=_serviceClient_CheckUpdateCompleted;
             _serviceClient.GetNewStoriesCompleted += _serviceClient_GetNewStoriesCompleted;
             _serviceClient.GetNewStoryCompleted+=_serviceClient_GetNewStoryCompleted;
+            _syncMaster=new List<ThreadSyncByCategory>();
            
         }
 
@@ -48,12 +53,17 @@ namespace ScaryStories.Services
                 _serviceClient.CheckUpdateAsync(lastDateTime);
             }
             catch (Exception e) {
-                
+                MessageBox.Show("Нет интернета");
+              
             }
         }
 
         void _serviceClient_CheckUpdateCompleted(object sender, CheckUpdateCompletedEventArgs e)
         {
+            if (e.Error != null) {
+                MessageBox.Show(e.Error.Message);
+                return;
+            }
             if (OnCheckUpdate != null)
             {
                 OnCheckUpdate(new RemoteCheckingUpdateDto() { NewStoriesCount = e.Result.NewStoriesNumber });
@@ -71,9 +81,14 @@ namespace ScaryStories.Services
                 OnStoriesDownload();
             }
             foreach (var categoryRemote in e.Result) {
+                var sync = new ThreadSyncByCategory() {
+                    CategoryName = categoryRemote.Name,
+                    MaxGeneratorCount = categoryRemote.StoriesIds.Count
+                };
+                _syncMaster.Add(sync);
                 CreateCategoryIfNotExist(categoryRemote);
                 _newStoriesIds = categoryRemote.StoriesIds;
-                _serviceClient.GetNewStoryAsync(categoryRemote.StoriesIds[(int)_currentStoryIndex]);
+                _serviceClient.GetNewStoryAsync(categoryRemote.StoriesIds[(int)sync.GetNextStoryid()]);
                 
             }      
         }
@@ -81,9 +96,9 @@ namespace ScaryStories.Services
         void _serviceClient_GetNewStoryCompleted(object sender, GetNewStoryCompletedEventArgs e)
         {
  	        InsertStory(e.Result);
-            var nextId = GetNextStoryid();
+            var sync=_syncMaster.FirstOrDefault(x => x.CategoryName == e.Result.CategoryName);
+            var nextId = sync.GetNextStoryid();
             if (nextId != null) {
-                
                 _serviceClient.GetNewStoryAsync(_newStoriesIds.ElementAt((int)nextId));
             }
            
@@ -91,7 +106,7 @@ namespace ScaryStories.Services
 
         private void InsertStory(StoryServiceDto story) {
             var categoryId = LocalCategories.FirstOrDefault(x => x.Name == story.CategoryName).Id;
-            _storyRepository.Save(new StoryDto(){CategoryId = categoryId,CreatedTime = DateTime.Now,Image = story.Image,
+            _storyRepository.Insert(new StoryDto(){CategoryId = categoryId,CreatedTime = DateTime.Now,Image = story.Image,
                     IsFavorite = story.IsFavorite,Likes = story.Likes,Name = story.Header,Text = story.Text});
             if (OnStoryInserted != null) {
                 OnStoryInserted();
@@ -101,7 +116,7 @@ namespace ScaryStories.Services
         private void CreateCategoryIfNotExist(CategoryServiceDto category) {
            var exist=LocalCategories.Any(x => x.Name == category.Name);
             if (!exist) {
-                _categoryRepository.Save(new CategoryDto(){CreatedTime = DateTime.Now,Image = category.Image,Name = category.Name});
+                _categoryRepository.InsertOrUpdate(new CategoryDto(){CreatedTime = DateTime.Now,Image = category.Image,Name = category.Name});
                RefreshLocalCategories();
             }
         }
@@ -110,19 +125,37 @@ namespace ScaryStories.Services
             _localCategories = _categoryRepository.GetAll();
         }
 
-        private int? GetNextStoryid() {
-            if (_newStoriesIds.Count() > _currentStoryIndex) {
-                return _currentStoryIndex++;
-            }
-            return null;
-        }
+   
+        public event Action OnStoriesDownload;
 
-        public event OnAction OnStoriesDownload;
-
-        public event OnAction OnStoryInserted;
+        public event Action OnStoryInserted;
 
         public event OnCheckUpdateHandler OnCheckUpdate;
 
 
+
+
+        public event Action OnUpdateCompleted;
+
+
+        public class ThreadSyncByCategory {
+            private int _generator;
+            public int MaxGeneratorCount { get; set; }
+            private object _lockObject=new object();
+            public string CategoryName { get; set; }
+
+
+            public int? GetNextStoryid()
+            {
+                if (_generator!=MaxGeneratorCount-1)
+                {
+                    _generator = _generator + 1;
+                    return _generator;
+                }
+                return null;
+            }
+
+            
+        }
     }
 }

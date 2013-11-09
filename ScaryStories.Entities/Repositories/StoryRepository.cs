@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using OpenNETCF.ORM;
-
 using ScaryStories.Entities.Base.Repositories;
 using ScaryStories.Entities.Dto;
 using ScaryStories.Entities.EntityModels;
+using ScaryStories.Entities.Repositories.Contracts;
 
 namespace ScaryStories.Entities.Repositories
 {
-		public class StoryRepository:BaseRepository<StoryDetail,StoryDto> {
+		public class StoryRepository:BaseRepository<StoryDetail,StoryDto>, IStoryRepository {
 
 				public StoryRepository(SQLiteDataStore store)
 					:base(store)
@@ -53,13 +53,13 @@ namespace ScaryStories.Entities.Repositories
 
 		        public void AddToFavorites(StoryDto story) {
 		           story.IsFavorite = true;
-		           this.Save(story);
+		           this.InsertOrUpdate(story);
 		         }
 
                 public void RemoveFromFavorites(StoryDto story)
                  {
                      story.IsFavorite = false;
-                     this.Save(story);
+                     this.InsertOrUpdate(story);
                  }
 
                 public IEnumerable<StoryDto> GetFavoriteStories()
@@ -69,6 +69,9 @@ namespace ScaryStories.Entities.Repositories
 
                 protected override StoryDto Convert(StoryDetail entity)
                 {
+                    if (entity == null) {
+                        return null;
+                    }
                     return new StoryDto(){CategoryId = entity._categoryId,Name = entity.Header,
                         Id=entity.Id,Image = entity.Image,IsFavorite = entity.IsFavorite,
                         Likes = entity.Likes,Text=entity.Text};
@@ -77,6 +80,11 @@ namespace ScaryStories.Entities.Repositories
                 public override IEnumerable<StoryDto> Search(string pattern) {
                     return ConvertColl(_store.Select<StoryDetail>(x => x.Header.ToLower().Contains(pattern.ToLower())));
                 }
+
+		        public IEnumerable<StoryDto> GetRandomStories() {
+                    return ConvertColl(_store.SelectRandom<StoryDetail>().ToList());
+		        }
+            
 
 		    public byte[] GetRandomImage() 
             {

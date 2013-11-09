@@ -4,16 +4,18 @@ using System.Linq;
 using System.Text;
 
 using ScaryStories.Entities.Repositories;
+using ScaryStories.Entities.Repositories.Contracts;
 using ScaryStories.Services.Base;
 
 namespace ScaryStories.Services
 {
     public class RandomImageService:IRandomImageService {
-        private StoryRepository _storyRepository;
-        private CategoryRepository _categoryRepository;
+        private IStoryRepository _storyRepository;
+        
 
-        public RandomImageService(StoryRepository storyRepository) {
-            _storyRepository = storyRepository;
+        public RandomImageService(RepositoriesStore store)
+        {
+            _storyRepository = store.StoryRepository;
            
         }
 

@@ -1,8 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+
 using Microsoft.Phone.Controls;
+
+using ScaryStories.Services;
 using ScaryStories.ViewModel.DataContext.Base;
 
 
@@ -14,20 +20,24 @@ namespace ScaryStories.Visual
 				public MainPage()
 				{
 						InitializeComponent();
-
+                    VkService service=new VkService();
 						// Set the data context of the listbox control to the sample data
 						DataContext = App.ViewModel;
 				    CategorySection.DataContext =
 				        App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "CategoriesWithStoriesContainer");
                     FavoriteSection.DataContext = App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "FavoriteStoryContainer");
+                    
+				    HistoryViewSection.DataContext =
+				        App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "HistoryViewContainer");
 				    MenuSection.DataContext = App.ViewModel;
 						this.Loaded += new RoutedEventHandler(MainPage_Loaded);
+
 				}
 
+
 				// Load data for the ViewModel Items
-				private void MainPage_Loaded(object sender, RoutedEventArgs e)
-				{
-					
+				private void MainPage_Loaded(object sender, RoutedEventArgs e) {
+                  
 				}
 
                 private void Selector_OnCategorySelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -52,6 +62,12 @@ namespace ScaryStories.Visual
                             
 
                  
+                }
+
+                private void Selector_OnHistoryViewSelectionChanged(object sender, SelectionChangedEventArgs e)
+                {
+                    var listbox = (ListBox)sender;
+                    NavigationService.Navigate(new Uri(String.Format("{0}?id={1}&code={2}", "/Pages/StoryView.xaml", listbox.SelectedIndex, "HistoryViewContainer"), UriKind.Relative));
                 }
 
 		}

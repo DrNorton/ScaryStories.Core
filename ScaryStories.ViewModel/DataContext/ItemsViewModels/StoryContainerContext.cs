@@ -1,29 +1,41 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Windows.Media;
 
+using ScaryStories.Entities.Base.Repositories;
 using ScaryStories.Entities.Dto;
+using ScaryStories.Entities.Entity;
+using ScaryStories.Entities.EntityModels;
 using ScaryStories.Entities.Repositories;
 using ScaryStories.Helpers;
+using ScaryStories.Services;
 using ScaryStories.ViewModel.DataContext.Base;
 
 namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
 {
     public abstract class StoryContainerContext:DatabaseDataContext,IStoryManipulator
     {
-        
         private List<StoryDto> _stories;
         private StoryDto _selectedStory;
         private bool _nextEnabled;
+        private VkService _vkService;
 
         private ActionCommand _deleteFromFavoritesCommand;
         private ActionCommand _addToFavoritesCommand;
         private ActionCommand _previoslyStoryCommand;
         private ActionCommand _nextStoryCommand;
 
-        public StoryContainerContext(StoryRepository storyRepository, CategoryRepository categoryRepository)
-               :base(storyRepository,categoryRepository){
-            
+        
+
+
+        public StoryContainerContext(RepositoriesStore store,VkService vkontakteService)
+            :base(store) {
+            _vkService = vkontakteService;
         }
+
+      
 
         public override string DataContextCode
         {
@@ -50,9 +62,7 @@ namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
             }
             set {
                 _selectedStory = value;
-                if (OnCurrentStoryChanged != null) {
-                    OnCurrentStoryChanged();
-                }
+                SaveStoryToHistoryView();
                 base.NotifyPropertyChanged("SelectedStory");
             }
         }
@@ -134,6 +144,19 @@ namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
             }
         }
 
+        public override  void Run() {
+            if (_vkService.ClientOnAutorization) {
+                _vkService.ClientOnAutorization = false;
+                ShareVk();
+
+            }
+        }
+
+        public void ShareVk() {
+            _vkService.SentToWall(SelectedStory.Text);
+            
+        }
+
         public bool NextEnabled {
             get {
                 return _nextEnabled;
@@ -164,7 +187,11 @@ namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
 
         }
 
-
-        public event OnCurrentStoryChangedHanlder OnCurrentStoryChanged;
+        private void SaveStoryToHistoryView() {
+            if (this.HistoryViewRepository != null) {
+                this.HistoryViewRepository.Insert(new HistoryViewDto(){StoryId = SelectedStory.Id,ViewTime = DateTime.Now});
+            }
+        }
+       
     }
 }

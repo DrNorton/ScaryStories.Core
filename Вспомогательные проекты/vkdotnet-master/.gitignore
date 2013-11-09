@@ -1,0 +1,6 @@
+*.obj
+*.rar
+*.7z
+*.exe
+*.pdb
+[Oo]bj/

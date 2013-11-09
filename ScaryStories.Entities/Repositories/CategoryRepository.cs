@@ -1,12 +1,12 @@
 ﻿using OpenNETCF.ORM;
-
 using ScaryStories.Entities.Base.Repositories;
 using ScaryStories.Entities.Dto;
 using ScaryStories.Entities.EntityModels;
+using ScaryStories.Entities.Repositories.Contracts;
 
 namespace ScaryStories.Entities.Repositories
 {
-		public class CategoryRepository:BaseRepository<CategoryDetail,CategoryDto> {
+		public class CategoryRepository:BaseRepository<CategoryDetail,CategoryDto>,ICategoryRepository {
 
 				public CategoryRepository(SQLiteDataStore store)
 					:base(store){

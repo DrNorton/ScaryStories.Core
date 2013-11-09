@@ -15,20 +15,22 @@
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
+    x:Name="StoryPage"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar>
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="Поделиться в контакте"/>
-                <shell:ApplicationBarMenuItem Text="Поделиться в фейсбук"/>
+                <shell:ApplicationBarMenuItem Text="Поделиться в вконтакте" Click="VkMenuItem_OnClick"  />
+                <shell:ApplicationBarMenuItem Text="Проговорить" Click="SpeechMenuItem_OnClick"/>
             </shell:ApplicationBar.MenuItems>
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.back.rest.png" Text="previosly"/>
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.favs.rest.png"  Text="add" Click="ApplicationBarIconButton_OnClick" />
             <shell:ApplicationBarIconButton IconUri="/Assets/AppBar/appbar.next.rest.png"  Text="next"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
-
+ 
+    
     <i:Interaction.Triggers>
         <appBarUtils:AppBarItemTrigger  Id="add">
             <i:InvokeCommandAction   Command="{Binding AddToFavoritesCommand}"/>
@@ -36,9 +38,7 @@
         <appBarUtils:AppBarItemTrigger Id="remove">
             <i:InvokeCommandAction  Command="{Binding DeleteFromFavoritesCommand}"/>
         </appBarUtils:AppBarItemTrigger>
-        <appBarUtils:AppBarItemTrigger Id="Поделиться в контакте">
-            <i:InvokeCommandAction   Command="{Binding ShareVkCommand}"/>
-        </appBarUtils:AppBarItemTrigger>
+     
         <appBarUtils:AppBarItemTrigger Id="next">
             <i:InvokeCommandAction Command="{Binding NextStoryCommand}"/>
         </appBarUtils:AppBarItemTrigger>
@@ -54,7 +54,7 @@
         <ImageBrush ImageSource="/Background.png"/>
     </phone:PhoneApplicationPage.Background>
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot"  Background="Transparent">
+    <Grid x:Name="LayoutRoot" DataContext="{Binding SelectedStory,Mode=OneWay}" Background="{Binding Template.BackgroundColor,Mode=TwoWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -62,13 +62,13 @@
 
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel Grid.Row="0" >
-            <TextBlock  Text="{Binding Name}" TextWrapping="Wrap"  Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock FontFamily="{Binding ElementName=StoryPage,Path=DataContext.Template.FontFamily}"  Text="{Binding Name}" TextWrapping="Wrap"  Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
          <ScrollViewer Grid.Row="1">
             <StackPanel>
-                <controls1:ScrollableTextBlock Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}" Grid.Row="1"  Height="618" Width="427" Text="{Binding Text}"  >
+                <controls1:ScrollableTextBlock Font="{Binding ElementName=StoryPage,Path=DataContext.Template.FontFamily}"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter},Mode=TwoWay}" Grid.Row="1"  Height="618" Width="427" Text="{Binding Text,Mode=TwoWay}"  >
                     <controls1:ScrollableTextBlock.Background>
                         <ImageBrush Stretch="Fill"/>
                     </controls1:ScrollableTextBlock.Background>

@@ -9,14 +9,15 @@ using ScaryStories.Services.StoriesUpdateRemoteService;
 namespace ScaryStories.Services.Base
 {
     public delegate void OnCheckUpdateHandler(RemoteCheckingUpdateDto dto);
-    public delegate void OnAction();
+  
 
     public interface IRemoteService {
        void CheckUpdate(DateTime lastDateTime);
        void StartAsyncUpdate(DateTime lastDateTime);
 
-       event OnAction OnStoriesDownload;
-       event OnAction OnStoryInserted;
+       event Action OnStoriesDownload;
+       event Action OnStoryInserted;
+        event Action OnUpdateCompleted;
        event OnCheckUpdateHandler OnCheckUpdate;
     }
 }

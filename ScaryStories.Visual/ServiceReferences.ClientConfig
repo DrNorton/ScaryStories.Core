@@ -10,10 +10,11 @@
       </basicHttpBinding>
     </bindings>
     <client>
-      <endpoint address="http://192.168.1.7/Services/StoriesUpdateService.svc" 
-          binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IStoriesUpdateService"
-          contract="StoriesUpdateRemoteService.IStoriesUpdateService"
-          name="BasicHttpBinding_IStoriesUpdateService"  />
+      <endpoint address="http://192.168.1.7/Services/StoriesUpdateService.svc"
+               binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IStoriesUpdateService"
+               contract="StoriesUpdateRemoteService.IStoriesUpdateService"
+               name="BasicHttpBinding_IStoriesUpdateService" />
+    
     </client>
   </system.serviceModel>
 </configuration>

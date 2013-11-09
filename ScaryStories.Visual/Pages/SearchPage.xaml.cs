@@ -23,9 +23,12 @@ namespace ScaryStories.Visual.Pages
         {
             if (e.Key.Equals(Key.Enter))
             {
-               ((ISearch)this.DataContext).Search();
-                
+                Search();
             }
+        }
+
+        private void Search() {
+            ((ISearch)this.DataContext).Search();
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -35,7 +38,9 @@ namespace ScaryStories.Visual.Pages
           
             if (NavigationContext.QueryString.TryGetValue("code", out _code))
             {
-                this.DataContext = App.ViewModel.MenuContexts.FirstOrDefault(x => x.DataContextCode == _code);
+                IContext dataContext = App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == _code);
+                this.DataContext = dataContext;
+                dataContext.Run();
             }
 
         }
@@ -53,5 +58,11 @@ namespace ScaryStories.Visual.Pages
             NavigationService.Navigate(new Uri(String.Format("{0}?id={1}&code={2}", "/Pages/StoryView.xaml", listbox.SelectedIndex, _code), UriKind.Relative));
         }
 
+        private void PhoneTextBox_OnActionIconTapped(object sender, EventArgs e)
+        {
+            Search();
+        }
+
+      
     }
 }

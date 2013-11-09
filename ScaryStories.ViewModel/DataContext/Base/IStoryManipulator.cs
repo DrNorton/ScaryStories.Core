@@ -8,13 +8,13 @@ namespace ScaryStories.ViewModel.DataContext.Base {
     public interface IStoryManipulator {
         List<StoryDto> Stories { get; set; } 
         StoryDto SelectedStory { get; set; }
-        event OnCurrentStoryChangedHanlder OnCurrentStoryChanged;
+       
         void NextStory();
         void PreviousStory();
         void AddToFavorites();
         void DeleteFromFavorites();
         bool CanNext();
         bool CanPrevious();
-       
+        void ShareVk();
     }
 }
