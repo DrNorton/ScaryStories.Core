@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Media;
 
 using ScaryStories.Entities.Base.Repositories;
@@ -19,17 +21,31 @@ namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
 
         public CategoriesWithStoriesContainerContext(RepositoriesStore store,VkService vkService) 
             :base(store,vkService) {
+                _backgroundWorker=new BackgroundWorker();
+                _backgroundWorker.DoWork += _backgroundWorker_DoWork;
+                _backgroundWorker.RunWorkerCompleted += _backgroundWorker_RunWorkerCompleted;
             GetCategories();
         }
 
-        private void GetCategories()
+        void _backgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e) {
+            base.Stories = (List<StoryDto>)e.Result;
+            ProgressBarOff();
+        }
+
+        void _backgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            Categories =base.CategoryRepository.GetAll().ToList();
+            e.Result = base.StoryRepository.GetStoriesByCategory(_selectedCategory.Id).ToList();
+        }
+
+        private async void GetCategories() {
+            Task<List<CategoryDto>> task = Task<List<CategoryDto>>.Factory.StartNew(() => base.CategoryRepository.GetAll().ToList());
+            Categories = task.Result;
         }
 
         private void LoadStoriesForCurrentCategory()
         {
-            base.Stories = base.StoryRepository.GetStoriesByCategory(_selectedCategory.Id).ToList();
+            ProgressBarOn();
+            _backgroundWorker.RunWorkerAsync();
         }
 
         public List<CategoryDto> Categories
@@ -58,8 +74,6 @@ namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
                 base.NotifyPropertyChanged("SelectedCategory");
             }
         }
-
-
 
         public override string DataContextCode
         {

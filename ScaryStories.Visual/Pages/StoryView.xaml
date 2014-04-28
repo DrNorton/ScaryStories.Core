@@ -54,10 +54,12 @@
         <ImageBrush ImageSource="/Background.png"/>
     </phone:PhoneApplicationPage.Background>
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid x:Name="LayoutRoot" DataContext="{Binding SelectedStory,Mode=OneWay}" Background="{Binding Template.BackgroundColor,Mode=TwoWay}">
+    <ScrollViewer >
+        <Grid x:Name="LayoutRoot" DataContext="{Binding SelectedStory,Mode=OneWay}" Background="{Binding Template.BackgroundColor,Mode=TwoWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!--TitlePanel contains the name of the application and page title-->
@@ -66,17 +68,19 @@
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
-         <ScrollViewer Grid.Row="1">
-            <StackPanel>
-                <controls1:ScrollableTextBlock Font="{Binding ElementName=StoryPage,Path=DataContext.Template.FontFamily}"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter},Mode=TwoWay}" Grid.Row="1"  Height="618" Width="427" Text="{Binding Text,Mode=TwoWay}"  >
+       
+      
+            <StackPanel Grid.Row="1">
+                <controls1:ScrollableTextBlock  Font="{Binding ElementName=StoryPage,Path=DataContext.Template.FontFamily}"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter},Mode=TwoWay}" Grid.Row="1"  Height="618" Width="427" Text="{Binding Text,Mode=TwoWay}"  >
                     <controls1:ScrollableTextBlock.Background>
                         <ImageBrush Stretch="Fill"/>
                     </controls1:ScrollableTextBlock.Background>
                 </controls1:ScrollableTextBlock>
+                
             </StackPanel>
-        </ScrollViewer>
-                   
-
-    </Grid>
-
+            <StackPanel Grid.Row="2" >
+                <TextBlock FontFamily="{Binding ElementName=StoryPage,Path=DataContext.Template.FontFamily}" FontSize="16" Foreground="White"  Text="{Binding SourceUrl}" TextWrapping="Wrap"  Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right" FontStyle="Italic"/>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </phone:PhoneApplicationPage>

@@ -35,8 +35,6 @@ namespace ScaryStories.ViewModel
             InitializationDataContexts(repositoryStore,settings,VkService);
 	    }
 
-       
-
         public List<IContext> DataContexts {
 	        get {
 	            return _dataContexts;

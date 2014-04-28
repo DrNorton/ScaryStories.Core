@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="6d2170e7-aebb-45f0-b0b7-bdc77a843453" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="8db8f6ee-3fb0-4223-8224-01c645dea097" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
     <EnableDataBinding>true</EnableDataBinding>
@@ -23,12 +23,12 @@
     <MetadataSource Address="http://192.168.1.7/Services/StoriesUpdateService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="StoriesUpdateService.disco" MetadataType="Disco" ID="30c94cff-7532-436d-abb6-2eac4fe720bd" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?disco" />
-    <MetadataFile FileName="StoriesUpdateService1.xsd" MetadataType="Schema" ID="f228d44d-c2dc-48e3-8a94-216e1052de9a" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd1" />
-    <MetadataFile FileName="StoriesUpdateService.xsd" MetadataType="Schema" ID="59c36932-0e90-49f6-9fa0-4f6c12de9d85" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd0" />
-    <MetadataFile FileName="StoriesUpdateService3.xsd" MetadataType="Schema" ID="554ac267-7646-452d-9828-f5248349091e" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd3" />
-    <MetadataFile FileName="StoriesUpdateService2.xsd" MetadataType="Schema" ID="b3ac1e34-655d-4707-8cce-8233a035c38c" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd2" />
-    <MetadataFile FileName="StoriesUpdateService.wsdl" MetadataType="Wsdl" ID="e11f34b8-35a3-4dcf-a9c5-b9785a9a62e1" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?wsdl" />
+    <MetadataFile FileName="StoriesUpdateService1.disco" MetadataType="Disco" ID="45ca1585-a0e7-4257-8135-31358beee7f7" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?disco" />
+    <MetadataFile FileName="StoriesUpdateService4.xsd" MetadataType="Schema" ID="f35c1571-d529-4063-a485-defc9186babb" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd1" />
+    <MetadataFile FileName="StoriesUpdateService41.xsd" MetadataType="Schema" ID="8426ee78-636c-4bd6-915c-a7cec81fe0dd" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd0" />
+    <MetadataFile FileName="StoriesUpdateService42.xsd" MetadataType="Schema" ID="a19c89f7-079f-4019-952a-b19d629d6c4b" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd3" />
+    <MetadataFile FileName="StoriesUpdateService43.xsd" MetadataType="Schema" ID="8f757051-2144-41cb-9335-ef2097a436e9" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd2" />
+    <MetadataFile FileName="StoriesUpdateService1.wsdl" MetadataType="Wsdl" ID="99b5a030-c435-4824-b375-56249ccd475c" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

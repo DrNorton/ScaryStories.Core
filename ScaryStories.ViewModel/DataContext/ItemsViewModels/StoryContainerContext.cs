@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 using System.Windows.Media;
 
 using ScaryStories.Entities.Base.Repositories;
@@ -12,6 +13,7 @@ using ScaryStories.Entities.Repositories;
 using ScaryStories.Helpers;
 using ScaryStories.Services;
 using ScaryStories.ViewModel.DataContext.Base;
+using System.ComponentModel;
 
 namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
 {
@@ -21,6 +23,11 @@ namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
         private StoryDto _selectedStory;
         private bool _nextEnabled;
         private VkService _vkService;
+
+        protected BackgroundWorker _backgroundWorker;
+        private double _opacity;
+        private bool _progressBarIsDeterminate;
+        private Visibility _progressBarVisibility;
 
         private ActionCommand _deleteFromFavoritesCommand;
         private ActionCommand _addToFavoritesCommand;
@@ -34,8 +41,6 @@ namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
             :base(store) {
             _vkService = vkontakteService;
         }
-
-      
 
         public override string DataContextCode
         {
@@ -187,9 +192,62 @@ namespace ScaryStories.ViewModel.DataContext.ItemsViewModels
 
         }
 
+        protected void ProgressBarOn()
+        {
+            Opacity = 0.1;
+            ProgressBarIsDeterminate = true;
+            ProgressBarVisibility = Visibility.Visible;
+        }
+
+        protected void ProgressBarOff()
+        {
+            Opacity = 1;
+            ProgressBarIsDeterminate = false;
+            ProgressBarVisibility = Visibility.Collapsed;
+        }
+
         private void SaveStoryToHistoryView() {
             if (this.HistoryViewRepository != null) {
                 this.HistoryViewRepository.Insert(new HistoryViewDto(){StoryId = SelectedStory.Id,ViewTime = DateTime.Now});
+            }
+        }
+
+        public double Opacity
+        {
+            get
+            {
+                return _opacity;
+            }
+            set
+            {
+                _opacity = value;
+                base.NotifyPropertyChanged("Opacity");
+            }
+        }
+
+        public bool ProgressBarIsDeterminate
+        {
+            get
+            {
+                return _progressBarIsDeterminate;
+            }
+            set
+            {
+                _progressBarIsDeterminate = value;
+                base.NotifyPropertyChanged("ProgressBarIsDeterminate");
+            }
+        }
+
+        public Visibility ProgressBarVisibility
+        {
+            get
+            {
+                return _progressBarVisibility;
+            }
+            set
+            {
+                _progressBarVisibility = value;
+                base.NotifyPropertyChanged("ProgressBarVisibility");
             }
         }
        

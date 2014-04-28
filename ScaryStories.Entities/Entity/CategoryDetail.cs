@@ -72,7 +72,7 @@ namespace ScaryStories.Entities.EntityModels
                 }
             }
         
-            [Reference(typeof(StoryDetail), "_categoryId",Autofill = true)]
+            [Reference(typeof(StoryDetail), "SourceId",Autofill = true)]
             public StoryDetail[] Stories
 			{
 				get { return this._stories; }

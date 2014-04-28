@@ -99,37 +99,29 @@
     <None Include="Service References\StoriesUpdateRemoteService\ScaryStories.Services.StoriesUpdateRemoteService.StoryServiceDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService.wsdl" />
-    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService.xsd">
-      <SubType>Designer</SubType>
+    <None Include="Service References\StoriesUpdateRemoteService\ScaryStories.Services.StoriesUpdateRemoteService.StorySourceServiceDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <Content Include="ServiceReferences.ClientConfig" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\StoriesUpdateRemoteService\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\StoriesUpdateRemoteService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\StoriesUpdateRemoteService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\StoriesUpdateRemoteService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService1.disco" />
+    <Content Include="ServiceReferences.ClientConfig" />
+    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService1.wsdl" />
+    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService42.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\StoriesUpdateRemoteService\StoriesUpdateService43.xsd">
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -153,6 +145,9 @@
       <Project>{42F15866-4159-47A6-9B37-BB9076CE46E9}</Project>
       <Name>ScaryStories.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\StoriesUpdateRemoteService\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

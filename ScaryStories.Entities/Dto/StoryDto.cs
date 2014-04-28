@@ -14,5 +14,8 @@ namespace ScaryStories.Entities.Dto
 				public long Likes { get; set; }
                 public bool IsFavorite { get; set; }
 				public int CategoryId { get; set; }
+                public string SourceUrl { get; set; }
+                public int SourceId { get; set; }
+
 		}
 }

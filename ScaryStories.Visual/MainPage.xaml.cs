@@ -19,20 +19,21 @@ namespace ScaryStories.Visual
 				// Constructor
 				public MainPage()
 				{
-						InitializeComponent();
-                    VkService service=new VkService();
-						// Set the data context of the listbox control to the sample data
-						DataContext = App.ViewModel;
-				    CategorySection.DataContext =
-				        App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "CategoriesWithStoriesContainer");
-                    FavoriteSection.DataContext = App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "FavoriteStoryContainer");
-                    
-				    HistoryViewSection.DataContext =
-				        App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "HistoryViewContainer");
-				    MenuSection.DataContext = App.ViewModel;
-						this.Loaded += new RoutedEventHandler(MainPage_Loaded);
-
+					InitializeComponent();
+                    SetDataContexts();
 				}
+
+		        public void SetDataContexts() {
+                    DataContext = App.ViewModel;
+                    CategorySection.DataContext =
+                        App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "CategoriesWithStoriesContainer");
+                    FavoriteSection.DataContext = App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "FavoriteStoryContainer");
+
+                    HistoryViewSection.DataContext =
+                        App.ViewModel.DataContexts.FirstOrDefault(x => x.DataContextCode == "HistoryViewContainer");
+                    MenuSection.DataContext = App.ViewModel;
+                    this.Loaded += new RoutedEventHandler(MainPage_Loaded);
+		        }
 
 
 				// Load data for the ViewModel Items

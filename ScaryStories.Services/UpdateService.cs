@@ -20,22 +20,41 @@ namespace ScaryStories.Services
         private DateTime _tempDateTime;
         private ICategoryRepository _categoryRepository;
         private IStoryRepository _storyRepository;
+        private IStorySourceRepository _storySourceRepository;
         private BackgroundWorker _updateWorker;
         private IEnumerable<CategoryDto> _localCategories;
         private List<ThreadSyncByCategory> _syncMaster; 
         private IEnumerable<int> _newStoriesIds;
+        private IEnumerable<StorySourceDto> _storySources; 
         private object _lockObject=new object();
 
         public UpdateService(RepositoriesStore store)
         {
             _categoryRepository = store.CategoryRepository;
             _storyRepository = store.StoryRepository;
+            _storySourceRepository = store.StorySourceRepository;
             _serviceClient=new StoriesUpdateServiceClient();
             _serviceClient.CheckUpdateCompleted+=_serviceClient_CheckUpdateCompleted;
             _serviceClient.GetNewStoriesCompleted += _serviceClient_GetNewStoriesCompleted;
             _serviceClient.GetNewStoryCompleted+=_serviceClient_GetNewStoryCompleted;
+            _serviceClient.GetSourcesCompleted += _serviceClient_GetSourcesCompleted;
             _syncMaster=new List<ThreadSyncByCategory>();
-           
+        }
+
+        void _serviceClient_GetSourcesCompleted(object sender, GetSourcesCompletedEventArgs e)
+        {
+            if (e.Error != null) {
+                MessageBox.Show("Нет подключения к интернету, либо служба обновления недоступна");
+            }
+           var localSources=_storySourceRepository.GetAll().ToList();
+            foreach (StorySourceServiceDto sourceDto in e.Result) {
+                var localStory=localSources.FirstOrDefault(x => x.Name == sourceDto.Name);
+                if (localStory == null) {
+                    _storySourceRepository.Insert(new StorySourceDto(){CreatedTime = sourceDto.CreatedTime,Image = sourceDto.Image,Name = sourceDto.Name,Url = sourceDto.Url});
+                }
+
+            }
+            _serviceClient.GetNewStoriesAsync(_tempDateTime);
         }
 
         public IEnumerable<CategoryDto> LocalCategories {
@@ -61,7 +80,7 @@ namespace ScaryStories.Services
         void _serviceClient_CheckUpdateCompleted(object sender, CheckUpdateCompletedEventArgs e)
         {
             if (e.Error != null) {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show("Не удалось подключиться к интернету, либо служба обновления недоступна");
                 return;
             }
             if (OnCheckUpdate != null)
@@ -71,9 +90,10 @@ namespace ScaryStories.Services
 
         }
 
-        public void StartAsyncUpdate(DateTime lastDateTime)
-        {
-            _serviceClient.GetNewStoriesAsync(lastDateTime);
+        public void StartAsyncUpdate(DateTime lastDateTime) {
+            _tempDateTime = lastDateTime;
+            _serviceClient.GetSourcesAsync();
+           
         }
 
         void _serviceClient_GetNewStoriesCompleted(object sender, GetNewStoriesCompletedEventArgs e) {
@@ -85,10 +105,11 @@ namespace ScaryStories.Services
                     CategoryName = categoryRemote.Name,
                     MaxGeneratorCount = categoryRemote.StoriesIds.Count
                 };
+                _storySources = _storySourceRepository.GetAll().ToList();
                 _syncMaster.Add(sync);
                 CreateCategoryIfNotExist(categoryRemote);
                 _newStoriesIds = categoryRemote.StoriesIds;
-                _serviceClient.GetNewStoryAsync(categoryRemote.StoriesIds[(int)sync.GetNextStoryid()]);
+                _serviceClient.GetNewStoryAsync(categoryRemote.StoriesIds[(int)sync.GetNe xtStoryid()]);
                 
             }      
         }
@@ -106,8 +127,12 @@ namespace ScaryStories.Services
 
         private void InsertStory(StoryServiceDto story) {
             var categoryId = LocalCategories.FirstOrDefault(x => x.Name == story.CategoryName).Id;
-            _storyRepository.Insert(new StoryDto(){CategoryId = categoryId,CreatedTime = DateTime.Now,Image = story.Image,
-                    IsFavorite = story.IsFavorite,Likes = story.Likes,Name = story.Header,Text = story.Text});
+            var storySource = _storySources.FirstOrDefault(x => x.Name == story.SourceName);
+            if (storySource != null) {
+                var storySourceId = storySource.Id;
+                _storyRepository.Insert(new StoryDto(){CategoryId = categoryId,CreatedTime = DateTime.Now,Image = story.Image,
+                    IsFavorite = story.IsFavorite,Likes = story.Likes,Name = story.Header,Text = story.Text,SourceId = storySourceId,SourceUrl = story.SourceUrl});
+            }
             if (OnStoryInserted != null) {
                 OnStoryInserted();
             }

@@ -23,6 +23,7 @@ namespace ScaryStories.Visual.Pages
         public AllStoriesList()
         {
             InitializeComponent();
+         
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)

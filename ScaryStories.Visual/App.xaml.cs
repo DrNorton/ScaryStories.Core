@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Threading.Tasks;
 
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
@@ -20,9 +22,7 @@ namespace ScaryStories.Visual
 		{
 				private static MainViewModel viewModel = null;
                 private const string DBConnectionString = "ScaryStories.db";
-		        private static SQLiteDataStore _store;
-		        private static SettingsManager _settingsManager;
-		        private static VkService _vkService;
+		         private BackgroundWorker _mainViewModelLoader;
             
 				/// <summary>
 				/// A static ViewModel used by the views to bind against.
@@ -32,10 +32,6 @@ namespace ScaryStories.Visual
 				{
 						get
 						{
-								// Delay creation of the view model until necessary
-								if (viewModel == null)
-										viewModel = new MainViewModel(_store,_settingsManager,_vkService);
-
 								return viewModel;
 						}
 				}
@@ -79,22 +75,25 @@ namespace ScaryStories.Visual
 								// and consume battery power when the user is not using the phone.
 								PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
 						}
-                      
-                        if(!CheckDatabaseExists(DBConnectionString))
-				        {
+                       
+                        if (!CheckDatabaseExists(DBConnectionString))
+                        {
                             ImportDatabaseToIsolatedStorage();
                         }
-                        _store = new SQLiteDataStore(DBConnectionString);
-                         _vkService=new VkService();
-				         _vkService.OnLoginDemand += NavigateToAuthorization;
-                        
-                         _settingsManager=new SettingsManager(IsolatedStorageSettings.ApplicationSettings);
-                         _settingsManager.Load();
-				        _store.AddType<CategoryDetail>();
-                        _store.AddType<StoryDetail>();
-                        _store.AddType<HistoryViewDetail>();
+                        var store = new SQLiteDataStore(DBConnectionString);
+                        var vkService = new VkService();
+                        vkService.OnLoginDemand += NavigateToAuthorization;
+                        var settingsManager = new SettingsManager(IsolatedStorageSettings.ApplicationSettings);
+                        settingsManager.Load();
+                        store.AddType<CategoryDetail>();
+                        store.AddType<StoryDetail>();
+                        store.AddType<HistoryViewDetail>();
+                        store.AddType<StorySourceDetail>();
+                        var mainViewModel = new MainViewModel(store, settingsManager, vkService);
+                        viewModel = mainViewModel;
 				}
 
+               
                
 
 		        private  void NavigateToAuthorization(Action<string> obj) {

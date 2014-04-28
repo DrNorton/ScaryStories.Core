@@ -83,12 +83,12 @@ namespace ScaryStories.ViewModel.Extensions
         private void CreateDefaultSettingsList() {
             _settings=new ScaryStorySettings();
 
-            Settings.BackgroundColor = new AccentColor() { Color = 0xFFFFFFFF.ToSolidColorBrush(), Name = "black" };
+            Settings.BackgroundColor = new AccentColor() { Color = 0xF0000001.ToSolidColorBrush(), Name = "black" };
             Settings.TileColor = new AccentColor() { Color = 0xFFE51400.ToSolidColorBrush(), Name = "red" };
             Settings.IsDynamicBackground = false;
             _settings.OnSettingsItemChange += OnItemChange;
             _settings.FontFamily = new FontFamily("Times New Roman");
-            _settings.FontColor = new AccentColor() { Color = 0xFFFFFFFF.ToSolidColorBrush(), Name = "black" };
+            _settings.FontColor = new AccentColor() { Color = 0xFFFFFFFF.ToSolidColorBrush(), Name = "white" };
             Save();
         }
 

@@ -58,20 +58,24 @@
     <Compile Include="Dto\CategoryDto.cs" />
     <Compile Include="Dto\HistoryViewDto.cs" />
     <Compile Include="Dto\StoryDto.cs" />
+    <Compile Include="Dto\StorySourceDto.cs" />
     <Compile Include="Entity\CategoryDetail.cs" />
     <Compile Include="Entity\HistoryViewDetail.cs" />
     <Compile Include="Entity\IDetail.cs" />
     <Compile Include="Entity\StoryDetail.cs" />
+    <Compile Include="Entity\StorySourceDetail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Base\BaseRepository.cs" />
     <Compile Include="Repositories\CategoryRepository.cs" />
     <Compile Include="Repositories\Base\IRepository.cs" />
+    <Compile Include="Repositories\Contracts\IStorySourceRepository.cs" />
     <Compile Include="Repositories\HistoryViewRepository.cs" />
     <Compile Include="Repositories\Contracts\IStoryRepository.cs" />
     <Compile Include="Repositories\Contracts\ICategoryRepository.cs" />
     <Compile Include="Repositories\Contracts\IHistoryViewRepository.cs" />
     <Compile Include="Repositories\RepositoryStore.cs" />
     <Compile Include="Repositories\StoryRepository.cs" />
+    <Compile Include="Repositories\StorySourceRepository.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

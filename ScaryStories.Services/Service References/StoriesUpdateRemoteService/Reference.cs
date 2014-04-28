@@ -137,6 +137,10 @@ namespace ScaryStories.Services.StoriesUpdateRemoteService {
         
         private long LikesField;
         
+        private string SourceNameField;
+        
+        private string SourceUrlField;
+        
         private string TextField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
@@ -218,6 +222,32 @@ namespace ScaryStories.Services.StoriesUpdateRemoteService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceName {
+            get {
+                return this.SourceNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceNameField, value) != true)) {
+                    this.SourceNameField = value;
+                    this.RaisePropertyChanged("SourceName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SourceUrl {
+            get {
+                return this.SourceUrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SourceUrlField, value) != true)) {
+                    this.SourceUrlField = value;
+                    this.RaisePropertyChanged("SourceUrl");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Text {
             get {
                 return this.TextField;
@@ -226,6 +256,81 @@ namespace ScaryStories.Services.StoriesUpdateRemoteService {
                 if ((object.ReferenceEquals(this.TextField, value) != true)) {
                     this.TextField = value;
                     this.RaisePropertyChanged("Text");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="StorySourceServiceDto", Namespace="http://schemas.datacontract.org/2004/07/ScaryStories.UpdateService")]
+    public partial class StorySourceServiceDto : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.DateTime CreatedTimeField;
+        
+        private byte[] ImageField;
+        
+        private string NameField;
+        
+        private string UrlField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedTime {
+            get {
+                return this.CreatedTimeField;
+            }
+            set {
+                if ((this.CreatedTimeField.Equals(value) != true)) {
+                    this.CreatedTimeField = value;
+                    this.RaisePropertyChanged("CreatedTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] Image {
+            get {
+                return this.ImageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ImageField, value) != true)) {
+                    this.ImageField = value;
+                    this.RaisePropertyChanged("Image");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Url {
+            get {
+                return this.UrlField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UrlField, value) != true)) {
+                    this.UrlField = value;
+                    this.RaisePropertyChanged("Url");
                 }
             }
         }
@@ -258,6 +363,11 @@ namespace ScaryStories.Services.StoriesUpdateRemoteService {
         System.IAsyncResult BeginGetNewStory(int id, System.AsyncCallback callback, object asyncState);
         
         ScaryStories.Services.StoriesUpdateRemoteService.StoryServiceDto EndGetNewStory(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/IStoriesUpdateService/GetSources", ReplyAction="http://tempuri.org/IStoriesUpdateService/GetSourcesResponse")]
+        System.IAsyncResult BeginGetSources(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<ScaryStories.Services.StoriesUpdateRemoteService.StorySourceServiceDto> EndGetSources(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -323,6 +433,25 @@ namespace ScaryStories.Services.StoriesUpdateRemoteService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetSourcesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetSourcesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<ScaryStories.Services.StoriesUpdateRemoteService.StorySourceServiceDto> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<ScaryStories.Services.StoriesUpdateRemoteService.StorySourceServiceDto>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class StoriesUpdateServiceClient : System.ServiceModel.ClientBase<ScaryStories.Services.StoriesUpdateRemoteService.IStoriesUpdateService>, ScaryStories.Services.StoriesUpdateRemoteService.IStoriesUpdateService {
         
         private BeginOperationDelegate onBeginGetNewStoriesDelegate;
@@ -342,6 +471,12 @@ namespace ScaryStories.Services.StoriesUpdateRemoteService {
         private EndOperationDelegate onEndGetNewStoryDelegate;
         
         private System.Threading.SendOrPostCallback onGetNewStoryCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetSourcesDelegate;
+        
+        private EndOperationDelegate onEndGetSourcesDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetSourcesCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -401,6 +536,8 @@ namespace ScaryStories.Services.StoriesUpdateRemoteService {
         public event System.EventHandler<CheckUpdateCompletedEventArgs> CheckUpdateCompleted;
         
         public event System.EventHandler<GetNewStoryCompletedEventArgs> GetNewStoryCompleted;
+        
+        public event System.EventHandler<GetSourcesCompletedEventArgs> GetSourcesCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -544,6 +681,50 @@ namespace ScaryStories.Services.StoriesUpdateRemoteService {
                         id}, this.onEndGetNewStoryDelegate, this.onGetNewStoryCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult ScaryStories.Services.StoriesUpdateRemoteService.IStoriesUpdateService.BeginGetSources(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetSources(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<ScaryStories.Services.StoriesUpdateRemoteService.StorySourceServiceDto> ScaryStories.Services.StoriesUpdateRemoteService.IStoriesUpdateService.EndGetSources(System.IAsyncResult result) {
+            return base.Channel.EndGetSources(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetSources(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((ScaryStories.Services.StoriesUpdateRemoteService.IStoriesUpdateService)(this)).BeginGetSources(callback, asyncState);
+        }
+        
+        private object[] OnEndGetSources(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<ScaryStories.Services.StoriesUpdateRemoteService.StorySourceServiceDto> retVal = ((ScaryStories.Services.StoriesUpdateRemoteService.IStoriesUpdateService)(this)).EndGetSources(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetSourcesCompleted(object state) {
+            if ((this.GetSourcesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetSourcesCompleted(this, new GetSourcesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetSourcesAsync() {
+            this.GetSourcesAsync(null);
+        }
+        
+        public void GetSourcesAsync(object userState) {
+            if ((this.onBeginGetSourcesDelegate == null)) {
+                this.onBeginGetSourcesDelegate = new BeginOperationDelegate(this.OnBeginGetSources);
+            }
+            if ((this.onEndGetSourcesDelegate == null)) {
+                this.onEndGetSourcesDelegate = new EndOperationDelegate(this.OnEndGetSources);
+            }
+            if ((this.onGetSourcesCompletedDelegate == null)) {
+                this.onGetSourcesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetSourcesCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetSourcesDelegate, null, this.onEndGetSourcesDelegate, this.onGetSourcesCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -656,6 +837,18 @@ namespace ScaryStories.Services.StoriesUpdateRemoteService {
             public ScaryStories.Services.StoriesUpdateRemoteService.StoryServiceDto EndGetNewStory(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 ScaryStories.Services.StoriesUpdateRemoteService.StoryServiceDto _result = ((ScaryStories.Services.StoriesUpdateRemoteService.StoryServiceDto)(base.EndInvoke("GetNewStory", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetSources(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetSources", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<ScaryStories.Services.StoriesUpdateRemoteService.StorySourceServiceDto> EndGetSources(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<ScaryStories.Services.StoriesUpdateRemoteService.StorySourceServiceDto> _result = ((System.Collections.ObjectModel.ObservableCollection<ScaryStories.Services.StoriesUpdateRemoteService.StorySourceServiceDto>)(base.EndInvoke("GetSources", _args, result)));
                 return _result;
             }
         }

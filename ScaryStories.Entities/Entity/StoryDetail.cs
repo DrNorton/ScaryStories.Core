@@ -8,6 +8,8 @@ namespace ScaryStories.Entities.EntityModels
 		public class StoryDetail:IDetail{
 				private int _id;
                 private DateTime _createdTime;
+                private string _sourceUrl;
+             private int _sourceId;
 
                 [Field(IsPrimaryKey = true)]
 				public int Id
@@ -91,7 +93,25 @@ namespace ScaryStories.Entities.EntityModels
 								_text = value;
 						}
 				}
-               
+                 [Field]
+                 public string SourceUrl {
+                     get {
+                         return _sourceUrl;
+                     }
+                     set {
+                         _sourceUrl = value;
+                     }
+                 }
+                 [Field]
+                 public int SourceId {
+                     get {
+                         return _sourceId;
+                     }
+                     set {
+                         _sourceId = value;
+                     }
+                 }
+
              public StoryDetail(int id, string header, byte[] image, string text, long likes, int categoryId,bool isFavorite) {
 				_id = id;
 				_header = header;

@@ -26,7 +26,7 @@
                         <ColumnDefinition Width="6*"/>
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}"/>
-                    <TextBlock Foreground="{Binding Template.FontColor}" TextWrapping="Wrap" Grid.Column="1" Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                    <TextBlock Foreground="{Binding ElementName=MainGrid,Path=DataContext.Template.FontColor}" TextWrapping="Wrap" Grid.Column="1" Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
                 </Grid>
 
             </StackPanel>
@@ -51,7 +51,12 @@
     </phone:PhoneApplicationPage.Resources>
  
     <!--LayoutRoot is the root grid where all page content is placed-->
-    <Grid  x:Name="LayoutRoot"   Background="{Binding Template.BackgroundColor,Mode=TwoWay}">
+<Grid x:Name="MainGrid" >
+    <Grid.RowDefinitions>
+        <RowDefinition/>
+        <RowDefinition/>
+    </Grid.RowDefinitions>
+        <Grid  x:Name="LayoutRoot" Opacity="{Binding Opacity}" Grid.RowSpan="2"  Background="{Binding Template.BackgroundColor,Mode=TwoWay}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -67,6 +72,7 @@
                   DisplayAllGroups="True"
                   ItemsSource="{Binding GroupedStories}"
                   Background="Transparent"
+           
                   GroupHeaderTemplate="{StaticResource StoryGroupHeaderTemplate}"
                   SelectedItem="{Binding SelectedStory,Mode=TwoWay}"
                   ItemTemplate="{StaticResource StoryItemTemplate}" GroupItemTemplate="{StaticResource GroupItemsTemplateWp7}" GroupItemsPanel="{StaticResource GroupItemsPanelTemplate}"
@@ -78,4 +84,14 @@
       
     </Grid>
 
+        <Grid x:Name="LoadingRoot"  Grid.Row="0" Grid.RowSpan="2" Visibility="{Binding ProgressBarVisibility}">
+        <Rectangle Fill="Transparent"/>
+            <StackPanel  Orientation="Vertical" VerticalAlignment="Center">
+                <toolkit:PerformanceProgressBar IsIndeterminate="{Binding ProgressBarIsDeterminate}" Foreground="Red" />
+                    <TextBlock Text="Загрузка..." HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </StackPanel>
+        
+    </Grid>
+    
+ </Grid>
 </phone:PhoneApplicationPage>

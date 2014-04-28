@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/ScaryStories.UpdateService" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ScaryStories.UpdateService" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfCategoryServiceDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CategoryServiceDto" nillable="true" type="tns:CategoryServiceDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCategoryServiceDto" nillable="true" type="tns:ArrayOfCategoryServiceDto" />
+  <xs:complexType name="CategoryServiceDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreatedTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="StoriesIds" nillable="true" type="q1:ArrayOfint" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CategoryServiceDto" nillable="true" type="tns:CategoryServiceDto" />
+  <xs:complexType name="CheckingResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="NewStoriesNumber" type="xs:long" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CheckingResult" nillable="true" type="tns:CheckingResult" />
+  <xs:complexType name="StoryServiceDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CategoryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreatedTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Header" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="IsFavorite" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Likes" type="xs:long" />
+      <xs:element minOccurs="0" name="SourceName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SourceUrl" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Text" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StoryServiceDto" nillable="true" type="tns:StoryServiceDto" />
+  <xs:complexType name="ArrayOfStorySourceServiceDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="StorySourceServiceDto" nillable="true" type="tns:StorySourceServiceDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfStorySourceServiceDto" nillable="true" type="tns:ArrayOfStorySourceServiceDto" />
+  <xs:complexType name="StorySourceServiceDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CreatedTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Image" nillable="true" type="xs:base64Binary" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Url" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="StorySourceServiceDto" nillable="true" type="tns:StorySourceServiceDto" />
+</xs:schema>

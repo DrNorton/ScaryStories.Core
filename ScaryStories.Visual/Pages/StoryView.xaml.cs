@@ -84,8 +84,7 @@ namespace ScaryStories.Visual.Pages
         private void ApplicationBarIconButton_OnClick(object sender, EventArgs e) {
             var favorite=((StoryDto)LayoutRoot.DataContext).IsFavorite;
             SetButtonsTextAndIcon(!favorite);
-            ApplicationBarIconButton button = GetAppBarIconButton("next");
-            button.IsEnabled = false;
+           
         }
 
         private void SpeechMenuItem_OnClick(object sender, EventArgs e)
