@@ -3,7 +3,6 @@ using System.Linq;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 
-using ScaryStories.ViewModel.DataContext.Base;
 
 namespace ScaryStories.Visual.Pages
 {

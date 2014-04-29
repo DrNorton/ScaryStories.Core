@@ -1,0 +1,122 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="ScaryStories.Visual.Views.MainView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="clr-namespace:ScaryStories.Visual.Converters"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800" 
+        xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+        xmlns:extensions="clr-namespace:ScaryStories.Visual.Extensions"
+        FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+    
+    <phone:PhoneApplicationPage.Resources>
+        <extensions:ByteToImageConverter x:Key="ByteToImageConverter"/>
+   
+    </phone:PhoneApplicationPage.Resources>
+
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" >
+
+        <controls:Panorama Title="Страшные истории" Foreground="{Binding FontColor,Source={StaticResource Template}}" Background="{Binding BackgroundColor,Source={StaticResource Template}}" >
+           
+
+            <controls:PanoramaItem Header="Меню" x:Name="MenuSection">
+                <ListBox Margin="0,0,-12,0" ItemsSource="{Binding Menu}" SelectedItem="{Binding SelectedMenuItem,Mode=TwoWay}"  >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Button Command="{Binding NavigateMenuCommand}">
+                                 <Grid >
+                             <Grid.ColumnDefinitions>
+                                 <ColumnDefinition Width="3*"/>
+                                 <ColumnDefinition Width="7*"/>
+                             </Grid.ColumnDefinitions>
+                           
+                                <Image Source="{Binding ImagePath}" Grid.Column="0" />
+                                <StackPanel Width="311" Margin="8,-7,0,0" Grid.Column="1">
+                                    <TextBlock Text="{Binding Header}" Foreground="{Binding FontColor,Source={StaticResource Template}}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
+                                    <TextBlock Text="{Binding Description}"  Foreground="{Binding FontColor,Source={StaticResource Template}}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" />
+                                </StackPanel>
+                            </Grid>
+                            </Button>
+                        </DataTemplate>
+                    
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+            <!--Panorama item one-->
+            <controls:PanoramaItem Header="Категории" x:Name="CategorySection">
+                <!--Double line list with text wrapping-->
+				<ListBox Margin="0,0,-12,0" SelectedItem="{Binding SelectedCategory,Mode=TwoWay}"  ItemsSource="{Binding Categories,Mode=OneWay}" BorderBrush="{x:Null}" Background="{x:Null}" >
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="17,0,0,17">
+                                <toolkit:HubTile Background="{Binding ElementName=CategorySection,Path=DataContext.Template.AdditionColor}" Foreground="{Binding FontColor,Source={StaticResource Template}}"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}" Title="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                </controls:PanoramaItem>
+            <!--Panorama item one-->
+            <controls:PanoramaItem Header="История" x:Name="HistoryViewSection">
+                <!--Double line list with text wrapping-->
+                <ListBox ItemsSource="{Binding HistoryStories}" SelectedItem="{Binding SelectedStory,Mode=TwoWay}" >
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="17,0,0,17">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="6*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}"/>
+                                <TextBlock Foreground="{Binding FontColor,Source={StaticResource Template}}"  TextWrapping="Wrap" Grid.Column="1" Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                            </Grid>
+
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </controls:PanoramaItem>
+            <!--Panorama item one-->
+            <controls:PanoramaItem Header="Избранное" x:Name="FavoriteSection">
+                <ListBox ItemsSource="{Binding FavoriteStories}" Foreground="{Binding FontColor,Source={StaticResource Template}}" SelectedItem="{Binding SelectedFavoriteStory,Mode=OneWay}" >
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                       <DataTemplate>
+                            <Grid Margin="17,0,0,17">
+                               <Grid.ColumnDefinitions>
+                                   <ColumnDefinition Width="4*"/>
+                                    <ColumnDefinition Width="6*"/>
+                               </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}"/>
+                                <TextBlock TextWrapping="Wrap" Grid.Column="1" Foreground="{Binding FontColor,Source={StaticResource Template}}"   Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                           </Grid>
+                      
+                       </DataTemplate>
+                   </ListBox.ItemTemplate>
+               </ListBox>
+            </controls:PanoramaItem>
+        </controls:Panorama>
+    </Grid>
+</phone:PhoneApplicationPage>

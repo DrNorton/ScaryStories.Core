@@ -53,6 +53,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\AppBarUtils.2.4\lib\wp71\AppBarUtils.dll</HintPath>
     </Reference>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.BindableAppBar">
+      <HintPath>..\packages\Caliburn.Micro.BindableAppBar.1.0.5.0\lib\wp71\Caliburn.Micro.BindableAppBar.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Extensions">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\Caliburn.Micro.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls" />
@@ -79,7 +88,9 @@
     <Reference Include="system" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
-    <Reference Include="System.Windows.Interactivity, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Interactivity, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
@@ -87,41 +98,51 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BootStrapper.cs" />
     <Compile Include="Controls\FontPicker.xaml.cs">
       <DependentUpon>FontPicker.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Converters\ByteArrayToImageSource.cs" />
-    <Compile Include="Converters\ByteToImageConverter.cs" />
+    <Compile Include="Extensions\AccentColor.cs" />
+    <Compile Include="Extensions\AlphaKeyGroup.cs" />
+    <Compile Include="Extensions\ByteArrayToImageSource.cs" />
+    <Compile Include="Extensions\ByteToImageConverter.cs" />
+    <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\ScaryStoriesSettings.cs" />
+    <Compile Include="Extensions\SettingsManager.cs" />
+    <Compile Include="Extensions\SettingTemplate.cs" />
+    <Compile Include="Extensions\SolidColorBrushExtension.cs" />
     <Compile Include="Converters\StoryNumberInCollectionConverter.cs" />
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Models\MenuItem.cs" />
+    <Compile Include="ViewModels\GrouppedStoriesListViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\SearchViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\SingleStoryViewModel.cs" />
+    <Compile Include="ViewModels\StoriesListViewModel.cs" />
+    <Compile Include="ViewModels\UpdateViewModel.cs" />
+    <Compile Include="Views\GrouppedStoriesListView.xaml.cs">
+      <DependentUpon>GrouppedStoriesListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\AllStoriesList.xaml.cs">
-      <DependentUpon>AllStoriesList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\RandomStoriesListPage.xaml.cs">
-      <DependentUpon>RandomStoriesListPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SearchPage.xaml.cs">
-      <DependentUpon>SearchPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\SettingsPage.xaml.cs">
-      <DependentUpon>SettingsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\StoriesForSelectedCategoryList.xaml.cs">
-      <DependentUpon>StoriesForSelectedCategoryList.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pages\StoryView.xaml.cs">
-      <DependentUpon>StoryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\UpdateView.xaml.cs">
-      <DependentUpon>UpdateView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\VkAuthPage.xaml.cs">
-      <DependentUpon>VkAuthPage.xaml</DependentUpon>
+    <Compile Include="Views\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\SearchView.xaml.cs">
+      <DependentUpon>SearchView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SingleStoryView.xaml.cs">
+      <DependentUpon>SingleStoryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\StoriesListView.xaml.cs">
+      <DependentUpon>StoriesListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UpdateView.xaml.cs">
+      <DependentUpon>UpdateView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -132,39 +153,31 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MainPage.xaml">
+    <Page Include="Views\GrouppedStoriesListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AllStoriesList.xaml">
+    <Page Include="Views\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\RandomStoriesListPage.xaml">
+    <Page Include="Views\SearchView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SearchPage.xaml">
+    <Page Include="Views\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SettingsPage.xaml">
+    <Page Include="Views\SingleStoryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\StoriesForSelectedCategoryList.xaml">
+    <Page Include="Views\StoriesListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\StoryView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\UpdateView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\VkAuthPage.xaml">
+    <Page Include="Views\UpdateView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,10 +258,6 @@
       <Project>{79AAE72E-F843-49A2-B9A2-995DF90E4CCD}</Project>
       <Name>ScaryStories.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ScaryStories.ViewModel\ScaryStories.ViewModel.csproj">
-      <Project>{E504309E-97C7-4ED0-99E6-FCB53F238BED}</Project>
-      <Name>ScaryStories.ViewModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Вспомогательные проекты\Phone.Controls\Phone.Controls.csproj">
       <Project>{71A41463-066F-444A-B774-5FB036C913A0}</Project>
       <Name>Phone.Controls</Name>
@@ -258,7 +267,7 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

@@ -79,17 +79,7 @@ namespace ScaryStories.ViewModel.DataContext.MenuDataContexts
             }
         }
 
-        public List<AlphaKeyGroup<StoryDto>> GroupedStories
-        {
-            get {
-
-                return _groupedStories;
-            }
-            set {
-                _groupedStories = value;
-                base.NotifyPropertyChanged("GroupedStories");
-            }
-        }
+     
 
         public override void Run()
         {

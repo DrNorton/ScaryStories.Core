@@ -1,0 +1,69 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="ScaryStories.Visual.Views.SingleStoryView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:appBarUtils="clr-namespace:AppBarUtils;assembly=AppBarUtils"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:converters="clr-namespace:ScaryStories.Visual.Converters"
+    xmlns:controls1="clr-namespace:Phone.Controls;assembly=Phone.Controls"
+    xmlns:extensions="clr-namespace:ScaryStories.Visual.Extensions"
+    xmlns:bindableAppBar="clr-namespace:Caliburn.Micro.BindableAppBar;assembly=Caliburn.Micro.BindableAppBar"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    x:Name="StoryPage"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+ 
+    <phone:PhoneApplicationPage.Resources>
+        <extensions:ByteToImageConverter x:Key="ByteToImageConverter"/>
+    </phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.Background>
+        <ImageBrush ImageSource="/Background.png"/>
+    </phone:PhoneApplicationPage.Background>
+    <!--LayoutRoot is the root grid where all page content is placed-->
+  <Grid>
+        <ScrollViewer >
+            <Grid x:Name="LayoutRoot" DataContext="{Binding CurrentStory,Mode=OneWay}" Background="{Binding BackgroundColor,Source={StaticResource Template}}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!--TitlePanel contains the name of the application and page title-->
+                <StackPanel Grid.Row="0" >
+                    <TextBlock FontFamily="{Binding FontFamily,Source={StaticResource Template}}"  Text="{Binding Name}" TextWrapping="Wrap"  Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+                </StackPanel>
+
+                <!--ContentPanel - place additional content here-->
+
+
+                <StackPanel Grid.Row="1">
+                    <controls1:ScrollableTextBlock  Font="{Binding FontFamily,Source={StaticResource Template}}"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter},Mode=TwoWay}" Grid.Row="1"  Height="618" Width="427" Text="{Binding Text,Mode=TwoWay}"  >
+                        <controls1:ScrollableTextBlock.Background>
+                            <ImageBrush Stretch="Fill"/>
+                        </controls1:ScrollableTextBlock.Background>
+                    </controls1:ScrollableTextBlock>
+
+                </StackPanel>
+                <StackPanel Grid.Row="2" >
+                    <TextBlock FontFamily="{Binding FontFamily,Source={StaticResource Template}}" FontSize="16" Foreground="White"  Text="{Binding SourceUrl}" TextWrapping="Wrap"  Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right" FontStyle="Italic"/>
+                </StackPanel>
+
+            </Grid>
+        </ScrollViewer>
+        <bindableAppBar:BindableAppBar x:Name="AppBar" IsVisible="True" IsMenuEnabled="False"   ForegroundColor="White" Opacity="0.9">
+            <bindableAppBar:BindableAppBarButton IconUri="/Assets/AppBar/appbar.back.rest.png" Text="предыдущая" x:Name="PrevioslyStory"/>
+            <bindableAppBar:BindableAppBarButton IconUri="/Assets/AppBar/appbar.favs.rest.png" Text="в избранное" x:Name="ToFavorite"/>
+            <bindableAppBar:BindableAppBarButton IconUri="/Assets/AppBar/appbar.next.rest.png" Text="следущая" x:Name="NextStory"/>
+        </bindableAppBar:BindableAppBar>
+    </Grid>
+
+</phone:PhoneApplicationPage>

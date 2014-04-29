@@ -13,7 +13,20 @@ using VkontakteInfrastructure.Model;
 using VkontakteServiceLayer;
 namespace ScaryStories.Services
 {
-    public class VkService {
+    public interface IVkService
+    {
+        event Action OnBack;
+        event Action<Action<string>> OnLoginDemand;
+        bool ClientOnAutorization { get; set; }
+        bool IsAuthorized { get; }
+        Uri GetUri();
+        void ParseUri(Uri uri);
+        void RestoreContext();
+        void SentToWall(string text);
+    }
+
+    public class VkService : IVkService
+    {
         public event Action OnBack;
         public event Action<Action<string>> OnLoginDemand;
         public bool ClientOnAutorization { get; set; }

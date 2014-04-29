@@ -41,6 +41,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Extensions">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\Caliburn.Micro.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="System.IO">
       <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\sl4-windowsphone71\System.IO.dll</HintPath>
@@ -63,35 +69,14 @@
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Interactivity, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Net" />
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContext\Base\DatabaseDataContext.cs" />
-    <Compile Include="DataContext\Base\BaseTemplate.cs" />
-    <Compile Include="DataContext\Base\IContext.cs" />
-    <Compile Include="DataContext\Base\IFind.cs" />
-    <Compile Include="DataContext\Base\IMenuItem.cs" />
-    <Compile Include="DataContext\Base\IServiceStore.cs" />
-    <Compile Include="DataContext\Base\IStoryManipulator.cs" />
-    <Compile Include="DataContext\ItemsViewModels\CategoriesWithStoriesContainerContext.cs" />
-    <Compile Include="DataContext\ItemsViewModels\FavoriteStoryContainerContext.cs" />
-    <Compile Include="DataContext\ItemsViewModels\HistoryViewContainerContext.cs" />
-    <Compile Include="DataContext\ItemsViewModels\StoryContainerContext.cs" />
-    <Compile Include="DataContext\MenuDataContexts\AllStoriesMenuDataContext.cs" />
-    <Compile Include="DataContext\MenuDataContexts\RandomStoriesDataContext.cs" />
-    <Compile Include="DataContext\MenuDataContexts\SearchMenuDataContext.cs" />
-    <Compile Include="DataContext\MenuDataContexts\SettingsMenuDataContext.cs" />
-    <Compile Include="DataContext\MenuDataContexts\UpdateMenuDataContext.cs" />
-    <Compile Include="DataContext\MenuDataContexts\VkAuthDataContext.cs" />
-    <Compile Include="Extensions\AccentColor.cs" />
-    <Compile Include="Extensions\AlphaKeyGroup.cs" />
-    <Compile Include="Extensions\ColorExtensions.cs" />
-    <Compile Include="Extensions\ScaryStoriesSettings.cs" />
-    <Compile Include="Extensions\SettingsManager.cs" />
-    <Compile Include="Extensions\SolidColorBrushExtension.cs" />
-    <Compile Include="MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +103,22 @@
     <ProjectReference Include="..\ScaryStories.Services\ScaryStories.Services.csproj">
       <Project>{79AAE72E-F843-49A2-B9A2-995DF90E4CCD}</Project>
       <Name>ScaryStories.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vkontakte\VkontakteCommonModel\VkontakteInfrastructure.csproj">
+      <Project>{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}</Project>
+      <Name>VkontakteInfrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vkontakte\VkontakteCore\VkontakteCore\VkontakteCore.csproj">
+      <Project>{CCD1ECF2-3190-4174-A421-0031B316D01B}</Project>
+      <Name>VkontakteCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vkontakte\VkontakteDataLayer\VkontakteDataLayer.csproj">
+      <Project>{3F6BFF94-49B6-4D55-999B-8F9E9A7EB8D4}</Project>
+      <Name>VkontakteDataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Vkontakte\VkontakteServiceLayer\VkontakteServiceLayer.csproj">
+      <Project>{70AC4FF5-4318-410C-9DD3-BD9B0754364E}</Project>
+      <Name>VkontakteServiceLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

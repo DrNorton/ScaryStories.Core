@@ -20,7 +20,7 @@ namespace ScaryStories.ViewModel.DataContext.MenuDataContexts
         
  
         public SettingsMenuDataContext(SettingsManager settingsManager) {
-           _colors=new List<AccentColor>();
+         
            _settingsManager = settingsManager;
         }
 
