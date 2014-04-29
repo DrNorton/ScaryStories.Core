@@ -109,7 +109,7 @@ namespace ScaryStories.Services
                 _syncMaster.Add(sync);
                 CreateCategoryIfNotExist(categoryRemote);
                 _newStoriesIds = categoryRemote.StoriesIds;
-                _serviceClient.GetNewStoryAsync(categoryRemote.StoriesIds[(int)sync.GetNe xtStoryid()]);
+                _serviceClient.GetNewStoryAsync(categoryRemote.StoriesIds[(int)sync.GetNextStoryid()]);
                 
             }      
         }
