@@ -1,0 +1,82 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="VkontakteMangoClient.PhotosViewPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:VkontakteViewModel="clr-namespace:VkontakteViewModel;assembly=VkontakteViewModel"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="696" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="True">
+    <phone:PhoneApplicationPage.Resources>
+        <VkontakteViewModel:PhotosViewPageViewModel x:Key="PhotosViewPageViewModel"  />
+        <Storyboard x:Name="Storyboard1" Completed="Storyboard1_OnCompleted">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="imageAnimation">
+        		<EasingDoubleKeyFrame x:Name="AnimationStartKeyValue" KeyTime="0" Value="480"/>
+        		<EasingDoubleKeyFrame x:Name="AnumationEndKeyValue" KeyTime="0:0:0.4" Value="0"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
+    <phone:PhoneApplicationPage.DataContext>
+        <Binding Source="{StaticResource PhotosViewPageViewModel}" />
+    </phone:PhoneApplicationPage.DataContext>
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--TitlePanel contains the name of the application and page title-->
+        <!--ContentPanel - place additional content here-->
+        <Grid x:Name="ContentPanel" Margin="12,0,12,0">
+            <Image x:Name="image" Source="{Binding SelectedPhotoViewModel.SourceMaxSize, Mode=OneWay}" RenderTransformOrigin="0.5,0.5">
+            	<Image.RenderTransform>
+            		<CompositeTransform/>
+            	</Image.RenderTransform>
+            	<toolkit:GestureService.GestureListener>
+                    <toolkit:GestureListener x:Name="gl" Flick="Gl_OnFlick" />
+                </toolkit:GestureService.GestureListener>
+            </Image>
+
+            <Image x:Name="imageAnimation" Source="{Binding NextPhotoThumbSource, Mode=OneWay}" RenderTransformOrigin="0.5,0.5" Visibility="Collapsed">
+                <Image.RenderTransform>
+                    <CompositeTransform/>
+                </Image.RenderTransform>
+            </Image>
+            <ListBox 
+                Name="listBoxImagePreview"
+                ItemsSource="{Binding Photos}" Width="480" 
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                SelectedItem="{Binding SelectedPhotoViewModel, Mode=TwoWay}" 
+                Height="191" VerticalAlignment="Top"
+                Visibility="{Binding PreviewListBoxVisible}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding SourceSmall}" Width="180" Height="180" Margin="6 12 6 12" />
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            
+        </Grid>
+    </Grid>
+ 
+    <!--Sample code showing usage of ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton IconUri="/Images/home.png" Text="Home" Click="ApplicationBarIconButtonHome_OnClick"/>
+            <shell:ApplicationBarIconButton IconUri="/Images/dark/appbar.favs.addto.rest.png" Text="Pin to start" Click="ApplicationBarMenuItemPinToStart_Click"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Pin to start" Click="ApplicationBarMenuItemPinToStart_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

@@ -1,0 +1,88 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkontakteCore", "VkontakteCore\VkontakteCore.csproj", "{CCD1ECF2-3190-4174-A421-0031B316D01B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkontakteMangoClient", "..\VkontakteMangoClient\VkontakteMangoClient.csproj", "{DC3C2DBE-AD5A-4CED-8068-753B1BAECD8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkontakteServiceLayer", "..\VkontakteServiceLayer\VkontakteServiceLayer.csproj", "{70AC4FF5-4318-410C-9DD3-BD9B0754364E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkontakteInfrastructure", "..\VkontakteCommonModel\VkontakteInfrastructure.csproj", "{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{DC32954F-721C-4491-AEB1-A7DAC60390E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkontakteViewModel", "..\VkontakteViewModel\VkontakteViewModel.csproj", "{5CECA088-BDEF-4BE4-ABD1-C4080884D709}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkontakteDataLayer", "..\VkontakteDataLayer\VkontakteDataLayer.csproj", "{3F6BFF94-49B6-4D55-999B-8F9E9A7EB8D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Json", "Json", "{1CE359C7-2D45-4AAF-BE3E-F138D146BFD5}"
+	ProjectSection(SolutionItems) = preProject
+		Solution items\Json\Newtonsoft.Json.WindowsPhone.dll = Solution items\Json\Newtonsoft.Json.WindowsPhone.dll
+		Solution items\Json\Newtonsoft.Json.WindowsPhone.pdb = Solution items\Json\Newtonsoft.Json.WindowsPhone.pdb
+		Solution items\Json\Newtonsoft.Json.WindowsPhone.xml = Solution items\Json\Newtonsoft.Json.WindowsPhone.xml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 7
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs.codeplex.com/tfs/tfs27
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = VkontakteCore\\VkontakteCore.csproj
+		SccProjectName1 = VkontakteCore
+		SccLocalPath1 = VkontakteCore
+		SccProjectUniqueName2 = ..\\VkontakteMangoClient\\VkontakteMangoClient.csproj
+		SccProjectName2 = ../VkontakteMangoClient
+		SccLocalPath2 = ..\\VkontakteMangoClient
+		SccProjectUniqueName3 = ..\\VkontakteServiceLayer\\VkontakteServiceLayer.csproj
+		SccProjectName3 = ../VkontakteServiceLayer
+		SccLocalPath3 = ..\\VkontakteServiceLayer
+		SccProjectUniqueName4 = ..\\VkontakteViewModel\\VkontakteViewModel.csproj
+		SccProjectName4 = ../VkontakteViewModel
+		SccLocalPath4 = ..\\VkontakteViewModel
+		SccProjectUniqueName5 = ..\\VkontakteCommonModel\\VkontakteInfrastructure.csproj
+		SccProjectName5 = ../VkontakteCommonModel
+		SccLocalPath5 = ..\\VkontakteCommonModel
+		SccProjectUniqueName6 = ..\\VkontakteDataLayer\\VkontakteDataLayer.csproj
+		SccProjectName6 = ../VkontakteDataLayer
+		SccLocalPath6 = ..\\VkontakteDataLayer
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCD1ECF2-3190-4174-A421-0031B316D01B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCD1ECF2-3190-4174-A421-0031B316D01B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCD1ECF2-3190-4174-A421-0031B316D01B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCD1ECF2-3190-4174-A421-0031B316D01B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC3C2DBE-AD5A-4CED-8068-753B1BAECD8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC3C2DBE-AD5A-4CED-8068-753B1BAECD8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC3C2DBE-AD5A-4CED-8068-753B1BAECD8D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DC3C2DBE-AD5A-4CED-8068-753B1BAECD8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC3C2DBE-AD5A-4CED-8068-753B1BAECD8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC3C2DBE-AD5A-4CED-8068-753B1BAECD8D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{70AC4FF5-4318-410C-9DD3-BD9B0754364E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70AC4FF5-4318-410C-9DD3-BD9B0754364E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70AC4FF5-4318-410C-9DD3-BD9B0754364E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70AC4FF5-4318-410C-9DD3-BD9B0754364E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CECA088-BDEF-4BE4-ABD1-C4080884D709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CECA088-BDEF-4BE4-ABD1-C4080884D709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CECA088-BDEF-4BE4-ABD1-C4080884D709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CECA088-BDEF-4BE4-ABD1-C4080884D709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F6BFF94-49B6-4D55-999B-8F9E9A7EB8D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F6BFF94-49B6-4D55-999B-8F9E9A7EB8D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F6BFF94-49B6-4D55-999B-8F9E9A7EB8D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F6BFF94-49B6-4D55-999B-8F9E9A7EB8D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1CE359C7-2D45-4AAF-BE3E-F138D146BFD5} = {DC32954F-721C-4491-AEB1-A7DAC60390E4}
+	EndGlobalSection
+EndGlobal

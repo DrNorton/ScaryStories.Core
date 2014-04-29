@@ -125,22 +125,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteCommonModel\VkontakteInfrastructure.csproj">
-      <Project>{84A5C2A6-37C9-4046-AB4D-91AA64A0E463}</Project>
-      <Name>VkontakteInfrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteCore\VkontakteCore\VkontakteCore.csproj">
-      <Project>{CCD1ECF2-3190-4174-A421-0031B316D01B}</Project>
-      <Name>VkontakteCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteDataLayer\VkontakteDataLayer.csproj">
-      <Project>{3F6BFF94-49B6-4D55-999B-8F9E9A7EB8D4}</Project>
-      <Name>VkontakteDataLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Примеры\Vkontakte\VkontakteServiceLayer\VkontakteServiceLayer.csproj">
-      <Project>{70AC4FF5-4318-410C-9DD3-BD9B0754364E}</Project>
-      <Name>VkontakteServiceLayer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\ScaryStories.Entities\ScaryStories.Entities.csproj">
       <Project>{42F15866-4159-47A6-9B37-BB9076CE46E9}</Project>
       <Name>ScaryStories.Entities</Name>

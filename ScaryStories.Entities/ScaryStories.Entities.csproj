@@ -79,7 +79,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\..\ORM_1.0.13029_SRC\OpenNETCF.ORM.SQLite\OpenNETCF.ORM.SQLite.WinPhone.csproj">
+    <ProjectReference Include="..\ORM_1.0.13029_SRC\OpenNETCF.ORM.SQLite\OpenNETCF.ORM.SQLite.WinPhone.csproj">
       <Project>{C6814B71-2825-491A-9066-A989BC3ABFF6}</Project>
       <Name>OpenNETCF.ORM.SQLite.WinPhone</Name>
     </ProjectReference>

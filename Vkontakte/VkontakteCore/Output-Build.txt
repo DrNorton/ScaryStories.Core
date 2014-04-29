@@ -1,0 +1,149 @@
+﻿------ Build started: Project: VkontakteInfrastructure, Configuration: Release Any CPU ------
+Build started 14.09.2011 1:16:56.
+ResolveAssemblyReferences:
+  A TargetFramework profile exclusion list will be generated.
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CopyFilesToOutputDirectory:
+  VkontakteInfrastructure -> C:\project\Vkontakte\VkontakteCommonModel\Bin\Release\VkontakteInfrastructure.dll
+
+Build succeeded.
+
+Time Elapsed 00:00:00.02
+------ Build started: Project: VkontakteDataLayer, Configuration: Release Any CPU ------
+Build started 14.09.2011 1:16:56.
+ResolveAssemblyReferences:
+  A TargetFramework profile exclusion list will be generated.
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CopyFilesToOutputDirectory:
+  VkontakteDataLayer -> C:\project\Vkontakte\VkontakteDataLayer\Bin\Release\VkontakteDataLayer.dll
+
+Build succeeded.
+
+Time Elapsed 00:00:00.03
+------ Build started: Project: VkontakteServiceLayer, Configuration: Release Any CPU ------
+Build started 14.09.2011 1:16:56.
+ResolveAssemblyReferences:
+  A TargetFramework profile exclusion list will be generated.
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CopyFilesToOutputDirectory:
+  VkontakteServiceLayer -> C:\project\Vkontakte\VkontakteServiceLayer\Bin\Release\VkontakteServiceLayer.dll
+
+Build succeeded.
+
+Time Elapsed 00:00:00.03
+------ Build started: Project: VkontakteCore, Configuration: Release Any CPU ------
+Build started 14.09.2011 1:16:56.
+ResolveAssemblyReferences:
+  A TargetFramework profile exclusion list will be generated.
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CopyFilesToOutputDirectory:
+  VkontakteCore -> C:\project\Vkontakte\VkontakteCore\VkontakteCore\Bin\Release\VkontakteCore.dll
+
+Build succeeded.
+
+Time Elapsed 00:00:00.04
+------ Build started: Project: VkontakteViewModel, Configuration: Release Any CPU ------
+C:\project\Vkontakte\VkontakteViewModel\Services\CommonErrorHandler.cs(18,13): warning CS1717: Assignment made to same variable; did you mean to assign something else?
+
+Compile complete -- 0 errors, 1 warnings
+Build started 14.09.2011 1:16:56.
+ResolveAssemblyReferences:
+  A TargetFramework profile exclusion list will be generated.
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CoreCompile:
+  C:\Windows\Microsoft.NET\Framework\v4.0.30319\Csc.exe /noconfig /nowarn:1701,1702 /nostdlib+ /errorreport:prompt /warn:4 /define:TRACE;SILVERLIGHT;WINDOWS_PHONE /reference:"C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.0\Toolkit\Feb11\Bin\Microsoft.Phone.Controls.Toolkit.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\Microsoft.Phone.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\Microsoft.Phone.Interop.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\mscorlib.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\system.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\System.Net.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\System.Windows.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\System.Xml.dll" /reference:C:\project\Vkontakte\VkontakteCore\VkontakteCore\Bin\Release\VkontakteCore.dll /reference:C:\project\Vkontakte\VkontakteDataLayer\Bin\Release\VkontakteDataLayer.dll /reference:C:\project\Vkontakte\VkontakteCommonModel\Bin\Release\VkontakteInfrastructure.dll /debug:pdbonly /optimize+ /out:obj\Release\VkontakteViewModel.dll /target:library AuthorizationViewModel.cs BaseViewModel.cs DelegateCommand.cs FriendsViewModel.cs ImageViewModel.cs ItemsViewModel\MessageViewModel.cs ItemsViewModel\PhotoAlbumViewModel.cs ItemsViewModel\UserViewModel.cs MainMenuPageViewModel.cs MessageConversationPageViewModel.cs MessagesPageViewModel.cs HomePageViewModel.cs PhotoAlbumPageViewModel.cs PhotosViewPageViewModel.cs ItemsViewModel\PhotoViewModel.cs ProfilePageViewModel.cs Properties\AssemblyInfo.cs Services\ICommonErrorHandler.cs Services\CommonErrorHandler.cs Services\ISimpleNavigationService.cs Services\SimpleNavigationService.cs ViewModelLocator.cs "C:\Users\asheriev\AppData\Local\Temp\Silverlight,Version=v4.0,Profile=WindowsPhone71.AssemblyAttributes.cs"
+CopyFilesToOutputDirectory:
+  Copying file from "obj\Release\VkontakteViewModel.dll" to "Bin\Release\VkontakteViewModel.dll".
+  VkontakteViewModel -> C:\project\Vkontakte\VkontakteViewModel\Bin\Release\VkontakteViewModel.dll
+  Copying file from "obj\Release\VkontakteViewModel.pdb" to "Bin\Release\VkontakteViewModel.pdb".
+
+Build succeeded.
+
+Time Elapsed 00:00:00.30
+------ Build started: Project: VkontakteMangoClient, Configuration: Release Any CPU ------
+Build started 14.09.2011 1:16:57.
+ResolveAssemblyReferences:
+  A TargetFramework profile exclusion list will be generated.
+GenerateTargetFrameworkMonikerAttribute:
+Skipping target "GenerateTargetFrameworkMonikerAttribute" because all output files are up-to-date with respect to the input files.
+CoreCompile:
+  C:\Windows\Microsoft.NET\Framework\v4.0.30319\Csc.exe /noconfig /nowarn:1701,1702 /nostdlib+ /errorreport:prompt /warn:4 /define:TRACE;SILVERLIGHT;WINDOWS_PHONE /reference:"c:\Program Files (x86)\Microsoft SDKs\Expression\Blend\Windows Phone\v7.1\Libraries\Microsoft.Expression.Controls.dll" /reference:"c:\Program Files (x86)\Microsoft SDKs\Expression\Extensions\FXG\Libraries\Windows Phone\v7.0\Microsoft.Expression.Controls.Fxg.dll" /reference:"C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Libraries\Silverlight\Microsoft.Phone.Controls.dll" /reference:C:\project\Vkontakte\VkontakteCore\packages\SilverlightToolkitWP.4.2011.8.17\lib\sl4-windowsphone71\Microsoft.Phone.Controls.Toolkit.dll /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\Microsoft.Phone.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\Microsoft.Phone.Interop.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\mscorlib.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\mscorlib.extensions.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\System.Core.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\system.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\System.Net.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\System.Windows.dll" /reference:"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\Silverlight\v4.0\Profile\WindowsPhone71\System.Xml.dll" /reference:C:\project\Vkontakte\VkontakteCore\VkontakteCore\Bin\Release\VkontakteCore.dll /reference:C:\project\Vkontakte\VkontakteCommonModel\Bin\Release\VkontakteInfrastructure.dll /reference:C:\project\Vkontakte\VkontakteViewModel\Bin\Release\VkontakteViewModel.dll /debug:pdbonly /optimize+ /out:obj\Release\VkontakteMangoClient.dll /resource:obj\Release\VkontakteMangoClient.g.resources /target:library /utf8output App.xaml.cs AuthorizationPage.xaml.cs FriendsPage.xaml.cs Helpers\TextBoxBindingHelper.cs MainMenu.xaml.cs HomePage.xaml.cs MessageConversationPage.xaml.cs MessagesPage.xaml.cs PhotoAlbumPage.xaml.cs PhotosViewPage.xaml.cs ProfilePage.xaml.cs Properties\AssemblyInfo.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\App.g.i.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\AuthorizationPage.g.i.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\FriendsPage.g.i.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\MainMenu.g.i.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\HomePage.g.i.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\MessageConversationPage.g.i.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\MessagesPage.g.i.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\PhotoAlbumPage.g.i.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\PhotosViewPage.g.i.cs C:\project\Vkontakte\VkontakteMangoClient\obj\Release\ProfilePage.g.i.cs "C:\Users\asheriev\AppData\Local\Temp\Silverlight,Version=v4.0,Profile=WindowsPhone71.AssemblyAttributes.cs"
+_CopyFilesMarkedCopyLocal:
+  Copying file from "C:\project\Vkontakte\VkontakteViewModel\Bin\Release\VkontakteViewModel.dll" to "Bin\Release\VkontakteViewModel.dll".
+  Copying file from "C:\project\Vkontakte\VkontakteViewModel\Bin\Release\VkontakteViewModel.pdb" to "Bin\Release\VkontakteViewModel.pdb".
+_CopyOutOfDateSourceItemsToOutputDirectory:
+Skipping target "_CopyOutOfDateSourceItemsToOutputDirectory" because all output files are up-to-date with respect to the input files.
+CopyFilesToOutputDirectory:
+  Copying file from "obj\Release\VkontakteMangoClient.dll" to "Bin\Release\VkontakteMangoClient.dll".
+  VkontakteMangoClient -> C:\project\Vkontakte\VkontakteMangoClient\Bin\Release\VkontakteMangoClient.dll
+  Copying file from "obj\Release\VkontakteMangoClient.pdb" to "Bin\Release\VkontakteMangoClient.pdb".
+CreateSilverlightAppManifest:
+  Begin application manifest generation
+  No changes detected. Application manifest file is up to date
+XapPackager:
+  Begin Xap packaging
+  Creating file VkontakteMangoClient.xap
+  Adding WMAppManifest.xml
+  Adding Background.png
+  Adding ApplicationIcon.png
+  Adding VkontakteMangoClient.dll
+  Adding Microsoft.Expression.Controls.dll
+  Adding Microsoft.Expression.Controls.Fxg.dll
+  Adding Microsoft.Phone.Controls.dll
+  Adding Microsoft.Phone.Controls.Toolkit.dll
+  Adding VkontakteCore.dll
+  Adding VkontakteInfrastructure.dll
+  Adding VkontakteViewModel.dll
+  Adding VkontakteServiceLayer.dll
+  Adding VkontakteDataLayer.dll
+  Adding Microsoft.Expression.Drawing.dll
+  Adding Newtonsoft.Json.WindowsPhone.dll
+  Adding Images\dark\appbar.add.rest.png
+  Adding Images\dark\appbar.back.rest.png
+  Adding Images\dark\appbar.basecircle.rest.png
+  Adding Images\dark\appbar.cancel.rest.png
+  Adding Images\dark\appbar.check.rest.png
+  Adding Images\dark\appbar.close.rest.png
+  Adding Images\dark\appbar.delete.rest.png
+  Adding Images\dark\appbar.download.rest.png
+  Adding Images\dark\appbar.edit.rest.png
+  Adding Images\dark\appbar.favs.addto.rest.png
+  Adding Images\dark\appbar.favs.rest.png
+  Adding Images\dark\appbar.feature.camera.rest.png
+  Adding Images\dark\appbar.feature.email.rest.png
+  Adding Images\dark\appbar.feature.search.rest.png
+  Adding Images\dark\appbar.feature.settings.rest.png
+  Adding Images\dark\appbar.feature.video.rest.png
+  Adding Images\dark\appbar.folder.rest.png
+  Adding Images\dark\appbar.minus.rest.png
+  Adding Images\dark\appbar.new.rest.png
+  Adding Images\dark\appbar.next.rest.png
+  Adding Images\dark\appbar.overflowdots.png
+  Adding Images\dark\appbar.questionmark.rest.png
+  Adding Images\dark\appbar.refresh.rest.png
+  Adding Images\dark\appbar.save.rest.png
+  Adding Images\dark\appbar.sendmessage.rest.png
+  Adding Images\dark\appbar.share.rest.png
+  Adding Images\dark\appbar.stop.rest.png
+  Adding Images\dark\appbar.sync.rest.png
+  Adding Images\dark\appbar.transport.ff.rest.png
+  Adding Images\dark\appbar.transport.pause.rest.png
+  Adding Images\dark\appbar.transport.play.rest.png
+  Adding Images\dark\appbar.transport.rew.rest.png
+  Adding Images\dark\appbar.upload.rest.png
+  Adding Images\home.png
+  Adding Images\PreloadImage.png
+  Adding README_FIRST.txt
+  Adding SplashScreenImage.jpg
+  Adding AppManifest.xaml
+  Xap packaging completed successfully
+
+Build succeeded.
+
+Time Elapsed 00:00:01.23
+========== Build: 6 succeeded or up-to-date, 0 failed, 0 skipped ==========
