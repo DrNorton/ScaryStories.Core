@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using OpenNETCF.ORM;
 using ScaryStories.Entities.Base.Repositories;
 using ScaryStories.Entities.Dto;
@@ -29,8 +31,8 @@ namespace ScaryStories.Entities.Repositories
 					return targetEntity;
 				}
 
-                 public DateTime GetLastTimeData() {
-                     return _store.GetLastDateTimeInsert("StoryDetail");
+                 public Task<DateTime> GetLastTimeData() {
+                     return Task<DateTime>.Factory.StartNew(()=>_store.GetLastDateTimeInsert("StoryDetail"));
                  }
 
 				public override StoryDetail CreateEntry(StoryDto dto) {
@@ -46,25 +48,31 @@ namespace ScaryStories.Entities.Repositories
 					};
 				}
 
-
-				public IEnumerable<StoryDto> GetStoriesByCategory(int categoryId) {
-					return ConvertColl(_store.Select<StoryDetail>(x => x._categoryId == categoryId));
+				public Task<IEnumerable<StoryDto>> GetStoriesByCategory(int categoryId) {
+					return Task<IEnumerable<StoryDto>>.Factory.StartNew(()=>ConvertColl(_store.Select<StoryDetail>(x => x._categoryId == categoryId)));
 				}
 
-		        public void AddToFavorites(StoryDto story) {
-		           story.IsFavorite = true;
-		           this.InsertOrUpdate(story);
-		         }
+		        public Task AddToFavorites(StoryDto story)
+		        {
+		            return Task.Factory.StartNew(() =>
+		            {
+		                story.IsFavorite = true;
+		                this.InsertOrUpdate(story);
+		            });
+		        }
 
-                public void RemoveFromFavorites(StoryDto story)
-                 {
-                     story.IsFavorite = false;
-                     this.InsertOrUpdate(story);
-                 }
-
-                public IEnumerable<StoryDto> GetFavoriteStories()
+                public Task RemoveFromFavorites(StoryDto story)
                 {
-                    return ConvertColl(_store.Select<StoryDetail>(x => x.IsFavorite.Equals(true)));
+                    return Task.Factory.StartNew(() =>
+                    {
+                        story.IsFavorite = false;
+                        this.InsertOrUpdate(story);
+                    });
+                }
+
+                public Task<IEnumerable<StoryDto>> GetFavoriteStories()
+                {
+                    return Task<IEnumerable<StoryDto>>.Factory.StartNew(() => ConvertColl(_store.Select<StoryDetail>(x => x.IsFavorite.Equals(true))));
 		        }
 
                 protected override StoryDto Convert(StoryDetail entity)
@@ -77,12 +85,13 @@ namespace ScaryStories.Entities.Repositories
                         Likes = entity.Likes,Text=entity.Text};
                 }
 
-                public override IEnumerable<StoryDto> Search(string pattern) {
-                    return ConvertColl(_store.Select<StoryDetail>(x => x.Header.ToLower().Contains(pattern.ToLower())));
+                public override Task<IEnumerable<StoryDto>> Search(string pattern)
+                {
+                    return Task<IEnumerable<StoryDto>>.Factory.StartNew(() =>  ConvertColl(_store.Select<StoryDetail>(x => x.Header.ToLower().Contains(pattern.ToLower())))); 
                 }
 
-		        public IEnumerable<StoryDto> GetRandomStories() {
-                    return ConvertColl(_store.SelectRandom<StoryDetail>().ToList());
+		        public Task<IEnumerable<StoryDto>> GetRandomStories() {
+                    return Task <IEnumerable<StoryDto>>.Factory.StartNew(()=>ConvertColl(_store.SelectRandom<StoryDetail>().ToList()));
 		        }
             
 

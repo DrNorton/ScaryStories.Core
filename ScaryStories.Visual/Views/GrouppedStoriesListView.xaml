@@ -15,6 +15,10 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsVisible="True" IsIndeterminate="{Binding IsLoading}" />
+    </shell:SystemTray.ProgressIndicator>
+
     <phone:PhoneApplicationPage.Resources>
         <converters:StoryNumberInCollectionConverter x:Key="NumberStoryConverter"/>
         <extensions:ByteToImageConverter x:Key="ByteToImageConverter"/>

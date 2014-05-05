@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using Caliburn.Micro;
 using Microsoft.Expression.Interactivity.Core;
@@ -11,7 +12,7 @@ using ScaryStories.Services.Dto;
 
 namespace ScaryStories.Visual.ViewModels
 {
-    public class UpdateViewModel:Screen
+    public class UpdateViewModel:BaseScreen
     {
         private ActionCommand _updateCommand;
         private IRemoteService _service;
@@ -31,13 +32,19 @@ namespace ScaryStories.Visual.ViewModels
         {
             _service = service;
             _repositoriesStore = repositoriesStore;
-            _lastStoryDatetime = _repositoriesStore.StoryRepository.GetLastTimeData();
+         
             _service = service;
             _service.OnCheckUpdate += _service_OnCheckUpdate;
             _service.OnStoryInserted += _service_OnStoryInserted;
             _service.OnStoriesDownload += _service_OnStoriesDownload;
             _service.OnUpdateCompleted += _service_OnUpdateCompleted;
             CheckUpdate();
+            GetLastTimeData();
+        }
+
+        private async void GetLastTimeData()
+        {
+            _lastStoryDatetime = await _repositoriesStore.StoryRepository.GetLastTimeData();
         }
 
 
@@ -107,12 +114,12 @@ namespace ScaryStories.Visual.ViewModels
 
         }
 
-        public void CheckUpdate()
+        public async void CheckUpdate()
         {
             ProgressBarVisibility = Visibility.Visible;
             IsIndeterminate = true;
             LogToStatusText("Подождите. Идет проверка доступных обновлений");
-            _lastStoryDatetime = _repositoriesStore.StoryRepository.GetLastTimeData();
+            _lastStoryDatetime =await _repositoriesStore.StoryRepository.GetLastTimeData();
             try
             {
                 _service.CheckUpdate(_lastStoryDatetime);

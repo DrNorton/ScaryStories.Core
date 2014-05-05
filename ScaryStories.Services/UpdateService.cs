@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 
 using ScaryStories.Entities.Dto;
@@ -16,11 +17,9 @@ using ScaryStories.Services.StoriesUpdateRemoteService;
 namespace ScaryStories.Services
 {
     public class UpdateService:IRemoteService {
+        private readonly RepositoriesStore _store;
         private StoriesUpdateServiceClient _serviceClient;
         private DateTime _tempDateTime;
-        private ICategoryRepository _categoryRepository;
-        private IStoryRepository _storyRepository;
-        private IStorySourceRepository _storySourceRepository;
         private BackgroundWorker _updateWorker;
         private IEnumerable<CategoryDto> _localCategories;
         private List<ThreadSyncByCategory> _syncMaster; 
@@ -30,9 +29,7 @@ namespace ScaryStories.Services
 
         public UpdateService(RepositoriesStore store)
         {
-            _categoryRepository = store.CategoryRepository;
-            _storyRepository = store.StoryRepository;
-            _storySourceRepository = store.StorySourceRepository;
+            _store = store;
             _serviceClient=new StoriesUpdateServiceClient();
             _serviceClient.CheckUpdateCompleted+=_serviceClient_CheckUpdateCompleted;
             _serviceClient.GetNewStoriesCompleted += _serviceClient_GetNewStoriesCompleted;
@@ -46,11 +43,11 @@ namespace ScaryStories.Services
             if (e.Error != null) {
                 MessageBox.Show("Нет подключения к интернету, либо служба обновления недоступна");
             }
-           var localSources=_storySourceRepository.GetAll().ToList();
+           var localSources=_store.StoryRepository.GetAll().ToList();
             foreach (StorySourceServiceDto sourceDto in e.Result) {
                 var localStory=localSources.FirstOrDefault(x => x.Name == sourceDto.Name);
                 if (localStory == null) {
-                    _storySourceRepository.Insert(new StorySourceDto(){CreatedTime = sourceDto.CreatedTime,Image = sourceDto.Image,Name = sourceDto.Name,Url = sourceDto.Url});
+                    _store.Insert(new StorySourceDto(){CreatedTime = sourceDto.CreatedTime,Image = sourceDto.Image,Name = sourceDto.Name,Url = sourceDto.Url});
                 }
 
             }
@@ -105,13 +102,18 @@ namespace ScaryStories.Services
                     CategoryName = categoryRemote.Name,
                     MaxGeneratorCount = categoryRemote.StoriesIds.Count
                 };
-                _storySources = _storySourceRepository.GetAll().ToList();
+                GetStorySources();
                 _syncMaster.Add(sync);
                 CreateCategoryIfNotExist(categoryRemote);
                 _newStoriesIds = categoryRemote.StoriesIds;
                 _serviceClient.GetNewStoryAsync(categoryRemote.StoriesIds[(int)sync.GetNextStoryid()]);
                 
             }      
+        }
+
+        private async void GetStorySources()
+        {
+            _storySources = (await _store.StorySourceRepository.GetAll()).ToList();
         }
 
         void _serviceClient_GetNewStoryCompleted(object sender, GetNewStoryCompletedEventArgs e)

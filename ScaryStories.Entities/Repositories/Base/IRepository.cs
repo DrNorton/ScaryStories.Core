@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Threading.Tasks;
 using ScaryStories.Entities.Dto;
 using ScaryStories.Entities.Entity;
 
@@ -10,13 +10,13 @@ namespace ScaryStories.Entities.Repositories
          where Detail : class,IDetail, new()
          where Dto : BaseDto, new()
       {
-			IEnumerable<Dto> GetAll();
-			Dto GetItem(int id);
-			void InsertOrUpdateRange(IEnumerable<Dto> items);
-			void InsertOrUpdate(Dto dto);
-		    void Insert(Dto dto);
-            IEnumerable<Dto> Search(string pattern);
-		    void Delete(Dto dto);
+			Task<IEnumerable<Dto>> GetAll();
+			Task<Dto> GetItem(int id);
+			Task InsertOrUpdateRange(IEnumerable<Dto> items);
+			Task InsertOrUpdate(Dto dto);
+		    Task Insert(Dto dto);
+            Task<IEnumerable<Dto>> Search(string pattern);
+		    Task Delete(Dto dto);
             Detail UpdateEntry(Dto sourceDto, Detail targetEntity);
             Detail CreateEntry(Dto dto);
             

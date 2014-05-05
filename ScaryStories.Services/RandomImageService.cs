@@ -10,17 +10,20 @@ using ScaryStories.Services.Base;
 namespace ScaryStories.Services
 {
     public class RandomImageService:IRandomImageService {
-        private IStoryRepository _storyRepository;
-        
+        private readonly RepositoriesStore _store;
+
 
         public RandomImageService(RepositoriesStore store)
         {
-            _storyRepository = store.StoryRepository;
-           
+            _store = store; 
         }
 
-        public byte[] GetRandomImage() {
-            return _storyRepository.GetRandomImage();
+        public  byte[] GetRandomImage()
+        {
+            //var task = _store.GetRandomImage();
+            //task.Wait();
+            //return task.Result;
+            return null;
         }
     }
 }

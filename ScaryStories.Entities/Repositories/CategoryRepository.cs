@@ -1,4 +1,6 @@
-﻿using OpenNETCF.ORM;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using OpenNETCF.ORM;
 using ScaryStories.Entities.Base.Repositories;
 using ScaryStories.Entities.Dto;
 using ScaryStories.Entities.EntityModels;
@@ -20,7 +22,9 @@ namespace ScaryStories.Entities.Repositories
 					return targetEntity;
 				}
 
-				public override CategoryDetail CreateEntry(CategoryDto dto) {
+                public override CategoryDetail CreateEntry(CategoryDto dto)
+                {
+              
 					return new CategoryDetail(dto.Id, dto.Name,dto.Image);
 				}
 
@@ -30,8 +34,8 @@ namespace ScaryStories.Entities.Repositories
                     return new CategoryDto(){Id=entity.Id,Image = entity.Image,Name=entity.Name};
                 }
 
-                public override System.Collections.Generic.IEnumerable<CategoryDto> Search(string pattern) {
-                    return ConvertColl(_store.Select<CategoryDetail>(x => x.Name.Contains(pattern)));
+                public override Task<IEnumerable<CategoryDto>> Search(string pattern) {
+                    return Task <IEnumerable<CategoryDto>> .Factory.StartNew(()=>ConvertColl(_store.Select<CategoryDetail>(x => x.Name.Contains(pattern))));
                 }
         }
 }

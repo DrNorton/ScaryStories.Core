@@ -17,6 +17,10 @@
     </Capabilities>
     <Tasks>
       <DefaultTask Name="_default" NavigationPage="/Views/MainView.xaml" />
+      <ExtendedTask Name="BackgroundTask">
+        <BackgroundServiceAgent Specifier="AudioPlayerAgent" Name="AudioPlaybackAgent" Source="AudioPlaybackAgent" Type="AudioPlaybackAgent.AudioPlayer" />
+        <BackgroundServiceAgent Specifier="AudioPlayerAgent" Name="AudioPlaybackAgent" Source="AudioPlaybackAgent" Type="AudioPlaybackAgent.AudioPlayer" />
+      </ExtendedTask>
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="ScaryStories.VisualToken" TaskName="_default">

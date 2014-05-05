@@ -8,7 +8,7 @@ using ScaryStories.Visual.Extensions;
 
 namespace ScaryStories.Visual.ViewModels
 {
-    public class SettingsViewModel:Screen
+    public class SettingsViewModel:BaseScreen
     {
         private readonly ISettingsManager _settingsManager;
         private List<AccentColor> _colors;
@@ -18,8 +18,16 @@ namespace ScaryStories.Visual.ViewModels
         {
             _settingsManager = settingsManager;
             _colors = new List<AccentColor>();
+            
+        }
+
+        protected override void OnViewReady(object view)
+        {
+            Wait(true);
             CreateColors();
             GetFonts();
+            Wait(false);
+            base.OnViewReady(view);
         }
 
         private void CreateColors()

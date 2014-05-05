@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-
+using System.Threading.Tasks;
 using OpenNETCF.ORM;
 using ScaryStories.Entities.Base.Repositories;
 using ScaryStories.Entities.Dto;
@@ -18,7 +18,7 @@ namespace ScaryStories.Entities.Repositories
             
         }
 
-        public override IEnumerable<HistoryViewDto> Search(string pattern)
+        public override Task<IEnumerable<HistoryViewDto>> Search(string pattern)
         {
             throw new NotImplementedException();
         }
@@ -42,14 +42,18 @@ namespace ScaryStories.Entities.Repositories
             return new HistoryViewDto() { Id = entity.Id, StoryId = entity.StoryId, ViewTime = entity.ViewTime };
         }
 
-        public IEnumerable<HistoryViewDto> GetLastHistories(int count) {
-            return ConvertColl(
-                _store.Fetch<HistoryViewDetail>(
-                    count,
-                    "",
-                    FieldSearchOrder.Ascending,
-                    true,
-                    typeof(HistoryViewDetail)).ToList());
+        public Task<IEnumerable<HistoryViewDto>> GetLastHistories(int count)
+        {
+            return Task<IEnumerable<HistoryViewDto>>.Factory.StartNew(() =>
+            
+                ConvertColl(
+                    _store.Fetch<HistoryViewDetail>(
+                        count,
+                        "",
+                        FieldSearchOrder.Ascending,
+                        true,
+                        typeof (HistoryViewDetail)).ToList())
+            );
         } 
     }
 }

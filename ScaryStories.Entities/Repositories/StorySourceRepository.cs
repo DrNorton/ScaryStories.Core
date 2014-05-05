@@ -1,4 +1,5 @@
-﻿using System.Windows.Media.Animation;
+﻿using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 
 using OpenNETCF.ORM;
 
@@ -20,7 +21,7 @@ namespace ScaryStories.Entities.Repositories
         {
             
         }
-        public override IEnumerable<StorySourceDto> Search(string pattern)
+        public override Task<IEnumerable<StorySourceDto>> Search(string pattern)
         {
             throw new NotImplementedException();
         }

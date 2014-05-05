@@ -11,14 +11,13 @@ using ScaryStories.Helpers;
 
 namespace ScaryStories.Visual.ViewModels
 {
-    public class SearchViewModel:Screen
+    public class SearchViewModel:BaseScreen
     {
         private readonly IRepositoriesStore _store;
         private readonly INavigationService _navigationService;
         private Visibility _progressBarVisibility = Visibility.Collapsed;
         private ActionCommand _doFindCommand;
         private string _searchPattern = "";
-        private BackgroundWorker _searchWorker;
         private List<StoryDto> _stories;
         private StoryDto _selectedStory;
 
@@ -26,29 +25,20 @@ namespace ScaryStories.Visual.ViewModels
         {
             _store = store;
             _navigationService = navigationService;
-            _searchWorker = new BackgroundWorker();
-            _searchWorker.DoWork += new DoWorkEventHandler(_searchWorker_DoWork);
-            _searchWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(_searchWorker_Completed);
+         
             
         }
 
-        public void Search()
+        public async void Search()
         {
             ProgressBarVisibility = Visibility.Visible;
-            _searchWorker.RunWorkerAsync();
-
-        }
-
-        private void _searchWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            e.Result =_store.StoryRepository.Search(_searchPattern).ToList();
-        }
-
-        private void _searchWorker_Completed(object sender, RunWorkerCompletedEventArgs e)
-        {
+            this.Stories=(await _store.StoryRepository.Search(_searchPattern)).ToList();
             ProgressBarVisibility = Visibility.Collapsed;
-            this.Stories = (List<StoryDto>)e.Result;
+     
         }
+
+     
+    
 
         public Visibility ProgressBarVisibility
         {

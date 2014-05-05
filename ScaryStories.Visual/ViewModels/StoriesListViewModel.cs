@@ -11,7 +11,7 @@ using ScaryStories.Visual.Extensions;
 
 namespace ScaryStories.Visual.ViewModels
 {
-    public class StoriesListViewModel:Screen
+    public class StoriesListViewModel:BaseScreen
     {
          private readonly IRepositoriesStore _store;
         private readonly INavigationService _navigationService;
@@ -19,38 +19,55 @@ namespace ScaryStories.Visual.ViewModels
        
         private StoryDto _selectedStory;
         private List<StoryDto> _stories; 
-        private BackgroundWorker _backgroundWorker;
+    
 
         public int CategoryId { get; set; }
+
+        public string StringIds { get; set; }
 
         public StoriesListViewModel(IRepositoriesStore store, INavigationService navigationService)
         {
             _store = store;
             _navigationService = navigationService;
             _stories=new List<StoryDto>();
-            _backgroundWorker = new BackgroundWorker();
-            _backgroundWorker.DoWork += _backgroundWorker_DoWork;
-            _backgroundWorker.RunWorkerCompleted += _backgroundWorker_RunWorkerCompleted;
-            _backgroundWorker.RunWorkerAsync();
+           
+       
         }
 
-        void _backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-       {
-           Stories = (List<StoryDto>)e.Result;
-       }
-
-        void _backgroundWorker_DoWork(object sender, DoWorkEventArgs e)
+        protected override void OnViewReady(object view)
         {
-            var stories=new List<StoryDto>();
-            if (CategoryId == 0)
+            Wait(true);
+            GetStories();
+            Wait(false);
+            base.OnViewReady(view);
+        }
+
+        private async void GetStories()
+        {
+            
+            var stories = new List<StoryDto>();
+            if (!String.IsNullOrEmpty(StringIds))
             {
-               stories = _store.StoryRepository.GetAll().ToList();
+                var idList = StringExtensions.DeserializeListOfIdsToString(StringIds);
+                foreach (var id in idList)
+                {
+                    stories.Add(await _store.StoryRepository.GetItem(id));
+                }
             }
             else
             {
-                stories = _store.StoryRepository.GetStoriesByCategory(CategoryId).ToList();
+                if (CategoryId == 0)
+                {
+                    stories = (await _store.StoryRepository.GetAll()).ToList();
+                }
+                else
+                {
+                    stories = (await _store.StoryRepository.GetStoriesByCategory(CategoryId)).ToList();
+                }
             }
-            e.Result =stories;
+           
+            Stories = stories;
+
         }
 
 

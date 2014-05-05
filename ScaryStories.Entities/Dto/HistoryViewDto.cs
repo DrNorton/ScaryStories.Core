@@ -9,5 +9,7 @@ namespace ScaryStories.Entities.Dto
     {
         public int StoryId { get; set; }
         public DateTime ViewTime { get; set; }
+
+        public StoryDto StoryDto { get; set; }
     }
 }

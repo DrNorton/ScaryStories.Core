@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Interop;
+using AudioPlaybackAgent;
 using Caliburn.Micro;
 using Microsoft.Phone.Controls;
 using OpenNETCF.ORM;
@@ -46,13 +47,14 @@ namespace ScaryStories.Visual
             _container.PerRequest<SettingsViewModel>();
             _container.PerRequest<SearchViewModel>();
             _container.PerRequest<UpdateViewModel>();
-
+            var audioPlayer = new AudioPlayer();
 
             var sqlStore=ConfigureDatabase();
             _container.RegisterInstance(typeof(IRepositoriesStore),null,new RepositoriesStore(sqlStore));
             _container.RegisterInstance(typeof(IVkService), null, ConfigureVk());
             var settingsManager = ConfigureSettingsManager();
             _container.RegisterInstance(typeof(ISettingsManager),null,settingsManager);
+            
         }
 
        
@@ -82,7 +84,7 @@ namespace ScaryStories.Visual
             store.AddType<StoryDetail>();
             store.AddType<HistoryViewDetail>();
             store.AddType<StorySourceDetail>();
-         
+            store.Insert(new StoryDetail(0, "ывывывыв" + DateTime.Now, null, "cывывывheck" + DateTime.Now, 0, 2, false));
             return store;
         }
 

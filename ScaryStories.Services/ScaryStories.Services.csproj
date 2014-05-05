@@ -82,7 +82,6 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="SpeechSynthesizerService.cs" />
-    <Compile Include="UpdateService.cs" />
     <Compile Include="VkService.cs" />
   </ItemGroup>
   <ItemGroup>

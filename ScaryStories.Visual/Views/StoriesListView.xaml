@@ -15,6 +15,9 @@
     SupportedOrientations="Portrait"   Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsVisible="True" IsIndeterminate="{Binding IsLoading}" />
+    </shell:SystemTray.ProgressIndicator>
     <Grid x:Name="MainGrid">
         <Grid  x:Name="LayoutRoot" Opacity="{Binding Opacity}"  Background="{Binding Template.BackgroundColor,Mode=TwoWay}">
             <Grid.RowDefinitions>

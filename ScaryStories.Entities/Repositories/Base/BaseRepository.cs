@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using OpenNETCF.ORM;
 using ScaryStories.Entities.Dto;
 using ScaryStories.Entities.Entity;
@@ -19,44 +20,51 @@ namespace ScaryStories.Entities.Base.Repositories
 				    _store = store;
 				}
 
-				public IEnumerable<Dto> GetAll() {
-					return ConvertColl(_store.Select<Entity>().ToList());
+				public Task<IEnumerable<Dto>> GetAll() {
+                    return Task <IEnumerable<Dto>>.Factory.StartNew(()=>ConvertColl(_store.Select<Entity>().ToList()));
 				}
 
-				public Dto GetItem(int id) {
-				    return Convert(_store.Select<Entity>(id));
+				public Task<Dto> GetItem(int id) {
+                    return Task<Dto>.Factory.StartNew(()=>Convert(_store.Select<Entity>(id)));
                        
 				}
 
-				public void InsertOrUpdateRange(IEnumerable<Dto> items)
+				public Task InsertOrUpdateRange(IEnumerable<Dto> items)
 				{
 					throw new NotImplementedException();
 				}
 
-				public void InsertOrUpdate(Dto dto) {
-				
-					var updatedOrSavedEntity = _store.Select<Entity>(x => x.Id.Equals(dto.Id)).FirstOrDefault();
-					if (updatedOrSavedEntity != null) {
-						UpdateEntry(dto, updatedOrSavedEntity);
-                        _store.Update(updatedOrSavedEntity);
-					    if (OnChange != null) {
-					        OnChange(dto);
-					    }
-					}
-					else {
-						updatedOrSavedEntity = CreateEntry(dto);
-						_store.Insert(updatedOrSavedEntity);
-					}
-					
-					dto.Id = updatedOrSavedEntity.Id;
+				public  Task InsertOrUpdate(Dto dto)
+				{
+				    return Task.Factory.StartNew(() =>
+				    {
+				        var updatedOrSavedEntity = _store.Select<Entity>(x => x.Id.Equals(dto.Id)).FirstOrDefault();
+				        if (updatedOrSavedEntity != null)
+				        {
+				            UpdateEntry(dto, updatedOrSavedEntity);
+				            _store.Update(updatedOrSavedEntity);
+				            if (OnChange != null)
+				            {
+				                OnChange(dto);
+				            }
+				        }
+				        else
+				        {
+				            updatedOrSavedEntity = CreateEntry(dto);
+				            _store.Insert(updatedOrSavedEntity);
+				        }
+
+				        dto.Id = updatedOrSavedEntity.Id;
+				    });
 				}
 
-		        public void Delete(Dto dto) {
-                    _store.Delete<Entity>(dto.Id);
+		        public Task Delete(Dto dto)
+		        {
+		            return Task.Factory.StartNew(() => _store.Delete<Entity>(dto.Id));
 		        }
 
 
-		     public abstract IEnumerable<Dto> Search(string pattern);
+		     public abstract Task<IEnumerable<Dto>> Search(string pattern);
 			 public abstract Entity UpdateEntry(Dto sourceDto, Entity targetEntity);
 			 public abstract Entity CreateEntry(Dto dto);
 
@@ -68,10 +76,14 @@ namespace ScaryStories.Entities.Base.Repositories
 		    }
 		     protected abstract Dto Convert(Entity entity);
 
-             public void Insert(Dto dto)
+             public Task Insert(Dto dto)
              {
-                 var insertedEntity = CreateEntry(dto);
-                 _store.Insert(insertedEntity);
+                 return Task.Factory.StartNew(() =>
+                 {
+                     var insertedEntity = CreateEntry(dto);
+                     _store.Insert(insertedEntity);
+                 });
+               
              }
                
         }

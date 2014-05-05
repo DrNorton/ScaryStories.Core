@@ -20,7 +20,9 @@
     x:Name="StoryPage"
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
- 
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsVisible="True" IsIndeterminate="{Binding IsLoading}" />
+    </shell:SystemTray.ProgressIndicator>
     <phone:PhoneApplicationPage.Resources>
         <extensions:ByteToImageConverter x:Key="ByteToImageConverter"/>
     </phone:PhoneApplicationPage.Resources>
@@ -60,9 +62,10 @@
             </Grid>
         </ScrollViewer>
         <bindableAppBar:BindableAppBar x:Name="AppBar" IsVisible="True" IsMenuEnabled="False"   ForegroundColor="White" Opacity="0.9">
-            <bindableAppBar:BindableAppBarButton IconUri="/Assets/AppBar/appbar.back.rest.png" Text="предыдущая" x:Name="PrevioslyStory"/>
+            <bindableAppBar:BindableAppBarButton Visibility="{Binding NavigationBarVisibility,Mode=TwoWay}" IconUri="/Assets/AppBar/appbar.back.rest.png" Text="предыдущая" x:Name="PrevioslyStory"/>
             <bindableAppBar:BindableAppBarButton IconUri="/Assets/AppBar/appbar.favs.rest.png" Text="в избранное" x:Name="ToFavorite"/>
-            <bindableAppBar:BindableAppBarButton IconUri="/Assets/AppBar/appbar.next.rest.png" Text="следущая" x:Name="NextStory"/>
+            <bindableAppBar:BindableAppBarButton Visibility="{Binding NavigationBarVisibility,Mode=TwoWay}" IconUri="/Assets/AppBar/appbar.next.rest.png" Text="следущая" x:Name="NextStory"/>
+            <bindableAppBar:BindableAppBarMenuItem Text="Проговорить" x:Name="SpeechStart"/>
         </bindableAppBar:BindableAppBar>
     </Grid>
 

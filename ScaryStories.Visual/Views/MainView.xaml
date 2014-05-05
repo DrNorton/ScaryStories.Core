@@ -16,7 +16,9 @@
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="False">
-    
+    <shell:SystemTray.ProgressIndicator>
+        <shell:ProgressIndicator IsVisible="True" IsIndeterminate="{Binding IsLoading}" />
+    </shell:SystemTray.ProgressIndicator>
     <phone:PhoneApplicationPage.Resources>
         <extensions:ByteToImageConverter x:Key="ByteToImageConverter"/>
    
@@ -73,7 +75,7 @@
             <!--Panorama item one-->
             <controls:PanoramaItem Header="История" x:Name="HistoryViewSection">
                 <!--Double line list with text wrapping-->
-                <ListBox ItemsSource="{Binding HistoryStories}" SelectedItem="{Binding SelectedStory,Mode=TwoWay}" >
+                <ListBox ItemsSource="{Binding HistoryStories,Mode=TwoWay}" SelectedItem="{Binding SelectedStory,Mode=TwoWay}" >
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <toolkit:WrapPanel Orientation="Horizontal"/>
@@ -86,8 +88,8 @@
                                     <ColumnDefinition Width="4*"/>
                                     <ColumnDefinition Width="6*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}"/>
-                                <TextBlock Foreground="{Binding FontColor,Source={StaticResource Template}}"  TextWrapping="Wrap" Grid.Column="1" Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                <Image Grid.Column="0"  Source="{Binding StoryDto.Image,Converter={StaticResource ByteToImageConverter}}"/>
+                                <TextBlock Foreground="{Binding FontColor,Source={StaticResource Template}}"  TextWrapping="Wrap" Grid.Column="1" Text="{Binding StoryDto.Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
                             </Grid>
 
                         </DataTemplate>
@@ -96,7 +98,7 @@
             </controls:PanoramaItem>
             <!--Panorama item one-->
             <controls:PanoramaItem Header="Избранное" x:Name="FavoriteSection">
-                <ListBox ItemsSource="{Binding FavoriteStories}" Foreground="{Binding FontColor,Source={StaticResource Template}}" SelectedItem="{Binding SelectedFavoriteStory,Mode=OneWay}" >
+                <ListBox ItemsSource="{Binding FavoriteStories}" Foreground="{Binding FontColor,Source={StaticResource Template}}" SelectedItem="{Binding SelectedFavoriteStory,Mode=TwoWay}" >
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <toolkit:WrapPanel Orientation="Horizontal"/>
