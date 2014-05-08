@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="UcJkg3LRBuGMUDBSR49f+VrTLgM=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="y6SRin+IXfVbk7i3E90HJQjXs4Y=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IStoriesUpdateService">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IStoriesUpdateService" contract="StoriesUpdateRemoteService.IStoriesUpdateService" bindingType="basicHttpBinding" address="http://192.168.1.7/Services/StoriesUpdateService.svc" bindingConfiguration="BasicHttpBinding_IStoriesUpdateService">
+    <endpoint name="BasicHttpBinding_IStoriesUpdateService" contract="StoriesUpdateRemoteService.IStoriesUpdateService" bindingType="basicHttpBinding" address="http://scarystories.cloudapp.net/services/StoriesUpdateService.svc" bindingConfiguration="BasicHttpBinding_IStoriesUpdateService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://192.168.1.7/Services/StoriesUpdateService.svc</serializedValue>
+          <serializedValue>http://scarystories.cloudapp.net/services/StoriesUpdateService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

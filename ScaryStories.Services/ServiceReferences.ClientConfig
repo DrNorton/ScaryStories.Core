@@ -2,16 +2,17 @@
     <system.serviceModel>
         <bindings>
             <basicHttpBinding>
-                <binding name="BasicHttpBinding_IStoriesUpdateService"   maxBufferSize="2147483647" maxReceivedMessageSize="2147483647" receiveTimeout="00:10:00" sendTimeout="00:10:00">
+                <binding name="BasicHttpBinding_IStoriesUpdateService" receiveTimeout="00:10:00"
+                    sendTimeout="00:10:00" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
                     <security mode="None" />
                 </binding>
             </basicHttpBinding>
         </bindings>
         <client>
-            <endpoint address="http://192.168.1.7/Services/StoriesUpdateService.svc"
+            <endpoint address="http://scarystories.cloudapp.net/services/StoriesUpdateService.svc"
                 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_IStoriesUpdateService"
                 contract="StoriesUpdateRemoteService.IStoriesUpdateService"
-                name="BasicHttpBinding_IStoriesUpdateService"  />
+                name="BasicHttpBinding_IStoriesUpdateService" />
         </client>
     </system.serviceModel>
 </configuration>

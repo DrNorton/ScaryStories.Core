@@ -34,10 +34,8 @@ namespace ScaryStories.Entities.Base.Repositories
 					throw new NotImplementedException();
 				}
 
-				public  Task InsertOrUpdate(Dto dto)
+				public  void InsertOrUpdate(Dto dto)
 				{
-				    return Task.Factory.StartNew(() =>
-				    {
 				        var updatedOrSavedEntity = _store.Select<Entity>(x => x.Id.Equals(dto.Id)).FirstOrDefault();
 				        if (updatedOrSavedEntity != null)
 				        {
@@ -55,7 +53,6 @@ namespace ScaryStories.Entities.Base.Repositories
 				        }
 
 				        dto.Id = updatedOrSavedEntity.Id;
-				    });
 				}
 
 		        public Task Delete(Dto dto)
@@ -76,13 +73,10 @@ namespace ScaryStories.Entities.Base.Repositories
 		    }
 		     protected abstract Dto Convert(Entity entity);
 
-             public Task Insert(Dto dto)
+             public void Insert(Dto dto)
              {
-                 return Task.Factory.StartNew(() =>
-                 {
                      var insertedEntity = CreateEntry(dto);
                      _store.Insert(insertedEntity);
-                 });
                
              }
                

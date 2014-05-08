@@ -13,6 +13,7 @@
     xmlns:controls1="clr-namespace:Phone.Controls;assembly=Phone.Controls"
     xmlns:extensions="clr-namespace:ScaryStories.Visual.Extensions"
     xmlns:bindableAppBar="clr-namespace:Caliburn.Micro.BindableAppBar;assembly=Caliburn.Micro.BindableAppBar"
+    xmlns:controls2="clr-namespace:ScaryStories.Visual.Controls"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -31,23 +32,17 @@
     </phone:PhoneApplicationPage.Background>
     <!--LayoutRoot is the root grid where all page content is placed-->
   <Grid>
-        <ScrollViewer >
-            <Grid x:Name="LayoutRoot" DataContext="{Binding CurrentStory,Mode=OneWay}" Background="{Binding BackgroundColor,Source={StaticResource Template}}">
+        <ScrollViewer>
+            <Grid x:Name="LayoutRoot"  Background="{Binding BackgroundColor,Source={StaticResource Template}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-
-                <!--TitlePanel contains the name of the application and page title-->
-                <StackPanel Grid.Row="0" >
+                <StackPanel DataContext="{Binding CurrentStory,Mode=OneWay}" Grid.Row="0" >
                     <TextBlock FontFamily="{Binding FontFamily,Source={StaticResource Template}}"  Text="{Binding Name}" TextWrapping="Wrap"  Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
                 </StackPanel>
-
-                <!--ContentPanel - place additional content here-->
-
-
-                <StackPanel Grid.Row="1">
+                <StackPanel DataContext="{Binding CurrentStory,Mode=OneWay}" Grid.Row="1">
                     <controls1:ScrollableTextBlock  Font="{Binding FontFamily,Source={StaticResource Template}}"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter},Mode=TwoWay}" Grid.Row="1"  Height="618" Width="427" Text="{Binding Text,Mode=TwoWay}"  >
                         <controls1:ScrollableTextBlock.Background>
                             <ImageBrush Stretch="Fill"/>
@@ -55,18 +50,18 @@
                     </controls1:ScrollableTextBlock>
 
                 </StackPanel>
-                <StackPanel Grid.Row="2" >
+                <StackPanel DataContext="{Binding CurrentStory,Mode=OneWay}" Grid.Row="2" >
                     <TextBlock FontFamily="{Binding FontFamily,Source={StaticResource Template}}" FontSize="16" Foreground="White"  Text="{Binding SourceUrl}" TextWrapping="Wrap"  Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" HorizontalAlignment="Right" FontStyle="Italic"/>
                 </StackPanel>
 
             </Grid>
         </ScrollViewer>
-        <bindableAppBar:BindableAppBar x:Name="AppBar" IsVisible="True" IsMenuEnabled="False"   ForegroundColor="White" Opacity="0.9">
+        <extensions:EnabledBindableAppBar x:Name="AppBar" IsVisible="True" IsMenuEnabled="False"  ForegroundColor="White" Opacity="0.9">
             <bindableAppBar:BindableAppBarButton Visibility="{Binding NavigationBarVisibility,Mode=TwoWay}" IconUri="/Assets/AppBar/appbar.back.rest.png" Text="предыдущая" x:Name="PrevioslyStory"/>
             <bindableAppBar:BindableAppBarButton IconUri="/Assets/AppBar/appbar.favs.rest.png" Text="в избранное" x:Name="ToFavorite"/>
             <bindableAppBar:BindableAppBarButton Visibility="{Binding NavigationBarVisibility,Mode=TwoWay}" IconUri="/Assets/AppBar/appbar.next.rest.png" Text="следущая" x:Name="NextStory"/>
             <bindableAppBar:BindableAppBarMenuItem Text="Проговорить" x:Name="SpeechStart"/>
-        </bindableAppBar:BindableAppBar>
+        </extensions:EnabledBindableAppBar>
     </Grid>
 
 </phone:PhoneApplicationPage>

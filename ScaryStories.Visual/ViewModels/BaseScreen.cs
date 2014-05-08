@@ -9,6 +9,7 @@ namespace ScaryStories.Visual.ViewModels
     public class BaseScreen:Screen
     {
         private bool _isLoading;
+        private bool _appBarEnabled;
 
         public bool IsLoading
         {
@@ -20,9 +21,20 @@ namespace ScaryStories.Visual.ViewModels
             }
         }
 
+        public bool AppBarEnabled
+        {
+            get { return _appBarEnabled; }
+            set
+            {
+                _appBarEnabled = value;
+                base.NotifyOfPropertyChange(()=>AppBarEnabled);
+            }
+        }
+
         public void Wait(bool wait)
         {
             IsLoading = wait;
+            AppBarEnabled = !wait;
         }
     }
 }

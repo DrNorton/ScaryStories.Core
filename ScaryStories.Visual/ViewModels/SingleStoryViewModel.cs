@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using AudioPlaybackAgent;
@@ -13,6 +14,7 @@ using ScaryStories.Entities.EntityModels;
 using ScaryStories.Entities.Repositories;
 using ScaryStories.Services;
 using ScaryStories.Services.Base;
+using ScaryStories.Visual.Controls;
 using ScaryStories.Visual.Extensions;
 
 namespace ScaryStories.Visual.ViewModels
@@ -21,21 +23,49 @@ namespace ScaryStories.Visual.ViewModels
     {
         private readonly IRepositoriesStore _repositoriesStore;
         private readonly INavigationService _navigationService;
-        private readonly SpeechSynthesizerService _speechSynthesizer;
+        private readonly ISpeechSynthesizerService _speechSynthesizer;
         private Visibility _navigationBarVisibility;
         private StoryDto _currentStory;
         public int CurrentStoryId { get; set; }
         public string StringIds { get; set; }
         private List<int> _ids;
-       
 
-        public SingleStoryViewModel(IRepositoriesStore repositoriesStore,INavigationService navigationService)
+        private UcProgress _progress=new UcProgress();
+
+  
+
+
+
+        public SingleStoryViewModel(IRepositoriesStore repositoriesStore, INavigationService navigationService, ISpeechSynthesizerService speechSynthesizer)
         {
+            _currentStory=new StoryDto();
+            _currentStory.Text = "";
             _repositoriesStore = repositoriesStore;
             _navigationService = navigationService;
-            _speechSynthesizer = new SpeechSynthesizerService();
-            
+            _speechSynthesizer = speechSynthesizer;
+            _speechSynthesizer.OnEndLoading += OnGetTrackCompleted;
+            _speechSynthesizer.OnStartLoading += StartSpeechLoading;
+            _speechSynthesizer.ReportProgressLoading += ReportProgressLoading;
             AddCustomConventions();
+        }
+
+        private void StartSpeechLoading(int obj)
+        {
+            IsLoading = true;
+            base.NotifyOfPropertyChange(() => CanNextStory);
+            base.NotifyOfPropertyChange(() => CanPrevioslyStory);
+            base.NotifyOfPropertyChange(() => CanToFavorite);
+            _progress.IsOpen = true;
+            _progress.Text = "Начинаем загрузку..";
+            _progress.Minimum = 0;
+            _progress.Maximum = obj;
+            _progress.Value = 0;
+        }
+
+        private void ReportProgressLoading(int obj)
+        {
+            _progress.Value = obj;
+            _progress.Text = String.Format("Загружено {0} из {1}", _progress.Value,_progress.Maximum);
         }
 
         static void AddCustomConventions()
@@ -46,48 +76,60 @@ namespace ScaryStories.Visual.ViewModels
             Control.IsEnabledProperty, "DataContext", "Click");
         }
 
-        protected override void OnInitialize()
+        protected async override void OnViewReady(object view)
         {
+            base.OnViewReady(view);
             Wait(true);
             if (StringIds != null)
-            _ids = StringExtensions.DeserializeListOfIdsToString(StringIds);
-            GetStory(CurrentStoryId);
+                _ids = StringExtensions.DeserializeListOfIdsToString(StringIds);
+            await GetStory(CurrentStoryId);
             Wait(false);
+            base.NotifyOfPropertyChange(() => CanNextStory);
+            base.NotifyOfPropertyChange(() => CanPrevioslyStory);
+            base.NotifyOfPropertyChange(() => CanToFavorite);
             base.OnInitialize();
         }
 
-        private async void GetStory(int storyId)
+
+        private async Task GetStory(int storyId)
         {
-            Wait(true);
+           
             CurrentStory=await _repositoriesStore.StoryRepository.GetItem(storyId);
-            await _repositoriesStore.HistoryViewRepository.Insert(new HistoryViewDto()
+             _repositoriesStore.HistoryViewRepository.Insert(new HistoryViewDto()
             {
                 StoryId = CurrentStory.Id,
                 ViewTime = DateTime.Now
             });
-            Wait(false);
+   
         }
 
         public async void PrevioslyStory()
         {
+            Wait(true);
             var currentIndex = _ids.IndexOf(CurrentStory.Id);
             var previosly = _ids[--currentIndex];
             GetStory(previosly);
             CurrentStoryId = CurrentStory.Id;
+            Wait(false);
             base.NotifyOfPropertyChange(() => CanNextStory);
             base.NotifyOfPropertyChange(() => CanPrevioslyStory);
             base.NotifyOfPropertyChange(() => CanToFavorite);
+         
         }
 
         public void SpeechStart()
         {
-            _speechSynthesizer.OnSaveToIsolatedCompleted += OnCompleted;
+        
             _speechSynthesizer.Speak(CurrentStory.Text);
         }
 
-        private void OnCompleted(string obj)
+        private void OnGetTrackCompleted()
         {
-            AudioPlayer.PlayList.Add(new AudioTrack(new Uri("temp5", UriKind.Relative), "Lullabies", "Bob Acri", "Bob Acri", null));
+            IsLoading = false;
+            base.NotifyOfPropertyChange(() => CanNextStory);
+            base.NotifyOfPropertyChange(() => CanPrevioslyStory);
+            base.NotifyOfPropertyChange(() => CanToFavorite);
+            _progress.IsOpen = false;
             BackgroundAudioPlayer.Instance.Play();
         }
 
@@ -95,6 +137,7 @@ namespace ScaryStories.Visual.ViewModels
         {
             get
             {
+                if (!AppBarEnabled) return false;
                 if (_ids == null)
                 {
                     NavigationBarVisibility = Visibility.Collapsed;
@@ -121,9 +164,13 @@ namespace ScaryStories.Visual.ViewModels
         {
             get
             {
-                if (CurrentStory.IsFavorite)
+                if (!AppBarEnabled) return false;
+                if (CurrentStory != null)
                 {
-                    return false;
+                    if (CurrentStory.IsFavorite)
+                    {
+                        return false;
+                    }
                 }
                 return true;
             }
@@ -131,23 +178,27 @@ namespace ScaryStories.Visual.ViewModels
 
         public async void NextStory()
         {
+            Wait(true);
             var currentIndex = _ids.IndexOf(CurrentStory.Id);
             var nextStory = currentIndex + 1;
             if (nextStory < _ids.Count)
             {
                 var nextIndex = _ids[nextStory];
-                GetStory(nextIndex);
+                await GetStory(nextIndex);
                 CurrentStoryId = CurrentStory.Id;
             }
-            base.NotifyOfPropertyChange(()=>CanNextStory);
+            Wait(false);
+            base.NotifyOfPropertyChange(() => CanNextStory);
             base.NotifyOfPropertyChange(() => CanPrevioslyStory);
             base.NotifyOfPropertyChange(() => CanToFavorite);
+           
         }
 
         public bool CanNextStory
         {
             get
             {
+                if (!AppBarEnabled) return false;
                 if (_ids == null)
                 {
                     NavigationBarVisibility = Visibility.Collapsed;

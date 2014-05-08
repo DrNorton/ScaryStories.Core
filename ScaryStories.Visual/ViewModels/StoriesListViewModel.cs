@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Caliburn.Micro;
 using ScaryStories.Entities.Dto;
 using ScaryStories.Entities.Repositories;
@@ -34,15 +35,15 @@ namespace ScaryStories.Visual.ViewModels
        
         }
 
-        protected override void OnViewReady(object view)
+        protected async override void OnViewReady(object view)
         {
             Wait(true);
-            GetStories();
+           await GetStories();
             Wait(false);
             base.OnViewReady(view);
         }
 
-        private async void GetStories()
+        private async Task GetStories()
         {
             
             var stories = new List<StoryDto>();

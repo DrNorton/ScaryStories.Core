@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Caliburn.Micro;
 using OpenNETCF.ORM;
 using ScaryStories.Entities.Dto;
@@ -24,7 +25,13 @@ namespace ScaryStories.Visual.ViewModels
         private List<StoryDto> _favoriteStories;
         private List<HistoryViewDto> _historyStories;
         private CategoryDto _selectedCategory;
-        private StoryDto _selectedFavoriteStory;
+        private HistoryViewDto _selectedHistoryStory;
+        private StoryDto _selectedFavouriteStory;
+        private MenuItem _selectedMenuItem;
+
+        private Visibility _categoryLoadTextVisibility=Visibility.Visible;
+        private Visibility _historyLoadTextVisibility = Visibility.Visible;
+        private Visibility _favoritesLoadTextVisibility = Visibility.Visible;
  
         private SettingTemplate _template;
 
@@ -44,21 +51,23 @@ namespace ScaryStories.Visual.ViewModels
         }
 
 
-        protected override void OnInitialize()
+       
+        protected async override void OnViewReady(object view)
         {
             Wait(true);
-            GetCategories();
-            GetFavoriteStories();
-            GetHistoryStories();
+            await GetCategories();
+            await GetFavoriteStories();
+            await GetHistoryStories();
             Wait(false);
-            base.OnInitialize();
+            base.OnViewReady(view);
         }
 
-        private async void GetHistoryStories()
+        private async Task GetHistoryStories()
         {
             var allHistory=await _store.HistoryViewRepository.GetAll();
             var historyStories = await AddStoryDtoToHistoryViewDto(allHistory);
             HistoryStories=historyStories.ToList();
+            HistoryLoadTextVisibility=Visibility.Collapsed;
         }
 
         private async Task<IEnumerable<HistoryViewDto>> AddStoryDtoToHistoryViewDto(IEnumerable<HistoryViewDto> history)
@@ -71,14 +80,16 @@ namespace ScaryStories.Visual.ViewModels
             return his;
         } 
 
-        private async void GetFavoriteStories()
+        private async Task GetFavoriteStories()
         {
-            FavoriteStories = new List<StoryDto>(await _store.StoryRepository.GetAll());
+            FavoriteStories = new List<StoryDto>(await _store.StoryRepository.GetFavoriteStories());
+            FavoritesLoadTextVisibility=Visibility.Collapsed;
         }
 
-        private async void GetCategories()
+        private async Task GetCategories()
         {
             Categories = new List<CategoryDto>(await _store.CategoryRepository.GetAll());
+            CategoryLoadTextVisibility=Visibility.Collapsed;
         }
 
         private void ConfigureMenu()
@@ -88,7 +99,7 @@ namespace ScaryStories.Visual.ViewModels
             _menu.Add(new MenuItem() { Header = "Подборка случайных историй", Description = "10 cлучайных историй", ImagePath = new Uri("/Content/random.png", UriKind.Relative),NavigateMenuCommand = new ActionCommand(NavigateToRandomStories) });
             _menu.Add(new MenuItem() { Header = "Поиск", Description = "Поиск истории", ImagePath = new Uri(@"/Content/search.png", UriKind.Relative),NavigateMenuCommand = new ActionCommand(()=> _navigationService.UriFor<SearchViewModel>().Navigate()) });
             _menu.Add(new MenuItem() { Header = "Настройки", Description = "Настройки программы", ImagePath = new Uri("/Content/settings.png", UriKind.Relative) ,NavigateMenuCommand = new ActionCommand(()=> _navigationService.UriFor<SettingsViewModel>().Navigate())});
-            _menu.Add(new MenuItem() { Header = "Обновление", Description = "Обновление", ImagePath = new Uri("/Content/update.png", UriKind.Relative) });
+            _menu.Add(new MenuItem() { Header = "Обновление", Description = "Обновление", ImagePath = new Uri("/Content/update.png", UriKind.Relative), NavigateMenuCommand = new ActionCommand(() => _navigationService.UriFor<UpdateViewModel>().Navigate()) });
 
         }
 
@@ -97,7 +108,7 @@ namespace ScaryStories.Visual.ViewModels
             Wait(true);
             var randomHistories = await _store.StoryRepository.GetRandomStories();
             Wait(false);
-            _navigationService.UriFor<StoriesListViewModel>().WithParam(x=>x.StringIds,StringExtensions.SerializeListOfIdsToString(randomHistories.Select(x=>x.Id).ToList())).Navigate();
+            _navigationService.UriFor<StoriesListViewModel>().WithParam(x => x.StringIds, StringExtensions.SerializeListOfIdsToString(randomHistories.Select(x => x.Id).ToList())).Navigate();
         }
 
 
@@ -156,19 +167,72 @@ namespace ScaryStories.Visual.ViewModels
             }
         }
 
-        public StoryDto SelectedFavoriteStory
+        public HistoryViewDto SelectedHistoryStory
         {
-            get { return _selectedFavoriteStory; }
+            get { return _selectedHistoryStory; }
             set
             {
-                _selectedFavoriteStory = value;
+                _selectedHistoryStory = value;
                 if(value!=null)
-                NavigateToFavoriteStory(value.Id);
-                base.NotifyOfPropertyChange(()=>SelectedFavoriteStory);
+                NavigateToSingleStory(value.StoryId);
+                base.NotifyOfPropertyChange(() => SelectedHistoryStory);
             }
         }
 
-        private void NavigateToFavoriteStory(int id)
+        public StoryDto SelectedFavouriteStory
+        {
+            get { return _selectedFavouriteStory; }
+            set
+            {
+                _selectedFavouriteStory = value;
+                if (value != null)
+                    NavigateToSingleStory(value.Id);
+                base.NotifyOfPropertyChange(()=>SelectedFavouriteStory);
+            }
+        }
+
+        public MenuItem SelectedMenuItem
+        {
+            get { return _selectedMenuItem; }
+            set
+            {
+                _selectedMenuItem = value;
+                value.NavigateMenuCommand.Execute();
+                base.NotifyOfPropertyChange(()=>SelectedMenuItem);
+            }
+        }
+
+        public Visibility CategoryLoadTextVisibility
+        {
+            get { return _categoryLoadTextVisibility; }
+            set
+            {
+                _categoryLoadTextVisibility = value;
+                base.NotifyOfPropertyChange(()=>CategoryLoadTextVisibility);
+            }
+        }
+
+        public Visibility HistoryLoadTextVisibility
+        {
+            get { return _historyLoadTextVisibility; }
+            set
+            {
+                _historyLoadTextVisibility = value;
+                base.NotifyOfPropertyChange(() => HistoryLoadTextVisibility);
+            }
+        }
+
+        public Visibility FavoritesLoadTextVisibility
+        {
+            get { return _favoritesLoadTextVisibility; }
+            set
+            {
+                _favoritesLoadTextVisibility = value;
+                base.NotifyOfPropertyChange(() => FavoritesLoadTextVisibility);
+            }
+        }
+
+        private void NavigateToSingleStory(int id)
         {
             _navigationService.UriFor<SingleStoryViewModel>().WithParam(x => x.CurrentStoryId, id).WithParam(x => x.StringIds, StringExtensions.SerializeListOfIdsToString(FavoriteStories.Select(x => x.Id))).Navigate();
         }

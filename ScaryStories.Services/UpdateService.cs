@@ -17,17 +17,18 @@ using ScaryStories.Services.StoriesUpdateRemoteService;
 namespace ScaryStories.Services
 {
     public class UpdateService:IRemoteService {
-        private readonly RepositoriesStore _store;
+        private readonly IRepositoriesStore _store;
         private StoriesUpdateServiceClient _serviceClient;
         private DateTime _tempDateTime;
         private BackgroundWorker _updateWorker;
-        private IEnumerable<CategoryDto> _localCategories;
+       
         private List<ThreadSyncByCategory> _syncMaster; 
         private IEnumerable<int> _newStoriesIds;
         private IEnumerable<StorySourceDto> _storySources; 
         private object _lockObject=new object();
+        private IEnumerable<CategoryDto> _localCategories;
 
-        public UpdateService(RepositoriesStore store)
+        public UpdateService(IRepositoriesStore store)
         {
             _store = store;
             _serviceClient=new StoriesUpdateServiceClient();
@@ -38,29 +39,32 @@ namespace ScaryStories.Services
             _syncMaster=new List<ThreadSyncByCategory>();
         }
 
-        void _serviceClient_GetSourcesCompleted(object sender, GetSourcesCompletedEventArgs e)
+
+        async void  _serviceClient_GetSourcesCompleted(object sender, GetSourcesCompletedEventArgs e)
         {
             if (e.Error != null) {
                 MessageBox.Show("Нет подключения к интернету, либо служба обновления недоступна");
             }
-           var localSources=_store.StoryRepository.GetAll().ToList();
+            IEnumerable<StoryDto> localSources = await GetLocalSources();
             foreach (StorySourceServiceDto sourceDto in e.Result) {
                 var localStory=localSources.FirstOrDefault(x => x.Name == sourceDto.Name);
                 if (localStory == null) {
-                    _store.Insert(new StorySourceDto(){CreatedTime = sourceDto.CreatedTime,Image = sourceDto.Image,Name = sourceDto.Name,Url = sourceDto.Url});
+                     _store.StorySourceRepository.Insert(new StorySourceDto(){CreatedTime = sourceDto.CreatedTime,Image = sourceDto.Image,Name = sourceDto.Name,Url = sourceDto.Url});
                 }
 
             }
             _serviceClient.GetNewStoriesAsync(_tempDateTime);
         }
 
-        public IEnumerable<CategoryDto> LocalCategories {
-            get {
-                if (_localCategories == null) {
-                    RefreshLocalCategories();
-                }
-                return _localCategories;
-            }
+        private async Task<IEnumerable<StoryDto>> GetLocalSources()
+        {
+            return await (_store.StoryRepository.GetAll());
+        }
+
+        private async Task<IEnumerable<CategoryDto>> GetLocalCategories()
+        {
+            _localCategories = await (_store.CategoryRepository.GetAll());
+            return _localCategories;
         }
 
         public void CheckUpdate(DateTime lastDateTime) {
@@ -93,7 +97,7 @@ namespace ScaryStories.Services
            
         }
 
-        void _serviceClient_GetNewStoriesCompleted(object sender, GetNewStoriesCompletedEventArgs e) {
+        async void _serviceClient_GetNewStoriesCompleted(object sender, GetNewStoriesCompletedEventArgs e) {
             if (OnStoriesDownload != null) {
                 OnStoriesDownload();
             }
@@ -103,8 +107,9 @@ namespace ScaryStories.Services
                     MaxGeneratorCount = categoryRemote.StoriesIds.Count
                 };
                 GetStorySources();
+            
                 _syncMaster.Add(sync);
-                CreateCategoryIfNotExist(categoryRemote);
+                await CreateCategoryIfNotExist(categoryRemote);
                 _newStoriesIds = categoryRemote.StoriesIds;
                 _serviceClient.GetNewStoryAsync(categoryRemote.StoriesIds[(int)sync.GetNextStoryid()]);
                 
@@ -116,7 +121,7 @@ namespace ScaryStories.Services
             _storySources = (await _store.StorySourceRepository.GetAll()).ToList();
         }
 
-        void _serviceClient_GetNewStoryCompleted(object sender, GetNewStoryCompletedEventArgs e)
+        async void _serviceClient_GetNewStoryCompleted(object sender, GetNewStoryCompletedEventArgs e)
         {
  	        InsertStory(e.Result);
             var sync=_syncMaster.FirstOrDefault(x => x.CategoryName == e.Result.CategoryName);
@@ -127,30 +132,31 @@ namespace ScaryStories.Services
            
         }
 
-        private void InsertStory(StoryServiceDto story) {
-            var categoryId = LocalCategories.FirstOrDefault(x => x.Name == story.CategoryName).Id;
+        private async void InsertStory(StoryServiceDto story)  
+        {
+            
+            var categoryId = _localCategories.FirstOrDefault(x => x.Name == story.CategoryName).Id;
             var storySource = _storySources.FirstOrDefault(x => x.Name == story.SourceName);
             if (storySource != null) {
                 var storySourceId = storySource.Id;
-                _storyRepository.Insert(new StoryDto(){CategoryId = categoryId,CreatedTime = DateTime.Now,Image = story.Image,
-                    IsFavorite = story.IsFavorite,Likes = story.Likes,Name = story.Header,Text = story.Text,SourceId = storySourceId,SourceUrl = story.SourceUrl});
+                    _store.StoryRepository.Insert(new StoryDto(){CategoryId = categoryId,CreatedTime = DateTime.Now,Image = story.Image,
+                    IsFavorite = false,Likes = story.Likes,Name = story.Header,Text = story.Text,SourceId = storySourceId,SourceUrl = story.SourceUrl});
             }
             if (OnStoryInserted != null) {
                 OnStoryInserted();
             }
         }
 
-        private void CreateCategoryIfNotExist(CategoryServiceDto category) {
-           var exist=LocalCategories.Any(x => x.Name == category.Name);
+        private async Task CreateCategoryIfNotExist(CategoryServiceDto category) {
+          
+            var exist = (await GetLocalCategories()).Any(x => x.Name == category.Name);
             if (!exist) {
-                _categoryRepository.InsertOrUpdate(new CategoryDto(){CreatedTime = DateTime.Now,Image = category.Image,Name = category.Name});
-               RefreshLocalCategories();
+               _store.CategoryRepository.InsertOrUpdate(new CategoryDto(){CreatedTime = DateTime.Now,Image = category.Image,Name = category.Name});
+                await GetLocalCategories();
             }
         }
 
-        private void RefreshLocalCategories() {
-            _localCategories = _categoryRepository.GetAll();
-        }
+        
 
    
         public event Action OnStoriesDownload;

@@ -35,6 +35,7 @@ using System.Collections;
 using System.Collections.Generic ;
 using System.Data;
 using System.Data.Common;
+using System.Diagnostics;
 using Community.CsharpSqlite;
 
 namespace Community.CsharpSqlite.SQLiteClient
@@ -107,6 +108,7 @@ namespace Community.CsharpSqlite.SQLiteClient
 		
 		internal void ReadpVm (Sqlite3.Vdbe pVm, int version, SqliteCommand cmd)
 		{
+            try{
 			int pN;
 			IntPtr pazValue;
 			IntPtr pazColName;
@@ -114,101 +116,117 @@ namespace Community.CsharpSqlite.SQLiteClient
 			
 			int[] declmode = null;
 
-			while (true) {
-				bool hasdata = cmd.ExecuteStatement(pVm, out pN, out pazValue, out pazColName);
-			
-				// For the first row, get the column information
-				if (first) {
-					first = false;
-					
-					if (version == 3) {
-						// A decltype might be null if the type is unknown to sqlite.
-						decltypes = new string[pN];
-						declmode = new int[pN]; // 1 == integer, 2 == datetime
-						for (int i = 0; i < pN; i++) {
-							string decl = Sqlite3.sqlite3_column_decltype (pVm, i);
-							if (decl != null) {
-								decltypes[i] = decl.ToLower(System.Globalization.CultureInfo.InvariantCulture);
-								if (decltypes[i] == "int" || decltypes[i] == "integer")
-									declmode[i] = 1;
-								else if (decltypes[i] == "date" || decltypes[i] == "datetime")
-									declmode[i] = 2;
-							}
-						}
-					}
-					
-					columns = new string[pN];	
-					for (int i = 0; i < pN; i++) {
-						string colName;
-						//if (version == 2) {
-						//	IntPtr fieldPtr = Marshal.ReadIntPtr (pazColName, i*IntPtr.Size);
-						//	colName = Sqlite.HeapToString (fieldPtr, ((SqliteConnection)cmd.Connection).Encoding);
-						//} else {
-							colName = Sqlite3.sqlite3_column_name (pVm, i);
-						//}
-						columns[i] = colName;
-						column_names_sens [colName] = i;
-						column_names_insens [colName] = i;
-					}
-				}
+                while (true)
+                {
+                    bool hasdata = cmd.ExecuteStatement(pVm, out pN, out pazValue, out pazColName);
 
-				if (!hasdata) break;
-				
-				object[] data_row = new object [pN];
-				for (int i = 0; i < pN; i++) {
-					/*
+                    // For the first row, get the column information
+                    if (first)
+                    {
+                        first = false;
+
+                        if (version == 3)
+                        {
+                            // A decltype might be null if the type is unknown to sqlite.
+                            decltypes = new string[pN];
+                            declmode = new int[pN]; // 1 == integer, 2 == datetime
+                            for (int i = 0; i < pN; i++)
+                            {
+                                string decl = Sqlite3.sqlite3_column_decltype(pVm, i);
+                                if (decl != null)
+                                {
+                                    decltypes[i] = decl.ToLower(System.Globalization.CultureInfo.InvariantCulture);
+                                    if (decltypes[i] == "int" || decltypes[i] == "integer")
+                                        declmode[i] = 1;
+                                    else if (decltypes[i] == "date" || decltypes[i] == "datetime")
+                                        declmode[i] = 2;
+                                }
+                            }
+                        }
+
+                        columns = new string[pN];
+                        for (int i = 0; i < pN; i++)
+                        {
+                            string colName;
+                            //if (version == 2) {
+                            //	IntPtr fieldPtr = Marshal.ReadIntPtr (pazColName, i*IntPtr.Size);
+                            //	colName = Sqlite.HeapToString (fieldPtr, ((SqliteConnection)cmd.Connection).Encoding);
+                            //} else {
+                            colName = Sqlite3.sqlite3_column_name(pVm, i);
+                            //}
+                            columns[i] = colName;
+                            column_names_sens[colName] = i;
+                            column_names_insens[colName] = i;
+                        }
+                    }
+
+                    if (!hasdata) break;
+
+                    object[] data_row = new object[pN];
+                    for (int i = 0; i < pN; i++)
+                    {
+                        /*
                     if (version == 2) {
 						IntPtr fieldPtr = Marshal.ReadIntPtr (pazValue, i*IntPtr.Size);
 						data_row[i] = Sqlite.HeapToString (fieldPtr, ((SqliteConnection)cmd.Connection).Encoding);
 					} else {
                     */
-						switch (Sqlite3.sqlite3_column_type (pVm, i)) {
-							case 1:
-								long val = Sqlite3.sqlite3_column_int64 (pVm, i);
-							
-								// If the column was declared as an 'int' or 'integer', let's play
-								// nice and return an int (version 3 only).
-								if (declmode[i] == 1 && val >= int.MinValue && val <= int.MaxValue)
-									data_row[i] = (int)val;
+                        switch (Sqlite3.sqlite3_column_type(pVm, i))
+                        {
+                            case 1:
+                                long val = Sqlite3.sqlite3_column_int64(pVm, i);
+
+                                // If the column was declared as an 'int' or 'integer', let's play
+                                // nice and return an int (version 3 only).
+                                if (declmode[i] == 1 && val >= int.MinValue && val <= int.MaxValue)
+                                    data_row[i] = (int) val;
 								
-								// Or if it was declared a date or datetime, do the reverse of what we
-								// do for DateTime parameters.
-								else if (declmode[i] == 2)
-									data_row[i] = DateTime.FromFileTime(val);								
-								else
-									data_row[i] = val;
-									
-								break;
-							case 2:
-								data_row[i] = Sqlite3.sqlite3_column_double (pVm, i);
-								break;
-							case 3:
-								data_row[i] = Sqlite3.sqlite3_column_text (pVm, i);
-								
-								// If the column was declared as a 'date' or 'datetime', let's play
-								// nice and return a DateTime (version 3 only).
-								if (declmode[i] == 2)
-									if (data_row[i] == null) data_row[i] = null;
-									else data_row[i] = DateTime.Parse((string)data_row[i], System.Globalization.CultureInfo.InvariantCulture);
-								break;
-							case 4:
-								int blobbytes = Sqlite3.sqlite3_column_bytes16 (pVm, i);
-								byte[] blob = Sqlite3.sqlite3_column_blob(pVm, i);
-								//byte[] blob = new byte[blobbytes];
-								//Marshal.Copy (blobptr, blob, 0, blobbytes);
-								data_row[i] = blob;
-								break;
-							case 5:
-								data_row[i] = null;
-								break;
-							default:
-								throw new Exception ("FATAL: Unknown sqlite3_column_type");
-						//}
-					}
-				}
-				
-				rows.Add (data_row);
-			}
+                                    // Or if it was declared a date or datetime, do the reverse of what we
+                                    // do for DateTime parameters.
+                                else if (declmode[i] == 2)
+                                    data_row[i] = DateTime.FromFileTime(val);
+                                else
+                                    data_row[i] = val;
+
+                                break;
+                            case 2:
+                                data_row[i] = Sqlite3.sqlite3_column_double(pVm, i);
+                                break;
+                            case 3:
+                                data_row[i] = Sqlite3.sqlite3_column_text(pVm, i);
+
+                                // If the column was declared as a 'date' or 'datetime', let's play
+                                // nice and return a DateTime (version 3 only).
+                                if (declmode[i] == 2)
+                                    if (data_row[i] == null) data_row[i] = null;
+                                    else
+                                        data_row[i] = DateTime.Parse((string) data_row[i],
+                                            System.Globalization.CultureInfo.InvariantCulture);
+                                break;
+                            case 4:
+                                int blobbytes = Sqlite3.sqlite3_column_bytes16(pVm, i);
+                                byte[] blob = Sqlite3.sqlite3_column_blob(pVm, i);
+                                //byte[] blob = new byte[blobbytes];
+                                //Marshal.Copy (blobptr, blob, 0, blobbytes);
+                                data_row[i] = blob;
+                                break;
+                            case 5:
+                                data_row[i] = null;
+                                break;
+                            default:
+                                throw new Exception("FATAL: Unknown sqlite3_column_type");
+                                //}
+                        }
+                    }
+
+                    rows.Add(data_row);
+                }
+               
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
 		}
 		internal void ReadingDone ()
 		{

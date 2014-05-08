@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:extensions="clr-namespace:ScaryStories.Visual.Extensions"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -18,6 +19,9 @@
     <shell:SystemTray.ProgressIndicator>
         <shell:ProgressIndicator IsVisible="True" IsIndeterminate="{Binding IsLoading}" />
     </shell:SystemTray.ProgressIndicator>
+    <phone:PhoneApplicationPage.Resources>
+        <extensions:ByteToImageConverter x:Key="ByteToImageConverter"/>
+    </phone:PhoneApplicationPage.Resources>
     <Grid x:Name="MainGrid">
         <Grid  x:Name="LayoutRoot" Opacity="{Binding Opacity}"  Background="{Binding Template.BackgroundColor,Mode=TwoWay}">
             <Grid.RowDefinitions>
@@ -33,7 +37,17 @@
                 <ListBox ItemsSource="{Binding Stories}" SelectedItem="{Binding SelectedStory,Mode=TwoWay}" >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding Name}" TextWrapping="Wrap" Style="{StaticResource PhoneTextExtraLargeStyle}"/>
+                            <StackPanel VerticalAlignment="Top">
+                                <Grid Margin="17,0,0,17">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="6*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}"/>
+                                    <TextBlock Foreground="{Binding FontColor,Source={StaticResource Template}}" TextWrapping="Wrap" Grid.Column="1" Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                </Grid>
+
+                            </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

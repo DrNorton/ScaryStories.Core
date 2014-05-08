@@ -33,6 +33,6 @@ namespace ScaryStories.Visual.Extensions
             return withoutZero;
         }
 
-     
+        
     }
 }

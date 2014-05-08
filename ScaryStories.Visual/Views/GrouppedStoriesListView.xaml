@@ -16,7 +16,7 @@
     mc:Ignorable="d"
     shell:SystemTray.IsVisible="True">
     <shell:SystemTray.ProgressIndicator>
-        <shell:ProgressIndicator IsVisible="True" IsIndeterminate="{Binding IsLoading}" />
+        <shell:ProgressIndicator IsVisible="True" IsIndeterminate="{Binding IsLoading,Mode=TwoWay}" />
     </shell:SystemTray.ProgressIndicator>
 
     <phone:PhoneApplicationPage.Resources>

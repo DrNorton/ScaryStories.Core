@@ -12,5 +12,11 @@ namespace ScaryStories.Visual.Models
         public string Description { get; set; }
         public Uri ImagePath { get; set; }
         public ActionCommand NavigateMenuCommand { get; set; }
+
+        public void NavigateToMenu()
+        {
+            if(NavigateMenuCommand!=null)
+            NavigateMenuCommand.Execute();
+        }
     }
 }

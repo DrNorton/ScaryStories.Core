@@ -13,8 +13,8 @@ namespace ScaryStories.Entities.Repositories
 			Task<IEnumerable<Dto>> GetAll();
 			Task<Dto> GetItem(int id);
 			Task InsertOrUpdateRange(IEnumerable<Dto> items);
-			Task InsertOrUpdate(Dto dto);
-		    Task Insert(Dto dto);
+			void InsertOrUpdate(Dto dto);
+		    void Insert(Dto dto);
             Task<IEnumerable<Dto>> Search(string pattern);
 		    Task Delete(Dto dto);
             Detail UpdateEntry(Dto sourceDto, Detail targetEntity);

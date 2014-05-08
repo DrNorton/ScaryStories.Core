@@ -114,11 +114,15 @@
     <Compile Include="Controls\FontPicker.xaml.cs">
       <DependentUpon>FontPicker.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UcProgress.xaml.cs">
+      <DependentUpon>UcProgress.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\AccentColor.cs" />
     <Compile Include="Extensions\AlphaKeyGroup.cs" />
     <Compile Include="Extensions\ByteArrayToImageSource.cs" />
     <Compile Include="Extensions\ByteToImageConverter.cs" />
     <Compile Include="Extensions\ColorExtensions.cs" />
+    <Compile Include="Extensions\EnabledBindableAppBar.cs" />
     <Compile Include="Extensions\ScaryStoriesSettings.cs" />
     <Compile Include="Extensions\SettingsManager.cs" />
     <Compile Include="Extensions\SettingTemplate.cs" />
@@ -163,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="Controls\FontPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\UcProgress.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -270,6 +278,10 @@
     <ProjectReference Include="..\ScaryStories.Helpers\ScaryStories.Helpers.csproj">
       <Project>{C734F7C7-6250-4E8D-B4CA-53D695F76BD7}</Project>
       <Name>ScaryStories.Helpers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ScaryStories.Interfaces\ScaryStories.Interfaces.csproj">
+      <Project>{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}</Project>
+      <Name>ScaryStories.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\ScaryStories.Services\ScaryStories.Services.csproj">
       <Project>{79AAE72E-F843-49A2-B9A2-995DF90E4CCD}</Project>

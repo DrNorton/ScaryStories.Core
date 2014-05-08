@@ -20,15 +20,15 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://192.168.1.7/Services/StoriesUpdateService.svc" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://scarystories.cloudapp.net/services/StoriesUpdateService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="StoriesUpdateService1.disco" MetadataType="Disco" ID="45ca1585-a0e7-4257-8135-31358beee7f7" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?disco" />
-    <MetadataFile FileName="StoriesUpdateService4.xsd" MetadataType="Schema" ID="f35c1571-d529-4063-a485-defc9186babb" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd1" />
-    <MetadataFile FileName="StoriesUpdateService41.xsd" MetadataType="Schema" ID="8426ee78-636c-4bd6-915c-a7cec81fe0dd" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd0" />
-    <MetadataFile FileName="StoriesUpdateService42.xsd" MetadataType="Schema" ID="a19c89f7-079f-4019-952a-b19d629d6c4b" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd3" />
-    <MetadataFile FileName="StoriesUpdateService43.xsd" MetadataType="Schema" ID="8f757051-2144-41cb-9335-ef2097a436e9" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?xsd=xsd2" />
-    <MetadataFile FileName="StoriesUpdateService1.wsdl" MetadataType="Wsdl" ID="99b5a030-c435-4824-b375-56249ccd475c" SourceId="1" SourceUrl="http://192.168.1.7/Services/StoriesUpdateService.svc?wsdl" />
+    <MetadataFile FileName="StoriesUpdateService.xsd" MetadataType="Schema" ID="f3841811-d8e1-44a6-9c1a-e8d364418691" SourceId="1" SourceUrl="http://scarystories.cloudapp.net/services/StoriesUpdateService.svc?xsd=xsd3" />
+    <MetadataFile FileName="StoriesUpdateService.disco" MetadataType="Disco" ID="d1d0aceb-81a7-449e-8b6e-2748b558cacc" SourceId="1" SourceUrl="http://scarystories.cloudapp.net/services/StoriesUpdateService.svc?disco" />
+    <MetadataFile FileName="StoriesUpdateService1.xsd" MetadataType="Schema" ID="7744ee3f-a95c-4963-8e3b-bab6207c91d5" SourceId="1" SourceUrl="http://scarystories.cloudapp.net/services/StoriesUpdateService.svc?xsd=xsd0" />
+    <MetadataFile FileName="StoriesUpdateService.wsdl" MetadataType="Wsdl" ID="3c4d1408-453f-4eb6-8143-6846e7385ddb" SourceId="1" SourceUrl="http://scarystories.cloudapp.net/services/StoriesUpdateService.svc?wsdl" />
+    <MetadataFile FileName="StoriesUpdateService2.xsd" MetadataType="Schema" ID="3232c16e-9467-4133-b140-dcfb2815a05a" SourceId="1" SourceUrl="http://scarystories.cloudapp.net/services/StoriesUpdateService.svc?xsd=xsd2" />
+    <MetadataFile FileName="StoriesUpdateService3.xsd" MetadataType="Schema" ID="d7216455-36c5-4bd2-9b38-4a4cd6e735cd" SourceId="1" SourceUrl="http://scarystories.cloudapp.net/services/StoriesUpdateService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

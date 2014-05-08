@@ -9,12 +9,15 @@ using System.Windows;
 using System.Windows.Interop;
 using AudioPlaybackAgent;
 using Caliburn.Micro;
+using Microsoft.Phone.BackgroundAudio;
 using Microsoft.Phone.Controls;
 using OpenNETCF.ORM;
 using ScaryStories.Entities.Entity;
 using ScaryStories.Entities.EntityModels;
 using ScaryStories.Entities.Repositories;
+using ScaryStories.Interfaces;
 using ScaryStories.Services;
+using ScaryStories.Services.Base;
 using ScaryStories.Services.Dto;
 using ScaryStories.Visual.Extensions;
 using ScaryStories.Visual.ViewModels;
@@ -26,6 +29,7 @@ namespace ScaryStories.Visual
         private PhoneContainer _container;
         private const string DBConnectionString = "ScaryStories.db";
 
+      
         public BootStrapper()
         {
 
@@ -47,14 +51,14 @@ namespace ScaryStories.Visual
             _container.PerRequest<SettingsViewModel>();
             _container.PerRequest<SearchViewModel>();
             _container.PerRequest<UpdateViewModel>();
-            var audioPlayer = new AudioPlayer();
-
             var sqlStore=ConfigureDatabase();
             _container.RegisterInstance(typeof(IRepositoriesStore),null,new RepositoriesStore(sqlStore));
             _container.RegisterInstance(typeof(IVkService), null, ConfigureVk());
             var settingsManager = ConfigureSettingsManager();
             _container.RegisterInstance(typeof(ISettingsManager),null,settingsManager);
-            
+            _container.RegisterPerRequest(typeof(IRemoteService), null, typeof(UpdateService));
+            _container.RegisterPerRequest(typeof(ISpeechSynthesizerService),null,typeof(SpeechSynthesizerService));
+            _container.RegisterInstance(typeof(IAudioTrackListHelper),null,new AudioTrackListHelper());
         }
 
        
@@ -84,7 +88,7 @@ namespace ScaryStories.Visual
             store.AddType<StoryDetail>();
             store.AddType<HistoryViewDetail>();
             store.AddType<StorySourceDetail>();
-            store.Insert(new StoryDetail(0, "ывывывыв" + DateTime.Now, null, "cывывывheck" + DateTime.Now, 0, 2, false));
+            store.Insert(new CategoryDetail(0,"",null));
             return store;
         }
 
@@ -155,7 +159,7 @@ namespace ScaryStories.Visual
 
         protected override void OnClose(object sender, Microsoft.Phone.Shell.ClosingEventArgs e)
         {
-            //FlurryWP8SDK.Api.EndSession();
+            BackgroundAudioPlayer.Instance.Track = null;
         }
 
         protected override void OnUnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
@@ -167,6 +171,6 @@ namespace ScaryStories.Visual
             }
 
             MessageBox.Show(e.ExceptionObject.Message, "Неожиданная ошибка", MessageBoxButton.OK);
-        }
+        } 
     }
 }

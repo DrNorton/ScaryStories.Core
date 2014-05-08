@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VkontakteServiceLayer", "Vk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AudioPlaybackAgent", "AudioPlaybackAgent\AudioPlaybackAgent.csproj", "{08474E4D-55ED-462B-B443-CE6216002338}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScaryStories.Interfaces", "ScaryStories.Interfaces\ScaryStories.Interfaces.csproj", "{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -257,6 +259,18 @@ Global
 		{08474E4D-55ED-462B-B443-CE6216002338}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{08474E4D-55ED-462B-B443-CE6216002338}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{08474E4D-55ED-462B-B443-CE6216002338}.Release|x86.ActiveCfg = Release|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{BFE8F2F0-37CE-45D4-83ED-DE2FE844596E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Windows;
+using System.Xml.Serialization;
 using Microsoft.Phone.BackgroundAudio;
 
 namespace AudioPlaybackAgent
@@ -9,19 +12,9 @@ namespace AudioPlaybackAgent
     public class AudioPlayer : AudioPlayerAgent
     {
         private static volatile bool _classInitialized;
-        private static List<AudioTrack> _playList; 
+        private List<string> playlist;
+        private AudioTrackListHelper _audioTrackListHelper;
 
-        public static List<AudioTrack> PlayList
-        {
-            get
-            {
-                if (_playList == null)
-                {
-                    _playList=new List<AudioTrack>();
-                }
-                return _playList;
-            }
-        }
         /// <remarks>
         /// AudioPlayer instances can share the same process. 
         /// Static fields can be used to share state between AudioPlayer instances
@@ -29,6 +22,8 @@ namespace AudioPlaybackAgent
         /// </remarks>
         public AudioPlayer()
         {
+            _audioTrackListHelper=new AudioTrackListHelper();
+            _audioTrackListHelper.LoadTrackListFromIzolatedStorage();
             if (!_classInitialized)
             {
                 _classInitialized = true;
@@ -39,6 +34,8 @@ namespace AudioPlaybackAgent
                 });
             }
         }
+
+    
 
         /// Code to execute on Unhandled Exceptions
         private void AudioPlayer_UnhandledException(object sender, ApplicationUnhandledExceptionEventArgs e)
@@ -71,10 +68,11 @@ namespace AudioPlaybackAgent
             switch (playState)
             {
                 case PlayState.TrackEnded:
-                    player.Track = GetPreviousTrack();
+                    player.Track = GetNextTrack();
                     break;
                 case PlayState.TrackReady:
                     player.Play();
+                    player.Volume = 1;
                     break;
                 case PlayState.Shutdown:
                     // TODO: Handle the shutdown state here (e.g. save state)
@@ -123,12 +121,8 @@ namespace AudioPlaybackAgent
                 case UserAction.Play:
                     if (player.PlayerState != PlayState.Playing)
                     {
-                        var tr = PlayList.FirstOrDefault();;
-                        if (tr != null)
-                        {
-                            player.Track = tr;
+                            player.Track = _audioTrackListHelper.GetCurrentTrack();
                             player.Play();
-                        }
                     }
                     break;
                 case UserAction.Stop:
@@ -177,11 +171,11 @@ namespace AudioPlaybackAgent
         {
             // TODO: add logic to get the next audio track
 
-            AudioTrack track = null;
+           return _audioTrackListHelper.GetNextTrack();
 
             // specify the track
 
-            return track;
+       
         }
 
 
@@ -199,11 +193,7 @@ namespace AudioPlaybackAgent
         {
             // TODO: add logic to get the previous audio track
 
-            AudioTrack track = null;
-
-            // specify the track
-
-            return track;
+            return _audioTrackListHelper.GetPrevioslyTrack();
         }
 
         /// <summary>

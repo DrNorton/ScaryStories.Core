@@ -30,7 +30,7 @@ namespace ScaryStories.Visual.ViewModels
             base.OnViewReady(view);
         }
 
-        private void CreateColors()
+        private async void CreateColors()
         {
             Colors = new List<AccentColor>();
             Colors.Add(new AccentColor() { Color = 0xFFFF0097.ToSolidColorBrush(), Name = "magenta" });

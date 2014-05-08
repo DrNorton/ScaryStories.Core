@@ -11,6 +11,8 @@
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800" 
         xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
         xmlns:extensions="clr-namespace:ScaryStories.Visual.Extensions"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:micro="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
         FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -21,7 +23,7 @@
     </shell:SystemTray.ProgressIndicator>
     <phone:PhoneApplicationPage.Resources>
         <extensions:ByteToImageConverter x:Key="ByteToImageConverter"/>
-   
+   <micro:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </phone:PhoneApplicationPage.Resources>
 
 
@@ -35,9 +37,10 @@
                 <ListBox Margin="0,0,-12,0" ItemsSource="{Binding Menu}" SelectedItem="{Binding SelectedMenuItem,Mode=TwoWay}"  >
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Button Command="{Binding NavigateMenuCommand}">
+                 
                                  <Grid >
-                             <Grid.ColumnDefinitions>
+                              
+                                <Grid.ColumnDefinitions>
                                  <ColumnDefinition Width="3*"/>
                                  <ColumnDefinition Width="7*"/>
                              </Grid.ColumnDefinitions>
@@ -48,7 +51,7 @@
                                     <TextBlock Text="{Binding Description}"  Foreground="{Binding FontColor,Source={StaticResource Template}}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" />
                                 </StackPanel>
                             </Grid>
-                            </Button>
+                            
                         </DataTemplate>
                     
                     </ListBox.ItemTemplate>
@@ -57,7 +60,9 @@
             <!--Panorama item one-->
             <controls:PanoramaItem Header="Категории" x:Name="CategorySection">
                 <!--Double line list with text wrapping-->
-				<ListBox Margin="0,0,-12,0" SelectedItem="{Binding SelectedCategory,Mode=TwoWay}"  ItemsSource="{Binding Categories,Mode=OneWay}" BorderBrush="{x:Null}" Background="{x:Null}" >
+                <Grid>
+                    <TextBlock Margin="0,0,-12,0" Text="Загрузка..." Visibility="{Binding CategoryLoadTextVisibility}"/>
+                    <ListBox Margin="0,0,-12,0" SelectedItem="{Binding SelectedCategory,Mode=TwoWay}"  ItemsSource="{Binding Categories,Mode=OneWay}" BorderBrush="{x:Null}" Background="{x:Null}" >
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <toolkit:WrapPanel Orientation="Horizontal"/>
@@ -71,11 +76,15 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                </Grid>
                 </controls:PanoramaItem>
+                
             <!--Panorama item one-->
             <controls:PanoramaItem Header="История" x:Name="HistoryViewSection">
-                <!--Double line list with text wrapping-->
-                <ListBox ItemsSource="{Binding HistoryStories,Mode=TwoWay}" SelectedItem="{Binding SelectedStory,Mode=TwoWay}" >
+                <Grid>
+                    <TextBlock Text="Загрузка..." Visibility="{Binding HistoryLoadTextVisibility}"/>
+                    <!--Double line list with text wrapping-->
+                <ListBox ItemsSource="{Binding HistoryStories,Mode=TwoWay}" Foreground="{Binding FontColor,Source={StaticResource Template}}" SelectedItem="{Binding SelectedHistoryStory,Mode=TwoWay}" >
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <toolkit:WrapPanel Orientation="Horizontal"/>
@@ -95,29 +104,34 @@
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>
+                    </Grid>
             </controls:PanoramaItem>
             <!--Panorama item one-->
             <controls:PanoramaItem Header="Избранное" x:Name="FavoriteSection">
-                <ListBox ItemsSource="{Binding FavoriteStories}" Foreground="{Binding FontColor,Source={StaticResource Template}}" SelectedItem="{Binding SelectedFavoriteStory,Mode=TwoWay}" >
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <toolkit:WrapPanel Orientation="Horizontal"/>
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                       <DataTemplate>
-                            <Grid Margin="17,0,0,17">
-                               <Grid.ColumnDefinitions>
-                                   <ColumnDefinition Width="4*"/>
-                                    <ColumnDefinition Width="6*"/>
-                               </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}"/>
-                                <TextBlock TextWrapping="Wrap" Grid.Column="1" Foreground="{Binding FontColor,Source={StaticResource Template}}"   Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
-                           </Grid>
-                      
-                       </DataTemplate>
-                   </ListBox.ItemTemplate>
-               </ListBox>
+                <Grid>
+                    <TextBlock Text="Загрузка..." Visibility="{Binding FavoritesLoadTextVisibility}"/>
+                    <ListBox ItemsSource="{Binding FavoriteStories}" Foreground="{Binding FontColor,Source={StaticResource Template}}" SelectedItem="{Binding SelectedFavouriteStory,Mode=TwoWay}" >
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <toolkit:WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="17,0,0,17">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="6*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0"  Source="{Binding Image,Converter={StaticResource ByteToImageConverter}}"/>
+                                    <TextBlock TextWrapping="Wrap" Grid.Column="1" Foreground="{Binding FontColor,Source={StaticResource Template}}"   Text="{Binding Name}" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}"/>
+                                </Grid>
+
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+              
             </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>
